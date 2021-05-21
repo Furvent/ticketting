@@ -1,5 +1,7 @@
 package fr.eql.ticketting.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +17,12 @@ public class UserController {
 	public UserController(UserService service) {
 		this.service = service;
 	}
-	
-	@GetMapping
-	public String displayUser(Model model) {
-		User userBefore = new User();
-		User userSaved = service.save(userBefore);
-		System.out.println(userSaved);
-		return "";
+
+	@GetMapping({"/list-users", "/", "/bob"}) // Point d'entrée d'url (dans le navigateur)
+	public String displayUsers(Model model) {
+		List<User> users = service.getAllUsers();
+		model.addAttribute("users", users);
+		return "usersDebug"; // le nom du template
 	}
-	
-	
 
 }

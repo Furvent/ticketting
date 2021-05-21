@@ -1,5 +1,6 @@
 package fr.eql.ticketting.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
@@ -8,7 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,14 +68,6 @@ public class User {
 		return creationAccountDate;
 	}
 
-	// Think to add setCreationAccountDate but waiting "bug"
-
-	@Override
-	public String toString() {
-		return "User [Id=" + Id + ", login=" + login + ", password=" + password + ", pseudo=" + pseudo
-				+ ", creationAccountDate=" + creationAccountDate + "]";
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -115,5 +113,14 @@ public class User {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "User [Id=" + Id + ", login=" + login + ", password=" + password + ", pseudo=" + pseudo
+				+ ", creationAccountDate=" + creationAccountDate + "]";
+	}
+	
+
+	
 
 }

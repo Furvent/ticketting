@@ -8,25 +8,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="TicketGroup")
 public class Group {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idGroup;
+	private Long id;
 	private String name;
 	private User createdBy;
 	private LocalDate creationDateGroup;
 	
-	@OneToMany(mappedBy = "groups")
+	@OneToMany(mappedBy = "group")
 	private Set<Membership> memberships;
 	
-	public Long getIdGroup() {
-		return idGroup;
+	public Long getId() {
+		return id;
 	}
-	public void setIdGroup(Long idGroup) {
-		this.idGroup = idGroup;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -54,13 +56,16 @@ public class Group {
 	public void setMemberships(Set<Membership> memberships) {
 		this.memberships = memberships;
 	}
+	public void setCreationDateGroup(LocalDate creationDateGroup) {
+		this.creationDateGroup = creationDateGroup;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
 		result = prime * result + ((creationDateGroup == null) ? 0 : creationDateGroup.hashCode());
-		result = prime * result + ((idGroup == null) ? 0 : idGroup.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((memberships == null) ? 0 : memberships.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -84,10 +89,10 @@ public class Group {
 				return false;
 		} else if (!creationDateGroup.equals(other.creationDateGroup))
 			return false;
-		if (idGroup == null) {
-			if (other.idGroup != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idGroup.equals(other.idGroup))
+		} else if (!id.equals(other.id))
 			return false;
 		if (memberships == null) {
 			if (other.memberships != null)
@@ -103,7 +108,7 @@ public class Group {
 	}
 	@Override
 	public String toString() {
-		return "Group [idGroup=" + idGroup + ", name=" + name + ", createdBy=" + createdBy + ", creationDateGroup="
+		return "Group [id=" + id + ", name=" + name + ", createdBy=" + createdBy + ", creationDateGroup="
 				+ creationDateGroup + ", memberships=" + memberships + "]";
 	}
 	

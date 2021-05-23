@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+//Log c'est historique
 @Entity
 public class Log implements Serializable{
 
@@ -22,7 +23,7 @@ public class Log implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long IdLog;
+	private Long id;
 	
 	private LocalDate date;
 	
@@ -31,6 +32,10 @@ public class Log implements Serializable{
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name = "ticket_id")
 	private Ticket ticket;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinColumn(name = "status_id")
+	private Status status;
 	
 	public Log(User user, Ticket ticket) {
 		this.date = LocalDate.now();
@@ -44,10 +49,10 @@ public class Log implements Serializable{
 		this.ticket = ticket;
 	}
 	public Long getIdLog() {
-		return IdLog;
+		return id;
 	}
-	public void setIdLog(Long idLog) {
-		IdLog = idLog;
+	public void setIdLog(Long id) {
+		this.id = id;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -61,6 +66,21 @@ public class Log implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	@Override
+	public String toString() {
+		return "Log [id=" + id + ", date=" + date + ", user=" + user + ", ticket=" + ticket + ", status=" + status
+				+ "]";
+	}
+	
 	
 }
 

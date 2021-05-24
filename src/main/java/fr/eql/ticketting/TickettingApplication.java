@@ -1,5 +1,7 @@
 package fr.eql.ticketting;
 
+import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -8,8 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
 import fr.eql.ticketting.entity.User;
-import fr.eql.ticketting.repository.GroupRepository;
-import fr.eql.ticketting.repository.UserRepository;
 import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
 import fr.eql.ticketting.service.UserService;
@@ -69,6 +69,18 @@ public class TickettingApplication implements CommandLineRunner {
 		membershipService.save(membership1);
 		membershipService.save(membership2);
 		membershipService.save(membership3);
+		System.out.println("-------------Membership of group1-------------");
+		// A discuter avec Didier
+		// Re tester avec la ref group1
+		Group groupBis = groupService.getGroupById(1l);
+		System.out.println(groupBis.getMemberships().size());
+		for (Membership membership : groupBis.getMemberships()) {
+			System.out.println(membership);
+		}
+	}
+	
+	public void createTickets() {
+		
 	}
 
 }

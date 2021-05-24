@@ -18,10 +18,10 @@ public class Task {
 	LocalDateTime userAddedDate;
 	LocalDateTime userWithdrawalDate;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
 	private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
 	private Ticket ticket;
 
 	public Task() {

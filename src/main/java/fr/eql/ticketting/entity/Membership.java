@@ -2,16 +2,12 @@ package fr.eql.ticketting.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.sun.istack.NotNull;
 
 @Entity
 public class Membership {
@@ -81,8 +77,7 @@ public class Membership {
 
 	@Override
 	public String toString() {
-		return "Membership [id=" + id + ", joinDate=" + joinDate + ", withDrawalDate=" + withDrawalDate + ", user="
-				+ user + ", group=" + group + "]";
+		return "Membership [id=" + id + ", joinDate=" + joinDate + ", withDrawalDate=" + withDrawalDate + "]";
 	}
 
 }

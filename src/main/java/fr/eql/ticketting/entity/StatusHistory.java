@@ -19,15 +19,15 @@ public class StatusHistory {
 
 	private LocalDateTime creationDate;
 
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name = "lastUserUpdater_id")
 	private User lastUserUpdater;
 
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name = "ticket_id")
 	private Ticket ticket;
 
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "status_id")
 	private Status status;
 

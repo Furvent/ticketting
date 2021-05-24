@@ -3,6 +3,7 @@ package fr.eql.ticketting.entity;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class Group {
 	@JoinColumn(nullable = false)
 	private User createdBy;
 
-	@OneToMany(mappedBy = "group")
+	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Membership> memberships;
 
 	public Group() {

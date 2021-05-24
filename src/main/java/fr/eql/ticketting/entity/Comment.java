@@ -1,5 +1,6 @@
 package fr.eql.ticketting.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -14,25 +15,29 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Comment {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String text;
 	private LocalDateTime createDate;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Comment parent;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<Comment> children;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY)
+	private Set<Comment> children;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private User user;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Ticket ticket;
+
+	public Comment() {
+		this.createDate = LocalDateTime.now();
+	}
 
 	public Long getId() {
 		return id;
@@ -89,14 +94,5 @@ public class Comment {
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
-	
-
-	public Comment() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	 
-	
 
 }

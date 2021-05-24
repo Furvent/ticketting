@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import fr.eql.ticketting.entity.StatusHistory;
-import fr.eql.ticketting.repository.LogRepository;
+import fr.eql.ticketting.repository.StatusHistoryRepository;
 
 @Service
 public class LogServiceImpl implements LogService{
-	LogRepository repository;
+	StatusHistoryRepository repository;
 	
 	@Override
 	public StatusHistory save(StatusHistory statusHistory) {

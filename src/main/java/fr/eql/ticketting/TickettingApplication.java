@@ -13,10 +13,10 @@ import fr.eql.ticketting.repository.UserRepository;
 @SpringBootApplication
 public class TickettingApplication implements CommandLineRunner {
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) {
 		SpringApplication.run(TickettingApplication.class, args);
 	}
-	
+
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
@@ -24,12 +24,11 @@ public class TickettingApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user = new User("login", "password", "pseudo");
+//		createUsers();
 		User user1 = new User("login1", "password1", "pseudo1");
-		userRepository.save(user);
-		userRepository.save(user1);
+		createOneGroup(user1);
 	}
-	
+
 	private void createUsers() {
 		User user1 = new User("login1", "password1", "pseudo1");
 		User user2 = new User("login2", "password2", "pseudo2");
@@ -40,12 +39,9 @@ public class TickettingApplication implements CommandLineRunner {
 		userRepository.save(user3);
 		userRepository.save(user4);
 	}
-	
-	private void createOneGroup() {
-		// Get user1
-		User user1 = userRepository.getOne(1l);
-		// Create group
-		Group group1 = new Group("Group1", user1);
+
+	private void createOneGroup(User user) {
+		Group group1 = new Group("Group1", user);
 		groupRepository.save(group1);
 	}
 

@@ -1,6 +1,5 @@
 package fr.eql.ticketting.entity;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
@@ -12,10 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Membership implements Serializable{
-
-	private static final long serialVersionUID = 1L;
-	
+public class Membership{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

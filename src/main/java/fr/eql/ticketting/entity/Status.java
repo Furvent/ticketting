@@ -1,6 +1,5 @@
 package fr.eql.ticketting.entity;
 
-import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -10,10 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Status implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
+public class Status {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -1,6 +1,5 @@
 package fr.eql.ticketting.entity;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -13,10 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class StatusHistory implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
+public class StatusHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -59,10 +55,6 @@ public class StatusHistory implements Serializable {
 
 	public void setIdLog(Long id) {
 		this.id = id;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public LocalDateTime getDate() {

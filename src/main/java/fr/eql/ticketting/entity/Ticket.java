@@ -1,6 +1,5 @@
 package fr.eql.ticketting.entity;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -10,11 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Ticket implements Serializable{
-
-
-	private static final long serialVersionUID = 1L;
-	
+public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -22,73 +17,88 @@ public class Ticket implements Serializable{
 	private LocalDate creationTicketDate;
 	private LocalDate closingTicketDate;
 	private LocalDate modificationTicketDate;
-	
+
 	@OneToMany(mappedBy = "ticket")
 	private Set<StatusHistory> statusHistory;
-	
+
 	@OneToMany(mappedBy = "ticket")
 	private Set<Task> tasks;
-	
+
 	@OneToMany(mappedBy = "ticket")
 	private Set<Comment> comment;
-	
+
 	public Ticket(String details, Status status) {
 		this.details = details;
 		this.creationTicketDate = LocalDate.now();
 	}
+
 	public Ticket() {
 	}
-	
+
 	public Long getid() {
 		return id;
 	}
+
 	public void setid(Long id) {
 		this.id = id;
 	}
+
 	public String getDetails() {
 		return details;
 	}
+
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
 	public LocalDate getCreationTicketDate() {
 		return creationTicketDate;
 	}
+
 	public void setCreationTicketDate(LocalDate creationTicketDate) {
 		this.creationTicketDate = creationTicketDate;
 	}
+
 	public LocalDate getClosingTicketDate() {
 		return closingTicketDate;
 	}
+
 	public void setClosingTicketDate(LocalDate closingTicketDate) {
 		this.closingTicketDate = closingTicketDate;
 	}
+
 	public LocalDate getModificationTicketDate() {
 		return modificationTicketDate;
 	}
+
 	public void setModificationTicketDate(LocalDate modificationTicketDate) {
 		this.modificationTicketDate = modificationTicketDate;
 	}
-	
+
 	public Set<StatusHistory> getStatusHistory() {
 		return statusHistory;
 	}
+
 	public void setStatusHistory(Set<StatusHistory> statusHistory) {
 		this.statusHistory = statusHistory;
 	}
+
 	public Set<Task> getTasks() {
 		return tasks;
 	}
+
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
 	}
-	
+
 	public Set<Comment> getComment() {
 		return comment;
 	}
+
 	public void setComment(Set<Comment> comment) {
 		this.comment = comment;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,6 +110,7 @@ public class Ticket implements Serializable{
 		result = prime * result + ((modificationTicketDate == null) ? 0 : modificationTicketDate.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -136,12 +147,12 @@ public class Ticket implements Serializable{
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", details=" + details + ", creationTicketDate=" + creationTicketDate
 				+ ", closingTicketDate=" + closingTicketDate + ", modificationTicketDate=" + modificationTicketDate
-				+"]";
+				+ "]";
 	}
-	
-	
+
 }

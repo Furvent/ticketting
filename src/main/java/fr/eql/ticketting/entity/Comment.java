@@ -1,6 +1,5 @@
 package fr.eql.ticketting.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 

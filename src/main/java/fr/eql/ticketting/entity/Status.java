@@ -10,38 +10,42 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Status implements Serializable{
+public class Status implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String label;
-	
+
 	@OneToMany(mappedBy = "status")
 	private Set<StatusHistory> statusHistory;
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getLabel() {
 		return label;
 	}
+
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	
+
 	public Set<StatusHistory> getStatusHistory() {
 		return statusHistory;
 	}
+
 	public void setStatusHistory(Set<StatusHistory> statusHistory) {
 		this.statusHistory = statusHistory;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -50,6 +54,7 @@ public class Status implements Serializable{
 		result = prime * result + ((label == null) ? 0 : label.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -71,10 +76,10 @@ public class Status implements Serializable{
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "Status [Id=" + id + ", label=" + label + "]";
 	}
-	
 
 }

@@ -1,6 +1,7 @@
 package fr.eql.ticketting.entity;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,67 +12,66 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Task {
-	
+public class Task implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	LocalDate userAddedDate;
-	LocalDate userWithdrawalDate;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	LocalDateTime userAddedDate;
+	LocalDateTime userWithdrawalDate;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private User user;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Ticket ticket;
-	
+
+	public Task() {
+		userAddedDate = LocalDateTime.now();
+	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setIdTask(Long id) {
 		this.id = id;
 	}
-	public LocalDate getUserAddedDate() {
+
+	public LocalDateTime getUserAddedDate() {
 		return userAddedDate;
 	}
-	public void setUserAddedDate(LocalDate userAddedDate) {
-		this.userAddedDate = userAddedDate;
-	}
-	public LocalDate getUserWithdrawalDate() {
+
+	public LocalDateTime getUserWithdrawalDate() {
 		return userWithdrawalDate;
 	}
-	public void setUserWithdrawalDate(LocalDate userWithdrawalDate) {
+
+	public void setUserWithdrawalDate(LocalDateTime userWithdrawalDate) {
 		this.userWithdrawalDate = userWithdrawalDate;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public Ticket getTicket() {
 		return ticket;
 	}
+
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
-	public Task() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Task(Long id, LocalDate userAddedDate, LocalDate userWithdrawalDate) {
-		super();
-		this.id = id;
-		this.userAddedDate = userAddedDate;
-		this.userWithdrawalDate = userWithdrawalDate;
-	}
+
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", userAddedDate=" + userAddedDate + ", userWithdrawalDate="
-				+ userWithdrawalDate + "]";
+		return "Task [id=" + id + ", userAddedDate=" + userAddedDate + ", userWithdrawalDate=" + userWithdrawalDate
+				+ "]";
 	}
-	
-	
 
 }

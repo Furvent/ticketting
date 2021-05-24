@@ -12,7 +12,6 @@ public class StatusServiceImpl implements StatusService{
 	StatusRepository repository;
 	
 	public StatusServiceImpl(StatusRepository repository) {
-		super();
 		this.repository = repository;
 	}
 	

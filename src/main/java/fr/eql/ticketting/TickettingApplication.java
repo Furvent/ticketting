@@ -1,7 +1,5 @@
 package fr.eql.ticketting;
 
-import java.util.Iterator;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,11 +7,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
+import fr.eql.ticketting.entity.Status;
+import fr.eql.ticketting.entity.StatusHistory;
 import fr.eql.ticketting.entity.Task;
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
+import fr.eql.ticketting.service.StatusHistoryService;
+import fr.eql.ticketting.service.StatusService;
 import fr.eql.ticketting.service.TaskService;
 import fr.eql.ticketting.service.TicketService;
 import fr.eql.ticketting.service.UserService;
@@ -35,6 +37,10 @@ public class TickettingApplication implements CommandLineRunner {
 	TicketService ticketService;
 	@Autowired
 	TaskService taskService;
+	@Autowired
+	StatusService statusService;
+	@Autowired
+	StatusHistoryService statusHistoryService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -110,7 +116,21 @@ public class TickettingApplication implements CommandLineRunner {
 		taskService.save(task2);
 		taskService.save(task3);
 		taskService.save(task4);
-		// Add 
+		// Add Status on ticket 1
+		// Create new status
+		Status status1 = new Status("label1");
+		Status status2 = new Status("label2");
+		Status status3 = new Status("label3");
+		statusService.save(status1);
+		statusService.save(status2);
+		statusService.save(status3);
+		// Link status and ticket inside HistoryStatus;
+		StatusHistory statusHistory1 = new StatusHistory(status1, ticket1);
+		StatusHistory statusHistory2 = new StatusHistory(status2, ticket1);
+		StatusHistory statusHistory3 = new StatusHistory(status3, ticket1);
+		statusHistoryService.save(statusHistory1);
+		statusHistoryService.save(statusHistory2);
+		statusHistoryService.save(statusHistory3);
 	}
 
 }

@@ -19,34 +19,27 @@ public class StatusHistory {
 
 	private LocalDateTime creationDate;
 
+	// Why last user ?
 	@ManyToOne()
 	@JoinColumn(name = "lastUserUpdater_id")
 	private User lastUserUpdater;
 
 	@ManyToOne()
-	@JoinColumn(name = "ticket_id")
+	@JoinColumn(name = "ticket_id", nullable = false)
 	private Ticket ticket;
 
 	@ManyToOne
-	@JoinColumn(name = "status_id")
+	@JoinColumn(name = "status_id", nullable = false)
 	private Status status;
 
 	public StatusHistory() {
 		this.creationDate = LocalDateTime.now();
 	}
 
-	public StatusHistory(User userAuthor, Ticket ticket) {
+	public StatusHistory(Status status, Ticket ticket) {
 		this();
-		this.lastUserUpdater = userAuthor;
+		this.status = status;
 		this.ticket = ticket;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public User getLastUserUpdater() {
@@ -73,14 +66,17 @@ public class StatusHistory {
 		this.status = status;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
 	@Override
 	public String toString() {
-		return "StatusHistory [id=" + id + ", creationDate=" + creationDate + ", lastUserUpdater=" + lastUserUpdater
-				+ ", ticket=" + ticket + ", status=" + status + "]";
+		return "StatusHistory [id=" + id + ", creationDate=" + creationDate + ", ticket=" + ticket + ", status=" + status + "]";
 	}
 
 	@Override

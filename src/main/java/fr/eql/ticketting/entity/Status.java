@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="StatusTicket")
+@Table(name = "StatusTicket")
 public class Status {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +19,13 @@ public class Status {
 
 	@OneToMany(mappedBy = "status")
 	private Set<StatusHistory> statusHistory;
+
+	public Status() {
+	}
+
+	public Status(String label) {
+		this.label = label;
+	}
 
 	public Long getId() {
 		return id;

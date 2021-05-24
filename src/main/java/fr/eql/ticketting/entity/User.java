@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class User implements Serializable{
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,18 +20,16 @@ public class User implements Serializable{
 	private long id;
 	private String login, password, pseudo;
 	private LocalDate creationAccountDate;
-	
+
 	@OneToMany(mappedBy = "user")
 	private Set<Task> tasks;
 
-	
 	@OneToMany(mappedBy = "user")
 	private Set<Membership> memberships;
-	
+
 	@OneToMany(mappedBy = "user")
 	private Set<Comment> comment;
 
-	
 	public User() {
 	}
 
@@ -78,7 +76,6 @@ public class User implements Serializable{
 		return creationAccountDate;
 	}
 
-	
 	public Set<Membership> getMemberships() {
 		return memberships;
 	}
@@ -98,7 +95,7 @@ public class User implements Serializable{
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
 	}
-	
+
 	public Set<Comment> getComment() {
 		return comment;
 	}
@@ -158,8 +155,5 @@ public class User implements Serializable{
 		return "User [id=" + id + ", login=" + login + ", password=" + password + ", pseudo=" + pseudo
 				+ ", creationAccountDate=" + creationAccountDate + "]";
 	}
-	
-
-	
 
 }

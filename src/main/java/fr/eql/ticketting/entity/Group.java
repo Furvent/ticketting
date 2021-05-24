@@ -10,12 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TicketGroup")
+@Table(name = "UsersGroup")
 public class Group {
 
 	@Id
@@ -25,7 +26,7 @@ public class Group {
 	private LocalDate creationDateGroup;
 
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	@Column(name = "creator_id")
+	@JoinColumn(name = "creator_id")
 	private User createdBy;
 
 	@OneToMany(mappedBy = "group")

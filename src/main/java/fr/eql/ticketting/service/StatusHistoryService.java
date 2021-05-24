@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.eql.ticketting.entity.StatusHistory;
 
-public interface LogService {
+public interface StatusHistoryService {
 	public StatusHistory save(StatusHistory statusHistory);
 	public List<StatusHistory> getAllStatusHistories();
 	public StatusHistory getStatusHistoryById(Long logId);

@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.StatusHistory;
-import fr.eql.ticketting.service.LogService;
+import fr.eql.ticketting.service.StatusHistoryService;
 
 @Controller
-public class LogController {
-	LogService logService;
+public class StatusHistoryController {
+	StatusHistoryService logService;
 
-	public LogController(LogService logService) {
+	public StatusHistoryController(StatusHistoryService logService) {
 		super();
 		this.logService = logService;
 	}

@@ -8,7 +8,7 @@ import fr.eql.ticketting.entity.StatusHistory;
 import fr.eql.ticketting.repository.StatusHistoryRepository;
 
 @Service
-public class LogServiceImpl implements LogService{
+public class StatusHistoryServiceImpl implements StatusHistoryService{
 	StatusHistoryRepository repository;
 	
 	@Override

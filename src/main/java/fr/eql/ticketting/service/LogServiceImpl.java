@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import fr.eql.ticketting.entity.Log;
+import fr.eql.ticketting.entity.StatusHistory;
 import fr.eql.ticketting.repository.LogRepository;
 
 @Service
@@ -12,28 +12,28 @@ public class LogServiceImpl implements LogService{
 	LogRepository repository;
 	
 	@Override
-	public Log save(Log log) {
-		return repository.save(log);
+	public StatusHistory save(StatusHistory statusHistory) {
+		return repository.save(statusHistory);
 	}
 
 	@Override
-	public List<Log> getAllLogs() {
+	public List<StatusHistory> getAllStatusHistories() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Log getLogById(Long logId) {
+	public StatusHistory getStatusHistoryById(Long logId) {
 		return repository.findById(logId).get();
 	}
 
 	@Override
-	public void delete(Log log) {
-		repository.delete(log);
+	public void delete(StatusHistory statusHistory) {
+		repository.delete(statusHistory);
 	}
 
 	@Override
-	public Log update(Log log) {
-		return repository.save(log);
+	public StatusHistory update(StatusHistory statusHistory) {
+		return repository.save(statusHistory);
 	}
 
 }

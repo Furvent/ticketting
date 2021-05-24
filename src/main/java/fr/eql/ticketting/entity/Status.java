@@ -20,7 +20,7 @@ public class Status implements Serializable{
 	private String label;
 	
 	@OneToMany(mappedBy = "status")
-	private Set<Log> log;
+	private Set<StatusHistory> statusHistory;
 	
 	public Long getId() {
 		return id;
@@ -35,11 +35,11 @@ public class Status implements Serializable{
 		this.label = label;
 	}
 	
-	public Set<Log> getLog() {
-		return log;
+	public Set<StatusHistory> getStatusHistory() {
+		return statusHistory;
 	}
-	public void setLog(Set<Log> log) {
-		this.log = log;
+	public void setStatusHistory(Set<StatusHistory> statusHistory) {
+		this.statusHistory = statusHistory;
 	}
 	
 	@Override

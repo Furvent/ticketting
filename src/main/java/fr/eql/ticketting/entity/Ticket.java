@@ -24,7 +24,7 @@ public class Ticket implements Serializable{
 	private LocalDate modificationTicketDate;
 	
 	@OneToMany(mappedBy = "ticket")
-	private Set<Log> log;
+	private Set<StatusHistory> statusHistory;
 	
 	@OneToMany(mappedBy = "ticket")
 	private Set<Task> tasks;
@@ -70,11 +70,11 @@ public class Ticket implements Serializable{
 		this.modificationTicketDate = modificationTicketDate;
 	}
 	
-	public Set<Log> getLog() {
-		return log;
+	public Set<StatusHistory> getStatusHistory() {
+		return statusHistory;
 	}
-	public void setLog(Set<Log> log) {
-		this.log = log;
+	public void setStatusHistory(Set<StatusHistory> statusHistory) {
+		this.statusHistory = statusHistory;
 	}
 	public Set<Task> getTasks() {
 		return tasks;

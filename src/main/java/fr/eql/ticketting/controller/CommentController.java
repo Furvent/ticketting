@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import fr.eql.ticketting.entity.Comment;
-import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.service.CommentService;
 
 @Controller

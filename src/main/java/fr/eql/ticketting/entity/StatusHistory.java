@@ -17,11 +17,11 @@ public class StatusHistory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private LocalDateTime date;
+	private LocalDateTime creationDate;
 
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+	@JoinColumn(name = "lastUserUpdater_id")
+	private User lastUserUpdater;
 
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name = "ticket_id")
@@ -32,13 +32,29 @@ public class StatusHistory {
 	private Status status;
 
 	public StatusHistory() {
-		this.date = LocalDateTime.now();
+		this.creationDate = LocalDateTime.now();
 	}
 
-	public StatusHistory(User user, Ticket ticket) {
+	public StatusHistory(User userAuthor, Ticket ticket) {
 		this();
-		this.user = user;
+		this.lastUserUpdater = userAuthor;
 		this.ticket = ticket;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getLastUserUpdater() {
+		return lastUserUpdater;
+	}
+
+	public void setLastUserUpdater(User lastUserUpdater) {
+		this.lastUserUpdater = lastUserUpdater;
 	}
 
 	public Ticket getTicket() {
@@ -49,30 +65,6 @@ public class StatusHistory {
 		this.ticket = ticket;
 	}
 
-	public Long getIdLog() {
-		return id;
-	}
-
-	public void setIdLog(Long id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getDate() {
-		return date;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
-
 	public Status getStatus() {
 		return status;
 	}
@@ -81,18 +73,24 @@ public class StatusHistory {
 		this.status = status;
 	}
 
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
+
 	@Override
 	public String toString() {
-		return "Log [id=" + id + ", date=" + date + ", user=" + user + ", ticket=" + ticket + ", status=" + status
-				+ "]";
+		return "StatusHistory [id=" + id + ", creationDate=" + creationDate + ", lastUserUpdater=" + lastUserUpdater
+				+ ", ticket=" + ticket + ", status=" + status + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((ticket == null) ? 0 : ticket.hashCode());
 		return result;
 	}
 
@@ -105,15 +103,20 @@ public class StatusHistory {
 		if (getClass() != obj.getClass())
 			return false;
 		StatusHistory other = (StatusHistory) obj;
-		if (date == null) {
-			if (other.date != null)
+		if (creationDate == null) {
+			if (other.creationDate != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!creationDate.equals(other.creationDate))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (lastUserUpdater == null) {
+			if (other.lastUserUpdater != null)
+				return false;
+		} else if (!lastUserUpdater.equals(other.lastUserUpdater))
 			return false;
 		if (status == null) {
 			if (other.status != null)
@@ -124,11 +127,6 @@ public class StatusHistory {
 			if (other.ticket != null)
 				return false;
 		} else if (!ticket.equals(other.ticket))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}

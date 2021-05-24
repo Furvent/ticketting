@@ -1,6 +1,6 @@
 package fr.eql.ticketting.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,10 +13,11 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String details;
-	private LocalDate creationTicketDate;
-	private LocalDate closingTicketDate;
-	private LocalDate modificationTicketDate;
+	private LocalDateTime creationTicketDate;
+	private LocalDateTime closingTicketDate;
+	private LocalDateTime modificationTicketDate;
 
 	@OneToMany(mappedBy = "ticket")
 	private Set<StatusHistory> statusHistory;
@@ -27,12 +28,13 @@ public class Ticket {
 	@OneToMany(mappedBy = "ticket")
 	private Set<Comment> comment;
 
-	public Ticket(String details, Status status) {
-		this.details = details;
-		this.creationTicketDate = LocalDate.now();
+	public Ticket() {
+		this.creationTicketDate = LocalDateTime.now();
 	}
 
-	public Ticket() {
+	public Ticket(String details) {
+		this();
+		this.details = details;
 	}
 
 	public Long getid() {
@@ -51,27 +53,23 @@ public class Ticket {
 		this.details = details;
 	}
 
-	public LocalDate getCreationTicketDate() {
+	public LocalDateTime getCreationTicketDate() {
 		return creationTicketDate;
 	}
 
-	public void setCreationTicketDate(LocalDate creationTicketDate) {
-		this.creationTicketDate = creationTicketDate;
-	}
-
-	public LocalDate getClosingTicketDate() {
+	public LocalDateTime getClosingTicketDate() {
 		return closingTicketDate;
 	}
 
-	public void setClosingTicketDate(LocalDate closingTicketDate) {
+	public void setClosingTicketDate(LocalDateTime closingTicketDate) {
 		this.closingTicketDate = closingTicketDate;
 	}
 
-	public LocalDate getModificationTicketDate() {
+	public LocalDateTime getModificationTicketDate() {
 		return modificationTicketDate;
 	}
 
-	public void setModificationTicketDate(LocalDate modificationTicketDate) {
+	public void setModificationTicketDate(LocalDateTime modificationTicketDate) {
 		this.modificationTicketDate = modificationTicketDate;
 	}
 
@@ -152,7 +150,7 @@ public class Ticket {
 	public String toString() {
 		return "Ticket [id=" + id + ", details=" + details + ", creationTicketDate=" + creationTicketDate
 				+ ", closingTicketDate=" + closingTicketDate + ", modificationTicketDate=" + modificationTicketDate
-				+ "]";
+				+ ", statusHistory=" + statusHistory + ", tasks=" + tasks + ", comment=" + comment + "]";
 	}
 
 }

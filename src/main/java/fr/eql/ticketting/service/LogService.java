@@ -3,7 +3,6 @@ package fr.eql.ticketting.service;
 import java.util.List;
 
 import fr.eql.ticketting.entity.StatusHistory;
-import fr.eql.ticketting.entity.Membership;
 
 public interface LogService {
 	public StatusHistory save(StatusHistory statusHistory);

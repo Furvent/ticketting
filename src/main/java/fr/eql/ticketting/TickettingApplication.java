@@ -9,9 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
+import fr.eql.ticketting.entity.Task;
+import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
+import fr.eql.ticketting.service.TaskService;
+import fr.eql.ticketting.service.TicketService;
 import fr.eql.ticketting.service.UserService;
 
 @SpringBootApplication
@@ -27,12 +31,17 @@ public class TickettingApplication implements CommandLineRunner {
 	GroupService groupService;
 	@Autowired
 	MembershipService membershipService;
+	@Autowired
+	TicketService ticketService;
+	@Autowired
+	TaskService taskService;
 
 	@Override
 	public void run(String... args) throws Exception {
 		createUsers();
 		createGroup();
 		createMembership();
+		createTickets();
 	}
 
 	private void createUsers() {
@@ -78,9 +87,29 @@ public class TickettingApplication implements CommandLineRunner {
 			System.out.println(membership);
 		}
 	}
-	
+
 	public void createTickets() {
-		
+		// Create 3 tickets
+		Group group1 = groupService.getGroupById(1l);
+		Ticket ticket1 = new Ticket("Ticket 1 details", group1);
+		Ticket ticket2 = new Ticket("Ticket 2 details", group1);
+		Ticket ticket3 = new Ticket("Ticket 3 details", group1);
+		ticketService.save(ticket1);
+		ticketService.save(ticket2);
+		ticketService.save(ticket3);
+		// Create task between ticket and user
+		// Get users
+		User user1 = userService.getUserWithId(1l);
+		User user2 = userService.getUserWithId(2l);
+		// Link users and tickets inside task
+		Task task1 = new Task(user1, ticket1);
+		Task task2 = new Task(user1, ticket2);
+		Task task3 = new Task(user1, ticket3);
+		Task task4 = new Task(user2, ticket3);
+		taskService.save(task1);
+		taskService.save(task2);
+		taskService.save(task3);
+		taskService.save(task4);
 	}
 
 }

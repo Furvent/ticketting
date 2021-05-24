@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -28,6 +29,9 @@ public class Ticket {
 	@OneToMany(mappedBy = "ticket")
 	private Set<Comment> comment;
 
+	@ManyToOne
+	private Group group;
+
 	public Ticket() {
 		this.creationTicketDate = LocalDateTime.now();
 	}
@@ -37,12 +41,13 @@ public class Ticket {
 		this.details = details;
 	}
 
-	public Long getid() {
-		return id;
+	public Ticket(String details, Group group) {
+		this(details);
+		this.group = group;
 	}
 
-	public void setid(Long id) {
-		this.id = id;
+	public Long getId() {
+		return id;
 	}
 
 	public String getDetails() {
@@ -95,6 +100,14 @@ public class Ticket {
 
 	public void setComment(Set<Comment> comment) {
 		this.comment = comment;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	@Override
@@ -150,7 +163,7 @@ public class Ticket {
 	public String toString() {
 		return "Ticket [id=" + id + ", details=" + details + ", creationTicketDate=" + creationTicketDate
 				+ ", closingTicketDate=" + closingTicketDate + ", modificationTicketDate=" + modificationTicketDate
-				+ ", statusHistory=" + statusHistory + ", tasks=" + tasks + ", comment=" + comment + "]";
+				+ ", statusHistory=" + statusHistory + ", comment=" + comment + "]";
 	}
 
 }

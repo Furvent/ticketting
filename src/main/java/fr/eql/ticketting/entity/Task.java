@@ -2,12 +2,11 @@ package fr.eql.ticketting.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -19,13 +18,21 @@ public class Task {
 	LocalDateTime userWithdrawalDate;
 
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private User user;
 
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Ticket ticket;
 
 	public Task() {
 		userAddedDate = LocalDateTime.now();
+	}
+
+	public Task(User user, Ticket ticket) {
+		this();
+		this.user = user;
+		this.ticket = ticket;
 	}
 
 	public Long getId() {

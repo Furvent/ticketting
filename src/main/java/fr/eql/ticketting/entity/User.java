@@ -1,6 +1,6 @@
 package fr.eql.ticketting.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -11,13 +11,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="UserApp")
+@Table(name = "UserApp")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String login, password, pseudo;
-	private LocalDate creationAccountDate;
+	private LocalDateTime creationAccountDate;
 
 	@OneToMany(mappedBy = "user")
 	private Set<Task> tasks;
@@ -29,13 +29,14 @@ public class User {
 	private Set<Comment> comment;
 
 	public User() {
+		this.creationAccountDate = LocalDateTime.now();
 	}
 
 	public User(String login, String password, String pseudo) {
+		this();
 		this.login = login;
 		this.password = password;
 		this.pseudo = pseudo;
-		this.creationAccountDate = LocalDate.now();
 	}
 
 	public long getId() {
@@ -70,7 +71,7 @@ public class User {
 		this.pseudo = pseudo;
 	}
 
-	public LocalDate getCreationAccountDate() {
+	public LocalDateTime getCreationAccountDate() {
 		return creationAccountDate;
 	}
 
@@ -80,10 +81,6 @@ public class User {
 
 	public void setMemberships(Set<Membership> memberships) {
 		this.memberships = memberships;
-	}
-
-	public void setCreationAccountDate(LocalDate creationAccountDate) {
-		this.creationAccountDate = creationAccountDate;
 	}
 
 	public Set<Task> getTasks() {

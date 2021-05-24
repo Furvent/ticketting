@@ -1,6 +1,6 @@
 package fr.eql.ticketting.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,7 +22,7 @@ public class Group {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private LocalDate creationDateGroup;
+	private LocalDateTime creationDateGroup;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -31,8 +31,11 @@ public class Group {
 	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Membership> memberships;
 
+	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Ticket> tickets;
+
 	public Group() {
-		this.creationDateGroup = LocalDate.now();
+		this.creationDateGroup = LocalDateTime.now();
 	}
 
 	public Group(String name, User createdBy) {
@@ -43,10 +46,6 @@ public class Group {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -65,7 +64,7 @@ public class Group {
 		this.createdBy = createdBy;
 	}
 
-	public LocalDate getCreationDateGroup() {
+	public LocalDateTime getCreationDateGroup() {
 		return creationDateGroup;
 	}
 
@@ -77,7 +76,15 @@ public class Group {
 		this.memberships = memberships;
 	}
 
-	public void setCreationDateGroup(LocalDate creationDateGroup) {
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public void setCreationDateGroup(LocalDateTime creationDateGroup) {
 		this.creationDateGroup = creationDateGroup;
 	}
 

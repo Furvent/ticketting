@@ -22,16 +22,16 @@ public class Comment {
 	private String text;
 	private LocalDateTime createDate;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne()
 	private Comment parent;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany()
 	private Set<Comment> children;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne()
 	private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne()
 	private Ticket ticket;
 
 	public Comment() {

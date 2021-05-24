@@ -8,15 +8,13 @@ import fr.eql.ticketting.entity.Membership;
 import fr.eql.ticketting.repository.MembershipRepository;
 
 @Service
-public class MembershipServiceImpl implements MembershipService{
+public class MembershipServiceImpl implements MembershipService {
 	MembershipRepository repository;
-	
-	
+
 	public MembershipServiceImpl(MembershipRepository repository) {
-		super();
 		this.repository = repository;
 	}
-	
+
 	public void setRepository(MembershipRepository repository) {
 		this.repository = repository;
 	}

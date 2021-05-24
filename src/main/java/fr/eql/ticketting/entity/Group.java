@@ -3,7 +3,6 @@ package fr.eql.ticketting.entity;
 import java.time.LocalDate;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,7 +23,8 @@ public class Group {
 	private String name;
 	private LocalDate creationDateGroup;
 
-	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(nullable = false)
 	private User createdBy;
 
 	@OneToMany(mappedBy = "group")

@@ -2,26 +2,36 @@ package fr.eql.ticketting.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long Id;
+	private long id;
 	private String login, password, pseudo;
 	private LocalDate creationAccountDate;
+	
+	@OneToMany(mappedBy = "user")
+	private Set<Task> tasks;
 
+	
+	@OneToMany(mappedBy = "user")
+	private Set<Membership> memberships;
+	
+	@OneToMany(mappedBy = "user")
+	private Set<Comment> comment;
+
+	
 	public User() {
 	}
 
@@ -33,11 +43,11 @@ public class User implements Serializable{
 	}
 
 	public long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getLogin() {
@@ -68,11 +78,40 @@ public class User implements Serializable{
 		return creationAccountDate;
 	}
 
+	
+	public Set<Membership> getMemberships() {
+		return memberships;
+	}
+
+	public void setMemberships(Set<Membership> memberships) {
+		this.memberships = memberships;
+	}
+
+	public void setCreationAccountDate(LocalDate creationAccountDate) {
+		this.creationAccountDate = creationAccountDate;
+	}
+
+	public Set<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
+	
+	public Set<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(Set<Comment> comment) {
+		this.comment = comment;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (Id ^ (Id >>> 32));
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((creationAccountDate == null) ? 0 : creationAccountDate.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
@@ -89,7 +128,7 @@ public class User implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (Id != other.Id)
+		if (id != other.id)
 			return false;
 		if (creationAccountDate == null) {
 			if (other.creationAccountDate != null)
@@ -116,7 +155,7 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return "User [Id=" + Id + ", login=" + login + ", password=" + password + ", pseudo=" + pseudo
+		return "User [id=" + id + ", login=" + login + ", password=" + password + ", pseudo=" + pseudo
 				+ ", creationAccountDate=" + creationAccountDate + "]";
 	}
 	

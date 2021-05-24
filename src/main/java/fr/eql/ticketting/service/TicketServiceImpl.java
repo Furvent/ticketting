@@ -2,9 +2,12 @@ package fr.eql.ticketting.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.repository.TicketRepository;
 
+@Service
 public class TicketServiceImpl implements TicketService{
 	
 	TicketRepository repository;

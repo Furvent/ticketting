@@ -19,10 +19,9 @@ public class StatusHistory {
 
 	private LocalDateTime creationDate;
 
-	// Why last user ?
 	@ManyToOne()
-	@JoinColumn(name = "lastUserUpdater_id")
-	private User lastUserUpdater;
+	@JoinColumn(name = "userUpdater_id")
+	private User userUpdater;
 
 	@ManyToOne()
 	@JoinColumn(name = "ticket_id", nullable = false)
@@ -33,21 +32,36 @@ public class StatusHistory {
 	private Status status;
 
 	public StatusHistory() {
-		this.creationDate = LocalDateTime.now();
 	}
 
-	public StatusHistory(Status status, Ticket ticket) {
-		this();
+	public StatusHistory(Status status, Ticket ticket, LocalDateTime creationDate) {
+		this.creationDate = creationDate;
 		this.status = status;
 		this.ticket = ticket;
 	}
 
-	public User getLastUserUpdater() {
-		return lastUserUpdater;
+	public Long getId() {
+		return id;
 	}
 
-	public void setLastUserUpdater(User lastUserUpdater) {
-		this.lastUserUpdater = lastUserUpdater;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public User getUserUpdater() {
+		return userUpdater;
+	}
+
+	public void setUserUpdater(User userUpdater) {
+		this.userUpdater = userUpdater;
 	}
 
 	public Ticket getTicket() {
@@ -66,27 +80,12 @@ public class StatusHistory {
 		this.status = status;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public LocalDateTime getCreationDate() {
-		return creationDate;
-	}
-
-	@Override
-	public String toString() {
-		return "StatusHistory [id=" + id + ", creationDate=" + creationDate + ", ticket=" + ticket + ", status=" + status + "]";
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((ticket == null) ? 0 : ticket.hashCode());
 		return result;
 	}
 
@@ -109,22 +108,13 @@ public class StatusHistory {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (lastUserUpdater == null) {
-			if (other.lastUserUpdater != null)
-				return false;
-		} else if (!lastUserUpdater.equals(other.lastUserUpdater))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		if (ticket == null) {
-			if (other.ticket != null)
-				return false;
-		} else if (!ticket.equals(other.ticket))
-			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "StatusHistory [id=" + id + ", creationDate=" + creationDate + ", ticket=" + ticket + ", status="
+				+ status + "]";
 	}
 
 }

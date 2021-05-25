@@ -1,6 +1,7 @@
 package fr.eql.ticketting.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,23 +30,26 @@ public class Group {
 	private User createdBy;
 
 	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
-	private Set<Membership> memberships;
+	private Set<Membership> memberships = new HashSet<Membership>();
 
 	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
-	private Set<Ticket> tickets;
+	private Set<Ticket> tickets = new HashSet<Ticket>();
 
 	public Group() {
-		this.creationDateGroup = LocalDateTime.now();
 	}
 
-	public Group(String name, User createdBy) {
-		this();
+	public Group(String name, User createdBy, LocalDateTime creationDateGroup) {
 		this.name = name;
 		this.createdBy = createdBy;
+		this.creationDateGroup = creationDateGroup;
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -68,6 +72,10 @@ public class Group {
 		return creationDateGroup;
 	}
 
+	public void setCreationDateGroup(LocalDateTime creationDateGroup) {
+		this.creationDateGroup = creationDateGroup;
+	}
+
 	public Set<Membership> getMemberships() {
 		return memberships;
 	}
@@ -84,14 +92,11 @@ public class Group {
 		this.tickets = tickets;
 	}
 
-	public void setCreationDateGroup(LocalDateTime creationDateGroup) {
-		this.creationDateGroup = creationDateGroup;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -111,20 +116,10 @@ public class Group {
 				return false;
 		} else if (!createdBy.equals(other.createdBy))
 			return false;
-		if (creationDateGroup == null) {
-			if (other.creationDateGroup != null)
-				return false;
-		} else if (!creationDateGroup.equals(other.creationDateGroup))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (memberships == null) {
-			if (other.memberships != null)
-				return false;
-		} else if (!memberships.equals(other.memberships))
 			return false;
 		if (name == null) {
 			if (other.name != null)

@@ -1,5 +1,6 @@
 package fr.eql.ticketting.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ public class Status {
 	private String label;
 
 	@OneToMany(mappedBy = "status")
-	private Set<StatusHistory> statusHistory;
+	private Set<StatusHistory> statusHistory = new HashSet<StatusHistory>();
 
 	public Status() {
 	}

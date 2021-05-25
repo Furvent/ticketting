@@ -1,6 +1,7 @@
 package fr.eql.ticketting.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -20,23 +21,22 @@ public class User {
 	private LocalDateTime creationAccountDate;
 
 	@OneToMany(mappedBy = "user")
-	private Set<Task> tasks;
+	private Set<Task> tasks = new HashSet<Task>();
 
 	@OneToMany(mappedBy = "user")
-	private Set<Membership> memberships;
+	private Set<Membership> memberships = new HashSet<Membership>();
 
 	@OneToMany(mappedBy = "user")
-	private Set<Comment> comment;
+	private Set<Comment> comment = new HashSet<Comment>();
 
 	public User() {
-		this.creationAccountDate = LocalDateTime.now();
 	}
 
-	public User(String login, String password, String pseudo) {
-		this();
+	public User(String login, String password, String pseudo, LocalDateTime creationAccountDate) {
 		this.login = login;
 		this.password = password;
 		this.pseudo = pseudo;
+		this.creationAccountDate = creationAccountDate;
 	}
 
 	public long getId() {
@@ -75,6 +75,10 @@ public class User {
 		return creationAccountDate;
 	}
 
+	public void setCreationAccountDate(LocalDateTime creationAccountDate) {
+		this.creationAccountDate = creationAccountDate;
+	}
+
 	public Set<Membership> getMemberships() {
 		return memberships;
 	}
@@ -103,8 +107,8 @@ public class User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((creationAccountDate == null) ? 0 : creationAccountDate.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((pseudo == null) ? 0 : pseudo.hashCode());
@@ -120,12 +124,12 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (id != other.id)
-			return false;
 		if (creationAccountDate == null) {
 			if (other.creationAccountDate != null)
 				return false;
 		} else if (!creationAccountDate.equals(other.creationAccountDate))
+			return false;
+		if (id != other.id)
 			return false;
 		if (login == null) {
 			if (other.login != null)

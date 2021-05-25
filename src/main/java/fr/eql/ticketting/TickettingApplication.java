@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import fr.eql.ticketting.entity.Comment;
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
 import fr.eql.ticketting.entity.Status;
@@ -12,6 +13,7 @@ import fr.eql.ticketting.entity.StatusHistory;
 import fr.eql.ticketting.entity.Task;
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.entity.User;
+import fr.eql.ticketting.service.CommentService;
 import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
 import fr.eql.ticketting.service.StatusHistoryService;
@@ -41,6 +43,8 @@ public class TickettingApplication implements CommandLineRunner {
 	StatusService statusService;
 	@Autowired
 	StatusHistoryService statusHistoryService;
+	@Autowired
+	CommentService commentService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -131,6 +135,25 @@ public class TickettingApplication implements CommandLineRunner {
 		statusHistoryService.save(statusHistory1);
 		statusHistoryService.save(statusHistory2);
 		statusHistoryService.save(statusHistory3);
+		// Add comments on ticket 2 from user1 and user2;
+		// Create new comment
+		// Create parent comment
+		Comment comment1 = new Comment("Comment 1 from user 1");
+		comment1.setTicket(ticket2);
+		comment1.setUser(user1);
+		commentService.save(comment1);
+		// Create child comment
+		Comment commentChild1of1 = new Comment("Comment child 1 of comment 1, from user 2");
+		commentChild1of1.setTicket(ticket2);
+		commentChild1of1.setUser(user2);
+		commentChild1of1.setParent(comment1);
+		comment1.getChildren().add(commentChild1of1);
+		commentService.save(commentChild1of1);
+		commentService.save(comment1);
+		// Test link between comment
+		Comment comment1Bis = commentService.getCommentById(1l);
+		System.out.println("-------------------comment1Bis----------------------");
+		System.out.println(comment1Bis);
 	}
 
 }

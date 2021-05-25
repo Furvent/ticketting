@@ -1,6 +1,7 @@
 package fr.eql.ticketting.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -25,17 +27,28 @@ public class Comment {
 	@ManyToOne()
 	private Comment parent;
 
-	@OneToMany()
-	private Set<Comment> children;
+	@OneToMany(fetch = FetchType.EAGER)
+	private Set<Comment> children = new HashSet<Comment>();
 
 	@ManyToOne()
+	@JoinColumn(nullable = false)
 	private User user;
 
 	@ManyToOne()
+	@JoinColumn(nullable = false)
 	private Ticket ticket;
 
 	public Comment() {
 		this.createDate = LocalDateTime.now();
+	}
+
+	public Comment(String text) {
+		this();
+	}
+
+	public Comment(String text, Comment parentComment) {
+		this(text);
+		this.parent = parentComment;
 	}
 
 	public Long getId() {
@@ -92,6 +105,13 @@ public class Comment {
 
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
+	}
+
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", text=" + text + ", createDate=" + createDate + ", parent=" + parent
+				+ ", number of children=" + children.size() + ", user=" + user.getPseudo() + ", ticket="
+				+ ticket.getDetails() + "]";
 	}
 
 }

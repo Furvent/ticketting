@@ -8,14 +8,13 @@ import fr.eql.ticketting.entity.Comment;
 import fr.eql.ticketting.repository.CommentRepository;
 
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 	CommentRepository repository;
 
 	public CommentServiceImpl(CommentRepository repository) {
-		super();
 		this.repository = repository;
 	}
-	
+
 	public void setRepository(CommentRepository repository) {
 		this.repository = repository;
 	}

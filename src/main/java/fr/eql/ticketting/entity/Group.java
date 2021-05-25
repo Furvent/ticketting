@@ -28,10 +28,10 @@ public class Group {
 	@JoinColumn(nullable = false)
 	private User createdBy;
 
-	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
 	private Set<Membership> memberships;
 
-	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
 	private Set<Ticket> tickets;
 
 	public Group() {

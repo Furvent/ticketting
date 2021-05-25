@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.repository.UserRepository;
+import fr.eql.ticketting.service.UserService;
 
 @SpringBootApplication
 public class TickettingApplication implements CommandLineRunner {
@@ -17,6 +18,9 @@ public class TickettingApplication implements CommandLineRunner {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	UserService userService;
 
 	@Override
 	public void run(String... args) throws Exception {

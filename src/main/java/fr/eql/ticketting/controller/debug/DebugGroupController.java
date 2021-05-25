@@ -18,10 +18,11 @@ public class DebugGroupController {
 		this.groupService = groupService;
 	}
 	
+	// Non utilisé pour l'instant
 	@GetMapping({"/debug-group"}) // Point d'entrée d'url (dans le navigateur)
 	public String displayGroups(Model model) {
-		List<Group> users = groupService.getAllGroups();
-		model.addAttribute("users", users);
+		List<Group> groups = groupService.getAllGroups();
+		model.addAttribute("groups", groups);
 		return "usersDebug"; // le nom du template
 	}
 

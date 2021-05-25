@@ -1,7 +1,7 @@
 package fr.eql.ticketting.entity;
 
-import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -9,37 +9,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-public class User implements Serializable{
-
-	private static final long serialVersionUID = 1L;
-
+@Table(name = "UserApp")
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String login, password, pseudo;
-	private LocalDate creationAccountDate;
-	
-	@OneToMany(mappedBy = "user")
-	private Set<Task> tasks;
+	private LocalDateTime creationAccountDate;
 
-	
 	@OneToMany(mappedBy = "user")
-	private Set<Membership> memberships;
-	
-	@OneToMany(mappedBy = "user")
-	private Set<Comment> comment;
+	private Set<Task> tasks = new HashSet<Task>();
 
-	
+	@OneToMany(mappedBy = "user")
+	private Set<Membership> memberships = new HashSet<Membership>();
+
+	@OneToMany(mappedBy = "user")
+	private Set<Comment> comment = new HashSet<Comment>();
+
 	public User() {
 	}
 
-	public User(String login, String password, String pseudo) {
+	public User(String login, String password, String pseudo, LocalDateTime creationAccountDate) {
 		this.login = login;
 		this.password = password;
 		this.pseudo = pseudo;
-		this.creationAccountDate = LocalDate.now();
+		this.creationAccountDate = creationAccountDate;
 	}
 
 	public long getId() {
@@ -74,21 +71,20 @@ public class User implements Serializable{
 		this.pseudo = pseudo;
 	}
 
-	public LocalDate getCreationAccountDate() {
+	public LocalDateTime getCreationAccountDate() {
 		return creationAccountDate;
 	}
 
-	
+	public void setCreationAccountDate(LocalDateTime creationAccountDate) {
+		this.creationAccountDate = creationAccountDate;
+	}
+
 	public Set<Membership> getMemberships() {
 		return memberships;
 	}
 
 	public void setMemberships(Set<Membership> memberships) {
 		this.memberships = memberships;
-	}
-
-	public void setCreationAccountDate(LocalDate creationAccountDate) {
-		this.creationAccountDate = creationAccountDate;
 	}
 
 	public Set<Task> getTasks() {
@@ -98,7 +94,7 @@ public class User implements Serializable{
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
 	}
-	
+
 	public Set<Comment> getComment() {
 		return comment;
 	}
@@ -111,8 +107,8 @@ public class User implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((creationAccountDate == null) ? 0 : creationAccountDate.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((pseudo == null) ? 0 : pseudo.hashCode());
@@ -128,12 +124,12 @@ public class User implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (id != other.id)
-			return false;
 		if (creationAccountDate == null) {
 			if (other.creationAccountDate != null)
 				return false;
 		} else if (!creationAccountDate.equals(other.creationAccountDate))
+			return false;
+		if (id != other.id)
 			return false;
 		if (login == null) {
 			if (other.login != null)
@@ -158,8 +154,5 @@ public class User implements Serializable{
 		return "User [id=" + id + ", login=" + login + ", password=" + password + ", pseudo=" + pseudo
 				+ ", creationAccountDate=" + creationAccountDate + "]";
 	}
-	
-
-	
 
 }

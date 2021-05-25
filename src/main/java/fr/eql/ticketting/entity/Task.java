@@ -1,77 +1,121 @@
 package fr.eql.ticketting.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Task {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	LocalDate userAddedDate;
-	LocalDate userWithdrawalDate;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+
+	private LocalDateTime userAddedDate;
+	private LocalDateTime userWithdrawalDate;
+
+	@ManyToOne
+	@JoinColumn(nullable = false)
 	private User user;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+
+	@ManyToOne
+	@JoinColumn(nullable = false)
 	private Ticket ticket;
-	
+
+	public Task() {
+	}
+
+	public Task(User user, Ticket ticket, LocalDateTime userAddedDate) {
+		this.user = user;
+		this.ticket = ticket;
+		this.userAddedDate = userAddedDate;
+	}
+
 	public Long getId() {
 		return id;
 	}
-	public void setIdTask(Long id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public LocalDate getUserAddedDate() {
+
+	public LocalDateTime getUserAddedDate() {
 		return userAddedDate;
 	}
-	public void setUserAddedDate(LocalDate userAddedDate) {
+
+	public void setUserAddedDate(LocalDateTime userAddedDate) {
 		this.userAddedDate = userAddedDate;
 	}
-	public LocalDate getUserWithdrawalDate() {
+
+	public LocalDateTime getUserWithdrawalDate() {
 		return userWithdrawalDate;
 	}
-	public void setUserWithdrawalDate(LocalDate userWithdrawalDate) {
+
+	public void setUserWithdrawalDate(LocalDateTime userWithdrawalDate) {
 		this.userWithdrawalDate = userWithdrawalDate;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public Ticket getTicket() {
 		return ticket;
 	}
+
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
-	public Task() {
-		super();
-		// TODO Auto-generated constructor stub
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((userAddedDate == null) ? 0 : userAddedDate.hashCode());
+		result = prime * result + ((userWithdrawalDate == null) ? 0 : userWithdrawalDate.hashCode());
+		return result;
 	}
-	public Task(Long id, LocalDate userAddedDate, LocalDate userWithdrawalDate) {
-		super();
-		this.id = id;
-		this.userAddedDate = userAddedDate;
-		this.userWithdrawalDate = userWithdrawalDate;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Task other = (Task) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (userAddedDate == null) {
+			if (other.userAddedDate != null)
+				return false;
+		} else if (!userAddedDate.equals(other.userAddedDate))
+			return false;
+		if (userWithdrawalDate == null) {
+			if (other.userWithdrawalDate != null)
+				return false;
+		} else if (!userWithdrawalDate.equals(other.userWithdrawalDate))
+			return false;
+		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", userAddedDate=" + userAddedDate + ", userWithdrawalDate="
-				+ userWithdrawalDate + "]";
+		return "Task [id=" + id + ", userAddedDate=" + userAddedDate + ", userWithdrawalDate=" + userWithdrawalDate
+				+ "]";
 	}
-	
-	
 
 }

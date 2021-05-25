@@ -7,22 +7,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import fr.eql.ticketting.entity.Group;
-import fr.eql.ticketting.entity.Log;
-import fr.eql.ticketting.service.LogService;
+import fr.eql.ticketting.entity.StatusHistory;
+import fr.eql.ticketting.service.StatusHistoryService;
 
 @Controller
-public class LogController {
-	LogService logService;
+public class StatusHistoryController {
+	StatusHistoryService logService;
 
-	public LogController(LogService logService) {
+	public StatusHistoryController(StatusHistoryService logService) {
 		super();
 		this.logService = logService;
 	}
 	
 	@GetMapping("/list-log")
 	public String displayGroups(Model model) {
-		List<Log> logs = logService.getAllLogs();
-		model.addAttribute("logs", logs);
+		List<StatusHistory> statusHistories = logService.getAllStatusHistories();
+		model.addAttribute("logs", statusHistories);
 		return "logList"; 
 	}	
 }

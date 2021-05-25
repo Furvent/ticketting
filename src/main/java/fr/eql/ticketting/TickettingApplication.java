@@ -1,40 +1,159 @@
 package fr.eql.ticketting;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import fr.eql.ticketting.entity.Comment;
+import fr.eql.ticketting.entity.Group;
+import fr.eql.ticketting.entity.Membership;
+import fr.eql.ticketting.entity.Status;
+import fr.eql.ticketting.entity.StatusHistory;
+import fr.eql.ticketting.entity.Task;
+import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.entity.User;
-import fr.eql.ticketting.repository.UserRepository;
+import fr.eql.ticketting.service.CommentService;
+import fr.eql.ticketting.service.GroupService;
+import fr.eql.ticketting.service.MembershipService;
+import fr.eql.ticketting.service.StatusHistoryService;
+import fr.eql.ticketting.service.StatusService;
+import fr.eql.ticketting.service.TaskService;
+import fr.eql.ticketting.service.TicketService;
 import fr.eql.ticketting.service.UserService;
 
 @SpringBootApplication
 public class TickettingApplication implements CommandLineRunner {
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) {
 		SpringApplication.run(TickettingApplication.class, args);
 	}
-	
-	@Autowired
-	UserRepository userRepository;
-	
+
 	@Autowired
 	UserService userService;
+	@Autowired
+	GroupService groupService;
+	@Autowired
+	MembershipService membershipService;
+	@Autowired
+	TicketService ticketService;
+	@Autowired
+	TaskService taskService;
+	@Autowired
+	StatusService statusService;
+	@Autowired
+	StatusHistoryService statusHistoryService;
+	@Autowired
+	CommentService commentService;
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user = new User("login", "password", "pseudo");
-		User user1 = new User("login1", "password1", "pseudo1");
-		userRepository.save(user);
-		userRepository.save(user1);
-//		userIdTest();
+		createUsers();
+		createGroup();
+		createMembership();
+		createTickets();
 	}
-	
-//	private void userIdTest() {
-//		User user2 = new User("login2", "password2", "pseudo2");
-//		userRepository.save(user2);
-//		System.out.println(user2);
-//	}
+
+	private void createUsers() {
+		User user1 = new User("login1", "password1", "pseudo1", LocalDateTime.now());
+		userService.save(user1);
+		User user2 = new User("login2", "password2", "pseudo2", LocalDateTime.now());
+		userService.save(user2);
+		User user3 = new User("login3", "password3", "pseudo3", LocalDateTime.now());
+		userService.save(user3);
+		User user4 = new User("login4", "password4", "pseudo4", LocalDateTime.now());
+		userService.save(user4);
+	}
+
+	public void createGroup() {
+		// Get my first user
+		User user1 = userService.getUserWithId(1l);
+		System.out.println(user1);
+		// Create a group with it
+		Group group = new Group("group1", user1, LocalDateTime.now());
+		groupService.save(group);
+	}
+
+	public void createMembership() {
+		// Get my first user
+		User user1 = userService.getUserWithId(1l);
+		User user2 = userService.getUserWithId(2l);
+		User user3 = userService.getUserWithId(3l);
+		// Get my first group
+		Group group1 = groupService.getGroupById(1l);
+		// Create Membership
+		Membership membership1 = new Membership(user1, group1, LocalDateTime.now());
+		Membership membership2 = new Membership(user2, group1, LocalDateTime.now());
+		Membership membership3 = new Membership(user3, group1, LocalDateTime.now());
+		membershipService.save(membership1);
+		membershipService.save(membership2);
+		membershipService.save(membership3);
+		System.out.println("-------------Membership of group1-------------");
+		Group groupBis = groupService.getGroupById(1l);
+		System.out.println(groupBis.getMemberships().size());
+		for (Membership membership : groupBis.getMemberships()) {
+			System.out.println(membership);
+		}
+	}
+
+	public void createTickets() {
+		// Create 3 tickets
+		Group group1 = groupService.getGroupById(1l);
+		Ticket ticket1 = new Ticket("Ticket 1 details", LocalDateTime.now(), group1);
+		Ticket ticket2 = new Ticket("Ticket 2 details", LocalDateTime.now(), group1);
+		Ticket ticket3 = new Ticket("Ticket 3 details", LocalDateTime.now(), group1);
+		ticketService.save(ticket1);
+		ticketService.save(ticket2);
+		ticketService.save(ticket3);
+		// Create task between ticket and user
+		// Get users
+		User user1 = userService.getUserWithId(1l);
+		User user2 = userService.getUserWithId(2l);
+		// Link users and tickets inside task
+		Task task1 = new Task(user1, ticket1, LocalDateTime.now());
+		Task task2 = new Task(user1, ticket2, LocalDateTime.now());
+		Task task3 = new Task(user1, ticket3, LocalDateTime.now());
+		Task task4 = new Task(user2, ticket3, LocalDateTime.now());
+		taskService.save(task1);
+		taskService.save(task2);
+		taskService.save(task3);
+		taskService.save(task4);
+		// Add Status on ticket 1
+		// Create new status
+		Status status1 = new Status("label1");
+		Status status2 = new Status("label2");
+		Status status3 = new Status("label3");
+		statusService.save(status1);
+		statusService.save(status2);
+		statusService.save(status3);
+		// Link status and ticket inside HistoryStatus;
+		StatusHistory statusHistory1 = new StatusHistory(status1, ticket1, LocalDateTime.now());
+		StatusHistory statusHistory2 = new StatusHistory(status2, ticket1, LocalDateTime.now());
+		StatusHistory statusHistory3 = new StatusHistory(status3, ticket1, LocalDateTime.now());
+		statusHistoryService.save(statusHistory1);
+		statusHistoryService.save(statusHistory2);
+		statusHistoryService.save(statusHistory3);
+		// Add comments on ticket 2 from user1 and user2;
+		// Create new comment
+		// Create parent comment
+		Comment comment1 = new Comment("Comment 1 from user 1", LocalDateTime.now());
+		comment1.setTicket(ticket2);
+		comment1.setUser(user1);
+		commentService.save(comment1);
+		// Create child comment
+		Comment commentChild1of1 = new Comment("Comment child 1 of comment 1, from user 2", LocalDateTime.now());
+		commentChild1of1.setTicket(ticket2);
+		commentChild1of1.setUser(user2);
+		commentChild1of1.setParent(comment1);
+		comment1.getChildren().add(commentChild1of1);
+		commentService.save(commentChild1of1);
+		commentService.save(comment1);
+		// Test link between comment
+		Comment comment1Bis = commentService.getCommentById(1l);
+		System.out.println("-------------------comment1Bis----------------------");
+		System.out.println(comment1Bis);
+	}
 
 }

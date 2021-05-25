@@ -8,10 +8,10 @@ import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.repository.TicketRepository;
 
 @Service
-public class TicketServiceImpl implements TicketService{
-	
+public class TicketServiceImpl implements TicketService {
+
 	TicketRepository repository;
-	
+
 	public TicketServiceImpl(TicketRepository repository) {
 		this.repository = repository;
 	}

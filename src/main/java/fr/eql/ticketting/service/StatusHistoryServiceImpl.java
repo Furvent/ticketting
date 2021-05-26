@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import fr.eql.ticketting.entity.StatusHistory;
 import fr.eql.ticketting.repository.StatusHistoryRepository;
-import fr.eql.ticketting.repository.StatusRepository;
 
 @Service
 public class StatusHistoryServiceImpl implements StatusHistoryService {

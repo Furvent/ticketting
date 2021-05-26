@@ -1,6 +1,5 @@
 package fr.eql.ticketting.entity;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;

@@ -1,12 +1,9 @@
 
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf">
-<head>
-<meta charset="ISO-8859-1">
-<title>Connexion</title>
-</head>
-<body>
-	<h1>Connexion</h1>
+<!DOCTYPE HTML>
+<body xmlns:th="http://www.thymeleaf.org"
+      th:fragment="_connectForm">
+
+<div>
 	<form th:action="@{/connexionSubmit}" th:object="${user}" method="POST">
 		<label>Login</label>
 		<input type="text" th:field="*{login}">
@@ -14,5 +11,5 @@
 		<input type="text" th:field="*{password}">
         <input type="submit" value="Create" />
       </form>
+</div>
 </body>
-</html>

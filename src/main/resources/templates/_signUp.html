@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<body xmlns:th="http://www.thymeleaf.org"
+      th:fragment="_signUp">
+	<div>
+		<form th:action="@{/list-users}" th:object="${user}" method="POST">
+			<div class="form-group">
+				<label for="login1">Login</label> <input type="text"
+					class="form-control" name="login" th:field="*{login}" id="login"
+					placeholder="Entrez votre login permanent"> <small
+					id="loginhelp" class="form-text text-muted">Ce login vous
+					servira d'identifiant permament à votre compte</small>
+			</div>
+			<div class="form-group">
+				<label for="pseudo1">Login</label> <input type="text"
+					class="form-control" name="pseudo" th:field="*{pseudo}" id="pseudo"
+					placeholder="Entrez votre pseudo (modifiable)"> <small
+					id="pseudohelp" class="form-text text-muted">Ce pseudo vous
+					servira d'identifiant public</small>
+			</div>
+			<div class="form-group">
+				<label for="password1">password</label> <input type="password"
+					class="form-control" name="password" th:field="*{password}"
+					id="password" placeholder="Entrez votre password"> <small
+					id="passwordhelp" class="form-text text-muted">Entrez votre
+					mot de passe</small>
+			</div>
+			<!-- ajouter confirmation des champs ? -->
+			<!-- 
+				<label>Password</label> <input type="password"
+				aria-label="password" name="password" th:field ="password"> <br />
+				 -->
+			<button type="submit" class="btn btn-primary">Submit</button>
+
+		</form>
+
+	</div>
+</body>

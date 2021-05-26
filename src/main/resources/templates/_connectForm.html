@@ -1,24 +1,23 @@
 <!DOCTYPE HTML>
-<body xmlns:th="http://www.thymeleaf.org"
-      th:fragment="_connectForm">
-
-<div>
-	<form th:action="@{/connexionSubmit}" th:object="${user}" method="POST">
-		<div class="form-group">
-			<label for="pseudo1">Login</label> <input type="text"
-					class="form-control" name="pseudo" th:field="*{login}" id="pseudo"> 
-					<small id="pseudohelp" class="form-text text-muted">Entrer votre login</small>
+<body xmlns:th="http://www.thymeleaf.org" th:fragment="_connectForm">
+	<div>
+		<form th:action="@{/connexionSubmit}" th:object="${user}"
+			method="POST">
+			<div class="form-group">
+				<label for="pseudo1">Login</label> <input type="text"
+					class="form-control" name="pseudo" th:field="*{login}" id="pseudo">
+				<small id="pseudohelp" class="form-text text-muted">Entrer
+					votre login</small>
 			</div>
 			<div class="form-group">
 				<label for="password1">password</label> <input type="password"
 					class="form-control" name="password" th:field="*{password}"
-					id="password"> 
-					<small id="passwordhelp" class="form-text text-muted">Entrez votre
-					mot de passe</small>
+					id="password"> <small id="passwordhelp"
+					class="form-text text-muted">Entrez votre mot de passe</small>
 			</div>
 			<button type="submit" class="btn btn-primary">CONNEXION</button>
-    </form>
-</div>
+		</form>
+	</div>
 </body>
 
-			
+

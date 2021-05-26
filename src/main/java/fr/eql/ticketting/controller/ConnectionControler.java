@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.repository.UserRepository;
@@ -18,9 +19,9 @@ import fr.eql.ticketting.service.UserService;
 @Controller
 @SessionAttributes("user")
 public class ConnectionControler {
-	
+
 	private UserService userService;
-	
+
 	public ConnectionControler(UserService userService) {
 		this.userService = userService;
 	}
@@ -30,7 +31,7 @@ public class ConnectionControler {
 		model.addAttribute("user", new User());
 		return "ConnectionPage";
 	}	
-	
+
 	@PostMapping("/connexionSubmit")
 	public String connexionSubmit(@ModelAttribute("user") User user, Model model) {
 		String retour = "";

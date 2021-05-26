@@ -38,7 +38,7 @@ public class ConnectionControler {
 		if(userConnected != null) {
 			retour = "GeneralDashboard.html";
 		}else {
-			retour = "connectForm";
+			retour = "ConnectionPage";
 		}
 		return retour;
 	}

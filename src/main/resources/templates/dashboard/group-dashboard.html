@@ -5,24 +5,22 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>General dashboard</title>
+<link rel="stylesheet" th:href="@{/css/group-dashboard.css}"></link>
 </head>
 <body>
-	<h1>USER ?</h1>
-	<p th:text="${user.login}"></p>
-	<p th:text="${user.password}"></p>
-	<p th:text="${user.pseudo}"></p>
-	<p th:text="${user.id}"></p>
-	
-	<h1 th:text="${groupId}"></h1>
-	<h2 th:text="'Group name =' + ${currUserGroup.name}"></h2>
-	<table>
-		<tr>
-			<th>Ticket details</th>
-		</tr>
-		<tr th:each="ticket : ${allTickets}">
-			<td th:text="${ticket.details}"></td>
-		</tr>
-	</table>
-	
+	<nav class="nav nav-tabs m-3">
+		<a class="nav-item nav-link active" href="#allTickets" data-toggle="tab">All tickets</a>
+		<a class="nav-item nav-link" href="#myTickets" data-toggle="tab">My tickets</a>
+	</nav>
+
+	<div class="tab-content m-3">
+		<div class="tab-pane fade show active" id="allTickets">
+			<div th:replace="dashboard/_all-tickets"></div>
+		</div>
+		<div class="tab-pane fade" id="myTickets">
+			<div th:replace="dashboard/_my-tickets"></div>
+		</div>
+	</div>
+
 </body>
 </html>

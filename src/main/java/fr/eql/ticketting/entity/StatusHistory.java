@@ -2,9 +2,7 @@ package fr.eql.ticketting.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +15,7 @@ public class StatusHistory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private LocalDateTime creationDate;
-
-	@ManyToOne()
-	@JoinColumn(name = "userUpdater_id")
-	private User userUpdater;
+	private LocalDateTime statusDate;
 
 	@ManyToOne()
 	@JoinColumn(name = "ticket_id", nullable = false)
@@ -35,7 +29,7 @@ public class StatusHistory {
 	}
 
 	public StatusHistory(Status status, Ticket ticket, LocalDateTime creationDate) {
-		this.creationDate = creationDate;
+		this.statusDate = creationDate;
 		this.status = status;
 		this.ticket = ticket;
 	}
@@ -48,20 +42,12 @@ public class StatusHistory {
 		this.id = id;
 	}
 
-	public LocalDateTime getCreationDate() {
-		return creationDate;
+	public LocalDateTime getStatusDate() {
+		return statusDate;
 	}
 
-	public void setCreationDate(LocalDateTime creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public User getUserUpdater() {
-		return userUpdater;
-	}
-
-	public void setUserUpdater(User userUpdater) {
-		this.userUpdater = userUpdater;
+	public void setStatusDate(LocalDateTime statusDate) {
+		this.statusDate = statusDate;
 	}
 
 	public Ticket getTicket() {
@@ -84,7 +70,7 @@ public class StatusHistory {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
+		result = prime * result + ((statusDate == null) ? 0 : statusDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -98,10 +84,10 @@ public class StatusHistory {
 		if (getClass() != obj.getClass())
 			return false;
 		StatusHistory other = (StatusHistory) obj;
-		if (creationDate == null) {
-			if (other.creationDate != null)
+		if (statusDate == null) {
+			if (other.statusDate != null)
 				return false;
-		} else if (!creationDate.equals(other.creationDate))
+		} else if (!statusDate.equals(other.statusDate))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -113,7 +99,7 @@ public class StatusHistory {
 
 	@Override
 	public String toString() {
-		return "StatusHistory [id=" + id + ", creationDate=" + creationDate + ", ticket=" + ticket + ", status="
+		return "StatusHistory [id=" + id + ", statusDate=" + statusDate + ", ticket=" + ticket + ", status="
 				+ status + "]";
 	}
 

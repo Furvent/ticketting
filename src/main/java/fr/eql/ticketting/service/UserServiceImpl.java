@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.repository.UserRepository;
 
@@ -45,5 +46,12 @@ public class UserServiceImpl implements UserService {
 			return returnedUser;
 		}
 		return returnedUser;
+	}
+
+	@Override
+	public List<User> findByGroup(Group group) {
+		List<User> users = new ArrayList<User>();
+		users = repository.findByGroup(group);
+		return users;
 	}
 }

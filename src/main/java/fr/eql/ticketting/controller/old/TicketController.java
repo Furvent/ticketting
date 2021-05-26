@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.service.TicketService;
 
-@Controller
+//@Controller
 public class TicketController {
 
 	TicketService service;

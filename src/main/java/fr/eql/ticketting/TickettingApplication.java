@@ -108,9 +108,9 @@ public class TickettingApplication implements CommandLineRunner {
 	public void createTickets() {
 		// Create 3 tickets
 		Group group1 = groupService.getGroupById(1l);
-		Ticket ticket1 = new Ticket("Ticket 1 details", LocalDateTime.now(), group1);
-		Ticket ticket2 = new Ticket("Ticket 2 details", LocalDateTime.now(), group1);
-		Ticket ticket3 = new Ticket("Ticket 3 details", LocalDateTime.now(), group1);
+		Ticket ticket1 = new Ticket("Ticket 1 details", group1);
+		Ticket ticket2 = new Ticket("Ticket 2 details", group1);
+		Ticket ticket3 = new Ticket("Ticket 3 details", group1);
 		ticketService.save(ticket1);
 		ticketService.save(ticket2);
 		ticketService.save(ticket3);
@@ -129,19 +129,25 @@ public class TickettingApplication implements CommandLineRunner {
 		taskService.save(task4);
 		// Add Status on ticket 1
 		// Create new status
-		Status status1 = new Status("label1");
-		Status status2 = new Status("label2");
-		Status status3 = new Status("label3");
-		statusService.save(status1);
-		statusService.save(status2);
-		statusService.save(status3);
+		Status statusOpened = new Status("Opened");
+		Status statusAllocated = new Status("Allocated");
+		Status statusDone = new Status("Done");
+		Status statusClosed = new Status("Closed");
+		Status statusCanceled = new Status("Canceled");
+		statusService.save(statusOpened);
+		statusService.save(statusAllocated);
+		statusService.save(statusDone);
+		statusService.save(statusClosed);
+		statusService.save(statusCanceled);
 		// Link status and ticket inside HistoryStatus;
-		StatusHistory statusHistory1 = new StatusHistory(status1, ticket1, LocalDateTime.now());
-		StatusHistory statusHistory2 = new StatusHistory(status2, ticket1, LocalDateTime.now());
-		StatusHistory statusHistory3 = new StatusHistory(status3, ticket1, LocalDateTime.now());
+		StatusHistory statusHistory1 = new StatusHistory(statusOpened, ticket1, LocalDateTime.now());
+		StatusHistory statusHistory2 = new StatusHistory(statusAllocated, ticket1, LocalDateTime.now());
+		StatusHistory statusHistory3 = new StatusHistory(statusDone, ticket1, LocalDateTime.now());
+		StatusHistory statusHistory4 = new StatusHistory(statusClosed, ticket1, LocalDateTime.now());
 		statusHistoryService.save(statusHistory1);
 		statusHistoryService.save(statusHistory2);
 		statusHistoryService.save(statusHistory3);
+		statusHistoryService.save(statusHistory4);
 		// Add comments on ticket 2 from user1 and user2;
 		// Create new comment
 		// Create parent comment

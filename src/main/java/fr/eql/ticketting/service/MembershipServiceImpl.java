@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import fr.eql.ticketting.entity.Membership;
+import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.repository.MembershipRepository;
 
 @Service
@@ -42,6 +43,12 @@ public class MembershipServiceImpl implements MembershipService {
 	@Override
 	public Membership update(Membership membership) {
 		return repository.save(membership);
+	}
+
+	@Override
+	public List<Membership> getMembershipsWithUser(User user) {
+		return repository.findByUser(user);
+		
 	}
 
 }

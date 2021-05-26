@@ -7,12 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.service.UserService;
 
 @Controller
+@SessionAttributes( value={"listUsers","testString"} )
 public class UserController {
 
 	UserService service;

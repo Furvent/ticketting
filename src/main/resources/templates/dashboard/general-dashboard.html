@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>General dashboard</title>
+</head>
+<body>
+	<p th:text="${user.login}"></p>
+	<p th:text="${user.password}"></p>
+	<p th:text="${user.pseudo}"></p>
+
+	<h2>User groups:</h2>
+	<table>
+		<tr>
+			<th>Group id</th>
+			<th>Group name</th>
+			<th>Group creationDateGroup</th>
+			<th>Group administrator</th>
+		</tr>
+		<tr th:each="group : ${userGroups}">
+			
+			<td >
+				<a th:text="${group.id}" th:href="'group?groupId='+${group.id}"></a>
+			</td>
+			<td th:text="${group.name}"></td>
+			<td th:text="${group.creationDateGroup}"></td>
+			<td>
+				<span th:if="${group.createdBy.id == user.id}">Your are the administrator of this group</span>
+				<span th:unless="${group.createdBy.id == user.id}" th:text="${group.createdBy.pseudo}"></span>
+			</td>
+		</tr>
+	</table>
+	<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

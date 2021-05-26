@@ -57,7 +57,7 @@ public class TickettingApplication implements CommandLineRunner {
 	}
 
 	private void createUsers() {
-		User user1 = new User("login1", "password1", "pseudo1", LocalDateTime.now());
+		User user1 = new User("testLogin", "testPassword", "testPseudo", LocalDateTime.now());
 		userService.save(user1);
 		User user2 = new User("login2", "password2", "pseudo2", LocalDateTime.now());
 		userService.save(user2);
@@ -70,10 +70,13 @@ public class TickettingApplication implements CommandLineRunner {
 	public void createGroup() {
 		// Get my first user
 		User user1 = userService.getUserWithId(1l);
+		User user2 = userService.getUserWithId(2l);
 		System.out.println(user1);
 		// Create a group with it
-		Group group = new Group("group1", user1, LocalDateTime.now());
-		groupService.save(group);
+		Group group1 = new Group("group1", user1, LocalDateTime.now());
+		Group group2 = new Group("group2", user2, LocalDateTime.now());
+		groupService.save(group1);
+		groupService.save(group2);
 	}
 
 	public void createMembership() {
@@ -81,21 +84,25 @@ public class TickettingApplication implements CommandLineRunner {
 		User user1 = userService.getUserWithId(1l);
 		User user2 = userService.getUserWithId(2l);
 		User user3 = userService.getUserWithId(3l);
+		User user4 = userService.getUserWithId(4l);
 		// Get my first group
 		Group group1 = groupService.getGroupById(1l);
-		// Create Membership
-		Membership membership1 = new Membership(user1, group1, LocalDateTime.now());
-		Membership membership2 = new Membership(user2, group1, LocalDateTime.now());
-		Membership membership3 = new Membership(user3, group1, LocalDateTime.now());
-		membershipService.save(membership1);
-		membershipService.save(membership2);
-		membershipService.save(membership3);
-		System.out.println("-------------Membership of group1-------------");
-		Group groupBis = groupService.getGroupById(1l);
-		System.out.println(groupBis.getMemberships().size());
-		for (Membership membership : groupBis.getMemberships()) {
-			System.out.println(membership);
-		}
+		Group group2 = groupService.getGroupById(2l);
+		// Create Membership to group 1
+		Membership membership1ToGroup1 = new Membership(user1, group1, LocalDateTime.now());
+		Membership membership2ToGroup1 = new Membership(user2, group1, LocalDateTime.now());
+		Membership membership3ToGroup1 = new Membership(user3, group1, LocalDateTime.now());
+		membershipService.save(membership1ToGroup1);
+		membershipService.save(membership2ToGroup1);
+		membershipService.save(membership3ToGroup1);
+		// Create Membership to group 2
+		Membership membership1ToGroup2 = new Membership(user2, group2, LocalDateTime.now());
+		Membership membership2ToGroup2 = new Membership(user3, group2, LocalDateTime.now());
+		Membership membership3ToGroup2 = new Membership(user1, group2, LocalDateTime.now());
+		membershipService.save(membership1ToGroup2);
+		membershipService.save(membership2ToGroup2);
+		membershipService.save(membership3ToGroup2);
+
 	}
 
 	public void createTickets() {
@@ -150,10 +157,6 @@ public class TickettingApplication implements CommandLineRunner {
 		comment1.getChildren().add(commentChild1of1);
 		commentService.save(commentChild1of1);
 		commentService.save(comment1);
-		// Test link between comment
-		Comment comment1Bis = commentService.getCommentById(1l);
-		System.out.println("-------------------comment1Bis----------------------");
-		System.out.println(comment1Bis);
 	}
 
 }

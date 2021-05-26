@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.repository.TicketRepository;
 
@@ -39,6 +40,11 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public Ticket update(Ticket ticket) {
 		return repository.save(ticket);
+	}
+
+	@Override
+	public List<Ticket> getTicketsWithGroup(Group group) {
+		return repository.findByGroup(group);
 	}
 
 }

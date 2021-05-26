@@ -3,7 +3,6 @@ package fr.eql.ticketting.service;
 import java.util.List;
 
 import fr.eql.ticketting.entity.Task;
-import fr.eql.ticketting.entity.Ticket;
 
 public interface TaskService {
 	public Task save(Task task);

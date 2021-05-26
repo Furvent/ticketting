@@ -1,6 +1,5 @@
 package fr.eql.ticketting.entity;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -18,9 +17,6 @@ public class Ticket {
 	private Long id;
 
 	private String details;
-	private LocalDateTime creationTicketDate;
-	private LocalDateTime closingTicketDate;
-	private LocalDateTime modificationTicketDate;
 
 	@OneToMany(mappedBy = "ticket")
 	private Set<StatusHistory> statusHistory = new HashSet<StatusHistory>();
@@ -38,13 +34,12 @@ public class Ticket {
 	public Ticket() {
 	}
 
-	public Ticket(String details, LocalDateTime creationTicketDate) {
+	public Ticket(String details) {
 		this.details = details;
-		this.creationTicketDate = creationTicketDate;
 	}
 
-	public Ticket(String details, LocalDateTime creationTicketDate, Group group) {
-		this(details, creationTicketDate);
+	public Ticket(String details, Group group) {
+		this(details);
 		this.group = group;
 	}
 
@@ -62,30 +57,6 @@ public class Ticket {
 
 	public void setDetails(String details) {
 		this.details = details;
-	}
-
-	public LocalDateTime getCreationTicketDate() {
-		return creationTicketDate;
-	}
-
-	public void setCreationTicketDate(LocalDateTime creationTicketDate) {
-		this.creationTicketDate = creationTicketDate;
-	}
-
-	public LocalDateTime getClosingTicketDate() {
-		return closingTicketDate;
-	}
-
-	public void setClosingTicketDate(LocalDateTime closingTicketDate) {
-		this.closingTicketDate = closingTicketDate;
-	}
-
-	public LocalDateTime getModificationTicketDate() {
-		return modificationTicketDate;
-	}
-
-	public void setModificationTicketDate(LocalDateTime modificationTicketDate) {
-		this.modificationTicketDate = modificationTicketDate;
 	}
 
 	public Set<StatusHistory> getStatusHistory() {
@@ -124,8 +95,6 @@ public class Ticket {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((closingTicketDate == null) ? 0 : closingTicketDate.hashCode());
-		result = prime * result + ((creationTicketDate == null) ? 0 : creationTicketDate.hashCode());
 		result = prime * result + ((details == null) ? 0 : details.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
@@ -140,16 +109,6 @@ public class Ticket {
 		if (getClass() != obj.getClass())
 			return false;
 		Ticket other = (Ticket) obj;
-		if (closingTicketDate == null) {
-			if (other.closingTicketDate != null)
-				return false;
-		} else if (!closingTicketDate.equals(other.closingTicketDate))
-			return false;
-		if (creationTicketDate == null) {
-			if (other.creationTicketDate != null)
-				return false;
-		} else if (!creationTicketDate.equals(other.creationTicketDate))
-			return false;
 		if (details == null) {
 			if (other.details != null)
 				return false;
@@ -165,9 +124,7 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", details=" + details + ", creationTicketDate=" + creationTicketDate
-				+ ", closingTicketDate=" + closingTicketDate + ", modificationTicketDate=" + modificationTicketDate
-				+ ", statusHistory=" + statusHistory + ", comment=" + comment + "]";
+		return "Ticket [id=" + id + ", details=" + details + "]";
 	}
 
 }

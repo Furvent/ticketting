@@ -7,7 +7,22 @@
 <title>General dashboard</title>
 </head>
 <body>
+	<h1>USER ?</h1>
+	<p th:text="${user.login}"></p>
+	<p th:text="${user.password}"></p>
+	<p th:text="${user.pseudo}"></p>
+	<p th:text="${user.id}"></p>
+	
 	<h1 th:text="${groupId}"></h1>
-
+	<h2 th:text="'Group name =' + ${currUserGroup.name}"></h2>
+	<table>
+		<tr>
+			<th>Ticket details</th>
+		</tr>
+		<tr th:each="ticket : ${allTickets}">
+			<td th:text="${ticket.details}"></td>
+		</tr>
+	</table>
+	
 </body>
 </html>

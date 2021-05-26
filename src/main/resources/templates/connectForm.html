@@ -1,18 +1,31 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf">
+<html xmlns:th="http://www.thymeleaf"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{_layout}"
+      layout:fragment="content">
 <head>
-<meta charset="ISO-8859-1">
-<title>Connexion</title>
+	<meta charset="ISO-8859-1">
+	<title>Connexion Page</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/connectForm.css}"/>
 </head>
 <body>
-	<h1>Connexion</h1>
-	<form th:action="@{/connexionSubmit}" th:object="${user}" method="POST">
-		<label>Login</label>
-		<input type="text" th:field="*{login}">
-		<label>Password</label>
-		<input type="text" th:field="*{password}">
-        <input type="submit" value="Create" />
-      </form>
+	<div class = "title">Connexion</div>   
+    		<form th:action="@{/connexionSubmit}" th:object="${user}" method="POST" class="connexionForm">
+		<div>
+			<label>Login :</label>
+			<input type="text" th:field="*{login}">
+		</div>
+		<br/>
+		<div>
+			<label>Password :</label>
+			<input type="text" th:field="*{password}">
+		</div>
+		<br/>
+        <input type="submit" value="CONNEXION" />
+      </form>	
+
 </body>
 </html>
+
+

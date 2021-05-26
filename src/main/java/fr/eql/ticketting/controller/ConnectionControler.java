@@ -28,7 +28,7 @@ public class ConnectionControler {
 	@GetMapping("/connect")
 	public String personneForm(Model model) {
 		model.addAttribute("user", new User());
-		return "test/testOnglets";
+		return "ConnectionPage";
 	}	
 	
 	@PostMapping("/connexionSubmit")

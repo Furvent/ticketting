@@ -15,6 +15,7 @@ import fr.eql.ticketting.entity.StatusHistory;
 import fr.eql.ticketting.entity.Task;
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.entity.User;
+import fr.eql.ticketting.enums.TicketStatus;
 import fr.eql.ticketting.service.CommentService;
 import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
@@ -129,21 +130,21 @@ public class TickettingApplication implements CommandLineRunner {
 		taskService.save(task4);
 		// Add Status on ticket 1
 		// Create new status
-		Status statusOpened = new Status("Opened");
-		Status statusAllocated = new Status("Allocated");
-		Status statusDone = new Status("Done");
-		Status statusClosed = new Status("Closed");
-		Status statusCanceled = new Status("Canceled");
+		Status statusOpened = new Status(TicketStatus.OPENED);
+		Status statusAllocated = new Status(TicketStatus.ALLOCATED);
+		Status statusDone = new Status(TicketStatus.DONE);
+		Status statusClosed = new Status(TicketStatus.CLOSED);
+		Status statusCanceled = new Status(TicketStatus.CANCELED);
 		statusService.save(statusOpened);
 		statusService.save(statusAllocated);
 		statusService.save(statusDone);
 		statusService.save(statusClosed);
 		statusService.save(statusCanceled);
 		// Link status and ticket inside HistoryStatus;
-		StatusHistory statusHistory1 = new StatusHistory(statusOpened, ticket1, LocalDateTime.now());
-		StatusHistory statusHistory2 = new StatusHistory(statusAllocated, ticket1, LocalDateTime.now());
-		StatusHistory statusHistory3 = new StatusHistory(statusDone, ticket1, LocalDateTime.now());
-		StatusHistory statusHistory4 = new StatusHistory(statusClosed, ticket1, LocalDateTime.now());
+		StatusHistory statusHistory1 = new StatusHistory(statusOpened, ticket1, LocalDateTime.of(2021, 5, 20, 10, 10));
+		StatusHistory statusHistory2 = new StatusHistory(statusAllocated, ticket1, LocalDateTime.of(2021, 5, 22, 10, 10));
+		StatusHistory statusHistory3 = new StatusHistory(statusDone, ticket1, LocalDateTime.of(2021, 5, 23, 10, 10));
+		StatusHistory statusHistory4 = new StatusHistory(statusClosed, ticket1, LocalDateTime.of(2021, 5, 24, 10, 10));
 		statusHistoryService.save(statusHistory1);
 		statusHistoryService.save(statusHistory2);
 		statusHistoryService.save(statusHistory3);

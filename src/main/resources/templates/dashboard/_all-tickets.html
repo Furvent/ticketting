@@ -3,21 +3,18 @@
 <p class="customClass">CSS BIEN IMPORTE</p>
 
 <div class="ticketting-container-all-tickets">
-	<div class="ticketting-container-column-ticket-status">
-		<h4 class="ticketting-title-status">STATUS 1</h4>
+	<div class="ticketting-container-column-ticket-status" th:each="openedTicket : ${openedTickets}">
+		<h4 class="ticketting-title-status"th:text="${openedTicket.details}"></h4>
 	</div>
-	<div class="ticketting-container-column-ticket-status">
-		<h4 class="ticketting-title-status">STATUS 2</h4>
-		<p>UNE CARD TROP BIEN !</p>
+	<div class="ticketting-container-column-ticket-status" th:each="allocatedTicket : ${allocatedTickets}">
+		<h4 class="ticketting-title-status"th:text="${allocatedTicket.details}"></h4>
+		
 	</div>
-	<div class="ticketting-container-column-ticket-status">
-		<h4 class="ticketting-title-status">STATUS 3</h4>
+	<div class="ticketting-container-column-ticket-status" th:each="doneTicket : ${doneTickets}">
+		<h4 class="ticketting-title-status"th:text="${doneTicket.details}"></h4>
 	</div>
-	<div class="ticketting-container-column-ticket-status">
-		<h4 class="ticketting-title-status">STATUS 4</h4>
-	</div>
-	<div class="ticketting-container-column-ticket-status">
-		<h4 class="ticketting-title-status">STATUS 5</h4>
+	<div class="ticketting-container-column-ticket-status" th:each="closeddTicket : ${closeddTickets}">
+		<h4 class="ticketting-title-status" th:text="${closeddTicket.details}"></h4>
 	</div>
 </div>
 <!-- Sur la droite on veut le détail d'un ticket quand on click dessus MAIS pour l'instant ce sera sur une autre page -->

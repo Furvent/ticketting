@@ -24,9 +24,13 @@ import fr.eql.ticketting.service.UserService;
 public class UserController {
 
 	UserService service;
+	MembershipService serviceMembership;
+	GroupService serviceGroup;
 
-	public UserController(UserService service) {
+	public UserController(UserService service, MembershipService serviceMembership, GroupService serviceGroup) {
 		this.service = service;
+		this.serviceMembership = serviceMembership;
+		this.serviceGroup = serviceGroup;
 	}
 
 	@GetMapping({"/list-users", "/", "/bob"}) // Point d'entrée d'url (dans le navigateur)
@@ -48,12 +52,6 @@ public class UserController {
 		return new RedirectView("/list-users");
 	}
 	
-	@Autowired
-	MembershipService serviceMembership;
-	
-	@Autowired
-	GroupService serviceGroup;
-		
 	@GetMapping("/list-users-grouped")
 	public String displayUsersByGroup(Model model) {
 		Group group = serviceGroup.getGroupById(1L);

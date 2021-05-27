@@ -9,17 +9,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import fr.eql.ticketting.controller.form.TicketForm;
 import fr.eql.ticketting.entity.Status;
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.service.StatusService;
 import fr.eql.ticketting.service.TicketService;
 
-//@Controller
+@Controller
 public class TicketController {
 
 	TicketService service;
 	StatusService statusService;
-
+	
+	@ModelAttribute("ticketForm")
+	public TicketForm addConvAttributeInModel() {
+		return new TicketForm();
+	}
+	
 	public TicketController(TicketService service, StatusService statusService) {
 		super();
 		this.service = service;
@@ -40,10 +46,7 @@ public class TicketController {
 		status = statusService.getAllStatus();
 		model.addAttribute("status", status);
 		
-		Status selectedStatus = new Status();
-		model.addAttribute("aStatus", selectedStatus);
 		
-		model.addAttribute("ticket", new Ticket());
 		return "newTicket";
 	}
 	
@@ -65,11 +68,13 @@ public class TicketController {
 	
 	//Page renvoyée par le test
 	@PostMapping("/test/test-SelectMenu2")
-	public String testMenu2(@ModelAttribute("aStatus")Status selectedStatus, Model model2) {
-		Status status2 = new Status(selectedStatus.getId(), selectedStatus.getLabel());
-		System.out.println(selectedStatus.getId());
-		System.out.println(selectedStatus.getLabel());
-		model2.addAttribute("aStatus", status2);
+	public String testMenu2(@ModelAttribute("ticketForm") TicketForm ticketForm, Model model2) {
+		Long idStatus = ticketForm.getIdStatus();
+		model2.addAttribute("idStatus", idStatus);
+		System.out.println(idStatus);
+		String description = ticketForm.getDescription();
+		model2.addAttribute("description", description);
+		System.out.println(description);
 		return "/test/test-SelectMenu2";
 	}
 }

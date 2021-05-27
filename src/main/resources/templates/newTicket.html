@@ -24,40 +24,36 @@
 </script>
 </head>
 <body>
-	<form method="post" th:object="${aStatus}" th:action="@{/test/test-SelectMenu2}">
-	
 	<div class="form-group">
-		<!-- Boucle thymeleaf affichage des status -->
-		<select th:field="*{status}" class="form-control">
-			<option value="default">Select statut</option>
-			<option th:each="s : ${status}" th:value="${s.id}"
-				th:text="${s.label}"></option>
-		</select>
-
-		<!-- Description du ticket -->
-		<div class="form-group">
-			<div class="form-group">
-				<label for="details">Description</label>
-				<textarea class="form-control" id="details" rows="3"
-					th:value="${ticket.details}"></textarea>
-			</div>
-			<small id="detailhelp" class="form-text text-muted">Expliquer
-				detail du ticket</small>
-		</div>
-		<!-- Selection du groupe -->
-		<!-- Assignation utilisateur -->
-		<select th:field="*{users}" class="form-control">
-			<option value="default">Select statut</option>
-			<option th:each="u : ${users}" th:value="${u.id}"
-				th:text="${u.pseudo}"></option>
-		</select>
-		<!--  
-			<select class="form-control">
-				<option selected="selected">orange</option>
-				<option>white</option>
-				<option>purple</option>
-			</select> -->
+		<form method="post" th:object="${ticketForm}" th:action="@{/test/test-SelectMenu2}" class="form-group">
 			
+			<!-- Boucle thymeleaf affichage des status -->
+			<select th:field="*{idStatus}" class="form-control">
+				<option value="default">Select statut</option>
+				<option th:each="s : ${status}" th:value="${s.id}"
+					th:text="${s.label}"></option>
+			</select>
+
+
+			<!-- Description du ticket -->
+			<div class="form-group">
+				<div class="form-group">
+					<label for="details">Description</label>
+					<textarea class="form-control" id="details" rows="3"
+						th:field="*{description}"></textarea>
+				</div>
+				<small id="detailhelp" class="form-text text-muted">Expliquer
+					detail du ticket</small>
+			</div>
+
+			<!-- Assignation utilisateur -->
+			<select th:field="*{idUser}" class="form-control">
+				<option value="default">Assigner un utilisateur</option>
+				<option th:each="u : ${users}" th:value="${u.id}"
+					th:text="${u.pseudo}"></option>
+			</select>
+
+			<button type="submit" class="btn btn-primary">VALIDER</button>
 		</form>
 	</div>
 </body>

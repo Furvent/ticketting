@@ -3,11 +3,16 @@
 	<table>
 		<tr>
 			<td><label>Id du statut :</label></td>
-			<td th:text="${aStatus.id}" ></td>
+			<td th:text="${ticketForm.idStatus}" ></td>
 		</tr>
+		<tr>
+			<td><label>Description ticket :</label></td>
+			<td th:text="${ticketForm.description}" ></td>
+		</tr>
+		<!--  
 		<tr>
 			<td><label>label du statut :</label></td>
 			<td th:text="${aStatus.label}"></td>
-		</tr>
+		</tr>-->
 	</table>
 </body>

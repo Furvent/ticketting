@@ -42,6 +42,11 @@ public class StatusHistoryServiceImpl implements StatusHistoryService {
 	public StatusHistory update(StatusHistory statusHistory) {
 		return repository.save(statusHistory);
 	}
+	
+	@Override
+	public List<StatusHistory> getStatusHistoriesFromThisTicket(Ticket ticket) {
+		return repository.findByTicket(ticket);
+	}
 
 	@Override
 	public StatusHistory getLastStatusHistoryFromThisTicket(Ticket ticket) {

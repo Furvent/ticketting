@@ -22,7 +22,7 @@ import fr.eql.ticketting.service.TicketService;
 import fr.eql.ticketting.service.UserService;
 
 @Controller
-@SessionAttributes(value = { "user" })
+@SessionAttributes(value = { "user", "groupSelectedByUserId" })
 public class GroupDashboardController {
 
 	GroupService groupService;
@@ -43,6 +43,8 @@ public class GroupDashboardController {
 
 	@GetMapping("group")
 	public String displayGroupDashboard(Model model, @RequestParam(name = "groupId", required = true) String groupID) {
+		// On ajoute le groupId en session
+		model.addAttribute("groupSelectedByUserId", groupID);
 		String templateName = "";
 		// On vérifie que l'utilisateur appartienne bien à ce groupe
 		User user = (User) model.getAttribute("user");

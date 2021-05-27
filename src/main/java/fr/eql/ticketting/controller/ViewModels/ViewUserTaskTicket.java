@@ -33,6 +33,14 @@ public class ViewUserTaskTicket {
 		this.lastStatus = lastStatus;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public List<String> getUsersTaskOn() {
 		return usersTaskOn;
 	}

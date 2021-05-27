@@ -1,1 +1,12 @@
-<p>FRAGMENT MY TICKETS</p>
+<div th:each="ticketView : ${userTickets}" class="card"
+	style="width: 20rem;">
+	<div class="card-body">
+		<h5 class="card-title" th:text="${ticketView.details}"></h5>
+		<h5 class="card-title">Working on</h5>
+		<ul>
+			<li th:each="userPseudo : ${ticketView.usersTaskOn}"
+				th:text="${userPseudo}"></li>
+		</ul>
+		<h5 class="card-title" th:text="${ticketView.lastStatus}"></h5>
+	</div>
+</div>

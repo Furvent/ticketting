@@ -1,5 +1,6 @@
 package fr.eql.ticketting.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import fr.eql.ticketting.entity.Group;
+import fr.eql.ticketting.entity.Membership;
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.service.GroupService;
+import fr.eql.ticketting.service.MembershipService;
 import fr.eql.ticketting.service.UserService;
 
 @Controller
@@ -46,11 +49,20 @@ public class UserController {
 	}
 	
 	@Autowired
-	GroupService groupService;
+	MembershipService serviceMembership;
 	
+	@Autowired
+	GroupService serviceGroup;
+		
 	@GetMapping("/list-users-grouped")
 	public String displayUsersByGroup(Model model) {
-		List<User> users = service.findByGroup(groupService.getGroupById(1L));
+		Group group = serviceGroup.getGroupById(1L);
+		System.out.println(group.getName());
+		List<Membership> memberships = serviceMembership.getMembershipsWithGroup(group);
+		List<User> users = new ArrayList<User>();
+		for (Membership membership : memberships) {
+			 users.add(membership.getUser());
+		}
 		model.addAttribute("users", users);
 		return "usersDebug";
 	}

@@ -5,62 +5,55 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>General dashboard</title>
+<link rel="stylesheet" th:href="@{/css/general-dashboard.css}"></link>
 </head>
 <body>
-	<p th:text="${user.login}"></p>
-	<p th:text="${user.password}"></p>
-	<p th:text="${user.pseudo}"></p>
-
-	<h2>User groups:</h2>
-	<table>
-		<tr>
-			<th>Group id</th>
-			<th>Group name</th>
-			<th>Group creationDateGroup</th>
-			<th>Group administrator</th>
-		</tr>
-		<tr th:each="group : ${userGroups}">
-			
-			<td >
-				<a th:text="${group.id}" th:href="'group?groupId='+${group.id}"></a>
-			</td>
-			<td th:text="${group.name}"></td>
-			<td th:text="${group.creationDateGroup}"></td>
-			<td>
-				<span th:if="${group.createdBy.id == user.id}">Your are the administrator of this group</span>
-				<span th:unless="${group.createdBy.id == user.id}" th:text="${group.createdBy.pseudo}"></span>
-			</td>
-		</tr>
-	</table>
-	<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+<nav class="nav nav-tabs m-3">
+		<a class="nav-item nav-link active" href="#allTickets" data-toggle="tab">Groupes</a>
+		<a class="nav-item nav-link" href="#myTickets" data-toggle="tab">Profil</a>
+	</nav>
+	<h2>MES GROUPES</h2>
+	<div class="group-container-all-btn">
+	<!--<div class="group-container-new-group">-->
+		<button type="button" class="btn btn-outline-primary">Nouveau</button>
+	<!--  </div>-->
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+  </form>
+	</div>
+	<div class="group-container-all-groups">	
+		<div class="group-container-column-group-list">
+			<table>
+				<tr>
+					<th>ID</th>
+					<th>NOM</th>
+					<th>ADMINISTRATEUR</th>
+				</tr>
+				<tr th:each="group : ${userGroups}">
+					<td><a th:text="${group.id}"
+						th:href="'group?groupId='+${group.id}"></a></td>
+					<td th:text="${group.name}"></td>
+					<td><span th:if="${group.createdBy.id == user.id}">You
+							are the administrator of this group</span> <span
+						th:unless="${group.createdBy.id == user.id}"
+						th:text="${group.createdBy.pseudo}"></span></td>
+				</tr>
+			</table>
+		</div>
+		<div class="group-container-column-group-stats">
+			<table>
+				<tr>
+					<th>INFOS</th>
+				</tr>
+				<tr th:each="group : ${userGroups}">
+					<td><span th:if="${group.createdBy.id == user.id}">You
+							are the administrator of this group</span> <span
+						th:unless="${group.createdBy.id == user.id}"
+						th:text="${group.createdBy.pseudo}"></span></td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

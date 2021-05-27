@@ -15,9 +15,19 @@
 .ticketting-container-column-ticket-status {
 	flex-grow: 1;
 	background-color: #d4d4d4;
-	margin-left: 2px;
-	margin-right: 2px;
+	margin-left: 1rem;
+	margin-right: 1rem;
 	text-align: center;
+	padding-bottom: 1rem;
+}
+
+.ticketting-ticket-card-container {
+	display: flex;
+	justify-content: space-around;
+}
+
+.ticketting-card-margin {
+	margin-top: 1rem;
 }
 
 /* Not use now */	

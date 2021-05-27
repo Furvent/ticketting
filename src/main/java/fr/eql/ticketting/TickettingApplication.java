@@ -68,7 +68,7 @@ public class TickettingApplication implements CommandLineRunner {
 		userService.save(user4);
 	}
 
-	public void createGroup() {
+	private void createGroup() {
 		// Get my first user
 		User user1 = userService.getUserWithId(1l);
 		User user2 = userService.getUserWithId(2l);
@@ -80,7 +80,7 @@ public class TickettingApplication implements CommandLineRunner {
 		groupService.save(group2);
 	}
 
-	public void createMembership() {
+	private void createMembership() {
 		// Get my first user
 		User user1 = userService.getUserWithId(1l);
 		User user2 = userService.getUserWithId(2l);
@@ -106,29 +106,25 @@ public class TickettingApplication implements CommandLineRunner {
 
 	}
 
-	public void createTickets() {
+	private void createTickets() {
 		// Create 3 tickets
 		Group group1 = groupService.getGroupById(1l);
 		Ticket ticket1 = new Ticket("Ticket 1 details", group1);
 		Ticket ticket2 = new Ticket("Ticket 2 details", group1);
 		Ticket ticket3 = new Ticket("Ticket 3 details", group1);
+		Ticket ticket4 = new Ticket("Ticket 4 details", group1);
+		Ticket ticket5 = new Ticket("Ticket 5 details", group1);
+		Ticket ticket6 = new Ticket("Ticket 6 details", group1);
 		ticketService.save(ticket1);
 		ticketService.save(ticket2);
 		ticketService.save(ticket3);
+		ticketService.save(ticket4);
+		ticketService.save(ticket5);
+		ticketService.save(ticket6);
 		// Create task between ticket and user
 		// Get users
 		User user1 = userService.getUserWithId(1l);
 		User user2 = userService.getUserWithId(2l);
-		// Link users and tickets inside task
-		Task task1 = new Task(user1, ticket1, LocalDateTime.now());
-		Task task2 = new Task(user1, ticket2, LocalDateTime.now());
-		Task task3 = new Task(user1, ticket3, LocalDateTime.now());
-		Task task4 = new Task(user2, ticket3, LocalDateTime.now());
-		taskService.save(task1);
-		taskService.save(task2);
-		taskService.save(task3);
-		taskService.save(task4);
-		// Add Status on ticket 1
 		// Create new status
 		Status statusOpened = new Status(TicketStatus.OPENED);
 		Status statusAllocated = new Status(TicketStatus.ALLOCATED);
@@ -140,15 +136,27 @@ public class TickettingApplication implements CommandLineRunner {
 		statusService.save(statusDone);
 		statusService.save(statusClosed);
 		statusService.save(statusCanceled);
-		// Link status and ticket inside HistoryStatus;
-		StatusHistory statusHistory1 = new StatusHistory(statusOpened, ticket1, LocalDateTime.of(2021, 5, 20, 10, 10));
-		StatusHistory statusHistory2 = new StatusHistory(statusAllocated, ticket1, LocalDateTime.of(2021, 5, 22, 10, 10));
-		StatusHistory statusHistory3 = new StatusHistory(statusDone, ticket1, LocalDateTime.of(2021, 5, 23, 10, 10));
-		StatusHistory statusHistory4 = new StatusHistory(statusClosed, ticket1, LocalDateTime.of(2021, 5, 24, 10, 10));
-		statusHistoryService.save(statusHistory1);
-		statusHistoryService.save(statusHistory2);
-		statusHistoryService.save(statusHistory3);
-		statusHistoryService.save(statusHistory4);
+		// Populate ticket 1
+		addStatusHistoryOnTicket(ticket1, statusOpened, LocalDateTime.of(2021, 5, 20, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket1, statusAllocated, LocalDateTime.of(2021, 5, 21, 10, 10));
+		addStatusHistoryOnTicket(ticket1, statusDone, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addStatusHistoryOnTicket(ticket1, statusClosed, LocalDateTime.of(2021, 5, 23, 10, 10));
+		// Populate ticket2
+		addStatusHistoryOnTicket(ticket2, statusOpened, LocalDateTime.of(2021, 5, 18, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket2, statusAllocated, LocalDateTime.of(2021, 5, 19, 10, 10));
+		addStatusHistoryOnTicket(ticket2, statusDone, LocalDateTime.of(2021, 5, 20, 10, 10));
+		// Populate ticket3
+		addStatusHistoryOnTicket(ticket3, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		// Populate ticket4
+		addStatusHistoryOnTicket(ticket4, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		// Populate ticket5
+		addStatusHistoryOnTicket(ticket5, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		// Populate ticket6
+		addStatusHistoryOnTicket(ticket6, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
 		// Add comments on ticket 2 from user1 and user2;
 		// Create new comment
 		// Create parent comment
@@ -164,6 +172,23 @@ public class TickettingApplication implements CommandLineRunner {
 		comment1.getChildren().add(commentChild1of1);
 		commentService.save(commentChild1of1);
 		commentService.save(comment1);
+	}
+
+	private void addTaskBetweenUserAndTicket(User user, Ticket ticket, Status statusAllocated, LocalDateTime taskTime) {
+		// Create a task
+		Task task = new Task(user, ticket, taskTime);
+		// Add StatusHistory on ticket
+		StatusHistory sh = new StatusHistory(statusAllocated, ticket, taskTime);
+		// Save entity
+		taskService.save(task);
+		statusHistoryService.save(sh);
+	}
+
+	private void addStatusHistoryOnTicket(Ticket ticket, Status status, LocalDateTime taskTime) {
+		// Add StatusHistory on ticket
+		StatusHistory sh = new StatusHistory(status, ticket, taskTime);
+		// Save entity
+		statusHistoryService.save(sh);
 	}
 
 }

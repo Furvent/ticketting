@@ -63,6 +63,7 @@ public class GroupDashboardController {
 			model.addAttribute("allTickets", groupTickets);
 			// On trie les tickets selon leur dernier statut
 			sortGroupTicketsByLastStatusAndAddThemToModel(model, groupTickets);
+			addStatusTitleToModel(model);
 
 			templateName = "/dashboard/group-dashboard.html";
 		} else {
@@ -107,6 +108,13 @@ public class GroupDashboardController {
 		model.addAttribute("allocatedTickets", allocatedTickets);
 		model.addAttribute("doneTickets", doneTickets);
 		model.addAttribute("closeddTickets", closeddTickets);
+	}
+	
+	private void addStatusTitleToModel(Model model) {
+		model.addAttribute("statusTitleOpened", "Opened");
+		model.addAttribute("statusTitleAllocated", "Allocated");
+		model.addAttribute("statusTitleDone", "Done");
+		model.addAttribute("statusTitleClosed", "Closed");
 	}
 
 }

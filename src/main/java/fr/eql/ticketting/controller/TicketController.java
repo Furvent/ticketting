@@ -39,17 +39,17 @@ public class TicketController {
 		List<Status> status = new ArrayList<Status>();
 		status = statusService.getAllStatus();
 		model.addAttribute("status", status);
+		
+		Status selectedStatus = new Status();
+		model.addAttribute("aStatus", selectedStatus);
+		
 		model.addAttribute("ticket", new Ticket());
-		for(Status s : status) {
-			System.out.println(s.getLabel());
-		}
 		return "newTicket";
 	}
 	
 	@PostMapping("/addNewTicket")
 	public String addNewTicket() {
 		return "GeneralDashboard";
-		
 	}
 	
 	//Méthode pour tester la selection sur une liste déroulante

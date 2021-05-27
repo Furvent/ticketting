@@ -25,7 +25,7 @@ import fr.eql.ticketting.service.TicketService;
 import fr.eql.ticketting.service.UserService;
 
 @Controller
-@SessionAttributes(value = { "user", "groupSelectedByUserId" })
+@SessionAttributes(value = { "user", "groupSelectedByUserId", "isUserAdmin"})
 public class GroupDashboardController {
 	GroupService groupService;
 	MembershipService membershipService;
@@ -48,9 +48,9 @@ public class GroupDashboardController {
 
 	@GetMapping("group")
 	public String displayGroupDashboard(Model model, @RequestParam(name = "groupId", required = true) String groupID) {
+		String templateName = "";
 		// On ajoute le groupId en session
 		model.addAttribute("groupSelectedByUserId", groupID);
-		String templateName = "";
 		// On vérifie que l'utilisateur appartienne bien à ce groupe
 		User user = (User) model.getAttribute("user");
 		List<Membership> userMemberships = membershipService.getMembershipsWithUser(user);
@@ -65,6 +65,8 @@ public class GroupDashboardController {
 			// On récupère le group en db
 			Group currUserGroup = groupService.getGroupById(groupIdLong);
 			model.addAttribute("currUserGroup", currUserGroup);
+			// On vérifie si l'utilisateur est administrateur et on rajoute l'information dans le model
+			model.addAttribute("isUserAdmin", checkIfUserIsAdmin(user, currUserGroup));
 			// On récupère tous les tickets du groupe
 			List<Ticket> groupTickets = getGroupTickets(currUserGroup);
 			model.addAttribute("allTickets", groupTickets);
@@ -166,6 +168,10 @@ public class GroupDashboardController {
 			pseudos.add(task.getUser().getPseudo());
 		}
 		return pseudos;
+	}
+	
+	private boolean checkIfUserIsAdmin(User user, Group group) {
+		return user.getId() == group.getCreatedBy().getId();
 	}
 
 }

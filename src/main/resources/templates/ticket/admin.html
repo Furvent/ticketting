@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>Modify the ticket</title>
+</head>
+<div class="card m-2" style="width: 25rem;">
+	<div class="card-body">
+		<h4 class="card-title text-center"
+			th:text="' - ' + ${ticket.details} + ' - '"></h4>
+		<div class="ticketting-line"></div>
+		<h5 class="card-title mt-2">Working on</h5>
+		<ul>
+			<li th:each="pseudo : ${usersPseudo}" th:text="${pseudo}"></li>
+		</ul>
+		<h5 class="card-title mt-2">History</h5>
+		<ul>
+			<li th:each="statusHistory : ${historic}">
+				<p>
+					Date <span th:text="${statusHistory.statusDate}"></span> => <span
+						th:text="${statusHistory.status.label}"></span>
+				</p>
+			</li>
+		</ul>
+	</div>
+	<form th:action="@{/modifTicket}" th:object="${ticketForm}"
+		method="POST">
+		<div class="form-group">
+			<label for="ticketDetail">Task's details</label> <input type="text"
+				class="form-control" name="ticketDetail" th:field="*{description}"
+				id="ticketDetail">
+		</div>
+		<!-- Radio -->
+		<div th:each="radioOption : ${ticketForm.radioButtonsOptions}" class="form-check">
+			<input class="form-check-input" type="radio"
+				th:field=${ticketForm.radioSelected} th:value="${radioOption}">
+			<label class="form-check-label"
+				th:text="${radioOption}" th:for="${radioOption}"></label>
+		</div>
+		<!-- End Radio -->
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+	<a th:if="groupSelectedByUserId == null" th:href="/dashboard"
+		class="btn btn-primary">Go back</a> <a
+		th:unless="groupSelectedByUserId == null"
+		th:href="'group?groupId='+${groupSelectedByUserId}"
+		class="btn btn-primary">Go back</a>
+</div>
+</html>

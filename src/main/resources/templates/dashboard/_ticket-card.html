@@ -2,7 +2,11 @@
 	<div class="card-body">
 		<h5 class="card-title" th:text="${ticket.details}"></h5>
 		<p class="card-text">Some quick example ticket</p>
-		<a th:href="'ticket?ticketId='+${ticket.id}" class="btn btn-primary">Ticket
-			in details</a>
+		<div class="d-flex justify-content-around">
+			<a th:href="'ticket?ticketId='+${ticket.id}" class="btn btn-primary">Ticket
+				in details</a>
+			<a th:if="${isUserAdmin}" th:href="'ticket-admin?ticketId='+${ticket.id}"
+				class="btn btn-primary"> Edit Ticket</a>
+		</div>
 	</div>
 </div>

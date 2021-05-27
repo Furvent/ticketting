@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.eql.ticketting.entity.Task;
 import fr.eql.ticketting.entity.Ticket;
+import fr.eql.ticketting.entity.User;
 
 public interface TaskService {
 	public Task save(Task task);
@@ -12,4 +13,6 @@ public interface TaskService {
 	public void delete(Task task);
 	public Task update(Task task);
 	public List<Task> getTasksByTicket(Ticket ticket);
+	public List<Task> getTasksByUser(User user);
+	public List<Task> getTaskByUserAndTicket(User user, Ticket ticket);
 }

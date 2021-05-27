@@ -151,6 +151,7 @@ public class TickettingApplication implements CommandLineRunner {
 		// Populate ticket4
 		addStatusHistoryOnTicket(ticket4, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
 		addTaskBetweenUserAndTicket(user1, ticket4, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		addTaskBetweenUserAndTicket(user2, ticket4, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
 		// Populate ticket5
 		addStatusHistoryOnTicket(ticket5, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
 		addTaskBetweenUserAndTicket(user2, ticket5, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));

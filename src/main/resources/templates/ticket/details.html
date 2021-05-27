@@ -7,7 +7,6 @@
 <title>Ticket's detail</title>
 <link rel="stylesheet" th:href="@{/css/commons.css}"></link>
 </head>
-<body>
 	<div class="card m-2" style="width: 25rem;">
 		<div class="card-body">
 			<h4 class="card-title text-center"
@@ -34,5 +33,4 @@
 		<a th:unless="groupSelectedByUserId == null" th:href="'group?groupId='+${groupSelectedByUserId}"
 			class="btn btn-primary">Go back</a>
 	</div>
-</body>
 </html>

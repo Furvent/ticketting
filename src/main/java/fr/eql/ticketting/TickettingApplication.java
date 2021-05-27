@@ -58,7 +58,7 @@ public class TickettingApplication implements CommandLineRunner {
 	}
 
 	private void createUsers() {
-		User user1 = new User("testLogin", "testPassword", "testPseudo", LocalDateTime.now());
+		User user1 = new User("test", "pwd", "testPseudo", LocalDateTime.now());
 		userService.save(user1);
 		User user2 = new User("login2", "password2", "pseudo2", LocalDateTime.now());
 		userService.save(user2);

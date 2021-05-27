@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import fr.eql.ticketting.entity.Status;
@@ -24,7 +25,7 @@ public class TicketController {
 		this.service = service;
 		this.statusService = statusService;
 	}
-
+	
 	@GetMapping("/list-tickets")
 	public String displayUsers(Model model) {
 		List<Ticket> tickets = service.getAllTickets();
@@ -34,7 +35,7 @@ public class TicketController {
 	
 	@GetMapping("/newTicket")
 	public String formAddTicket(Model model) {
-		//envoit des status sur la page
+		
 		List<Status> status = new ArrayList<Status>();
 		status = statusService.getAllStatus();
 		model.addAttribute("status", status);
@@ -49,5 +50,26 @@ public class TicketController {
 	public String addNewTicket() {
 		return "GeneralDashboard";
 		
+	}
+	
+	//Méthode pour tester la selection sur une liste déroulante
+	@GetMapping("/test/test-SelectMenu")
+	public String testMenu(Model model){
+		List<Status> status = new ArrayList<Status>();
+		status = statusService.getAllStatus();
+		model.addAttribute("status", status);
+		Status selectedStatus = new Status();
+		model.addAttribute("aStatus", selectedStatus);
+		return "/test/test-SelectMenu";
+	}
+	
+	//Page renvoyée par le test
+	@PostMapping("/test/test-SelectMenu2")
+	public String testMenu2(@ModelAttribute("aStatus")Status selectedStatus, Model model2) {
+		Status status2 = new Status(selectedStatus.getId(), selectedStatus.getLabel());
+		System.out.println(selectedStatus.getId());
+		System.out.println(selectedStatus.getLabel());
+		model2.addAttribute("aStatus", status2);
+		return "/test/test-SelectMenu2";
 	}
 }

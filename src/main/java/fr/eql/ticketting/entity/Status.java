@@ -20,6 +20,14 @@ public class Status {
 
 	@OneToMany(mappedBy = "status")
 	private Set<StatusHistory> statusHistory = new HashSet<StatusHistory>();
+	
+	
+	//ajouter pour le test a supprimer
+	public Status(Long id, String label) {
+		super();
+		this.id = id;
+		this.label = label;
+	}
 
 	public Status() {
 	}

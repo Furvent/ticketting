@@ -28,6 +28,7 @@
 				<option th:each="s : ${status}" th:value="${s.id}"
 					th:text="${s.label}"></option>
 			</select>
+			
 			<!-- Description du ticket -->
 			<div class="form-group">
 				<div class="form-group">
@@ -38,7 +39,6 @@
 				<small id="detailhelp" class="form-text text-muted">Expliquer
 					detail du ticket</small>
 			</div>
-
 			<!-- Selection du groupe -->
 			<!-- Assignation utilisateur -->
 			<select th:field="*{users}" class="form-control">

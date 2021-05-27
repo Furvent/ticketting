@@ -45,6 +45,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "signUp";
 	}
+	
 	@PostMapping("/list-users")
 	public RedirectView signUpNewUser(@ModelAttribute("user") User user) {
 		userService.save(user);
@@ -63,5 +64,4 @@ public class UserController {
 		model.addAttribute("users", users);
 		return "usersDebug";
 	}
-
 }

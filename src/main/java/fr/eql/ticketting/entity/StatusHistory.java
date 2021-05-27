@@ -34,6 +34,11 @@ public class StatusHistory {
 		this.ticket = ticket;
 	}
 
+	public StatusHistory(LocalDateTime statusDate, Status status) {
+		this.statusDate = statusDate;
+		this.status = status;
+	}
+
 	public Long getId() {
 		return id;
 	}

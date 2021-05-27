@@ -1,4 +1,4 @@
-package fr.eql.ticketting.controller.old;
+package fr.eql.ticketting.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

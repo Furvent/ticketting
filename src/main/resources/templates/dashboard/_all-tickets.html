@@ -1,0 +1,31 @@
+<div class="ticketting-container-all-tickets">
+	<div class="ticketting-container-column-ticket-status">
+		<h4 class="ticketting-title-status" th:text="${statusTitleOpened}"></h4>
+		<div th:each="openedTicket : ${openedTickets}"
+			th:include="dashboard/_ticket-card"
+			th:with="ticket=${openedTicket}"
+			class="ticketting-ticket-card-container"></div>
+	</div>
+	<div class="ticketting-container-column-ticket-status">
+		<h4 class="ticketting-title-status" th:text="${statusTitleAllocated}"></h4>
+		<div th:each="allocatedTicket : ${allocatedTickets}"
+			th:include="dashboard/_ticket-card"
+			th:with="ticket=${allocatedTicket}"
+			class="ticketting-ticket-card-container"></div>
+	</div>
+	<div class="ticketting-container-column-ticket-status">
+		<h4 class="ticketting-title-status" th:text="${statusTitleDone}"></h4>
+		<div th:each="doneTicket : ${doneTickets}"
+			th:include="dashboard/_ticket-card"
+			th:with="ticket=${doneTicket}"
+			class="ticketting-ticket-card-container"></div>
+	</div>
+	<div class="ticketting-container-column-ticket-status">
+		<h4 class="ticketting-title-status" th:text="${statusTitleClosed}"></h4>
+		<div th:each="closeddTicket : ${closeddTickets}"
+			th:include="dashboard/_ticket-card"
+			th:with="ticket=${closeddTicket}"
+			class="ticketting-ticket-card-container"></div>
+	</div>
+</div>
+<!-- Sur la droite on veut le détail d'un ticket quand on click dessus MAIS pour l'instant ce sera sur une autre page -->

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>General dashboard</title>
+<link rel="stylesheet" th:href="@{/css/group-dashboard.css}"></link>
+</head>
+<body>
+	<nav class="nav nav-tabs m-3">
+		<a class="nav-item nav-link active" href="#allTickets" data-toggle="tab">All tickets</a>
+		<a class="nav-item nav-link" href="#myTickets" data-toggle="tab">My tickets</a>
+	</nav>
+
+	<div class="tab-content m-3">
+		<div class="tab-pane fade show active" id="allTickets">
+			<div th:replace="dashboard/_all-tickets"></div>
+		</div>
+		<div class="tab-pane fade" id="myTickets">
+			<div th:replace="dashboard/_my-tickets"></div>
+		</div>
+	</div>
+
+</body>
+</html>

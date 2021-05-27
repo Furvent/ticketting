@@ -1,4 +1,4 @@
-package fr.eql.ticketting.controller;
+package fr.eql.ticketting.controller.old;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.service.StatusService;
 import fr.eql.ticketting.service.TicketService;
 
-@Controller
+//@Controller
 public class TicketController {
 
 	TicketService service;

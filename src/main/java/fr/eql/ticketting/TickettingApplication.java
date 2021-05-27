@@ -15,6 +15,7 @@ import fr.eql.ticketting.entity.StatusHistory;
 import fr.eql.ticketting.entity.Task;
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.entity.User;
+import fr.eql.ticketting.enums.TicketStatus;
 import fr.eql.ticketting.service.CommentService;
 import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
@@ -57,7 +58,7 @@ public class TickettingApplication implements CommandLineRunner {
 	}
 
 	private void createUsers() {
-		User user1 = new User("login1", "password1", "pseudo1", LocalDateTime.now());
+		User user1 = new User("testLogin", "testPassword", "testPseudo", LocalDateTime.now());
 		userService.save(user1);
 		User user2 = new User("login2", "password2", "pseudo2", LocalDateTime.now());
 		userService.save(user2);
@@ -67,74 +68,95 @@ public class TickettingApplication implements CommandLineRunner {
 		userService.save(user4);
 	}
 
-	public void createGroup() {
+	private void createGroup() {
 		// Get my first user
 		User user1 = userService.getUserWithId(1l);
+		User user2 = userService.getUserWithId(2l);
 		System.out.println(user1);
 		// Create a group with it
-		Group group = new Group("group1", user1, LocalDateTime.now());
-		groupService.save(group);
+		Group group1 = new Group("group1", user1, LocalDateTime.now());
+		Group group2 = new Group("group2", user2, LocalDateTime.now());
+		groupService.save(group1);
+		groupService.save(group2);
 	}
 
-	public void createMembership() {
+	private void createMembership() {
 		// Get my first user
 		User user1 = userService.getUserWithId(1l);
 		User user2 = userService.getUserWithId(2l);
 		User user3 = userService.getUserWithId(3l);
+		User user4 = userService.getUserWithId(4l);
 		// Get my first group
 		Group group1 = groupService.getGroupById(1l);
-		// Create Membership
-		Membership membership1 = new Membership(user1, group1, LocalDateTime.now());
-		Membership membership2 = new Membership(user2, group1, LocalDateTime.now());
-		Membership membership3 = new Membership(user3, group1, LocalDateTime.now());
-		membershipService.save(membership1);
-		membershipService.save(membership2);
-		membershipService.save(membership3);
-		System.out.println("-------------Membership of group1-------------");
-		Group groupBis = groupService.getGroupById(1l);
-		System.out.println(groupBis.getMemberships().size());
-		for (Membership membership : groupBis.getMemberships()) {
-			System.out.println(membership);
-		}
+		Group group2 = groupService.getGroupById(2l);
+		// Create Membership to group 1
+		Membership membership1ToGroup1 = new Membership(user1, group1, LocalDateTime.now());
+		Membership membership2ToGroup1 = new Membership(user2, group1, LocalDateTime.now());
+		Membership membership3ToGroup1 = new Membership(user3, group1, LocalDateTime.now());
+		membershipService.save(membership1ToGroup1);
+		membershipService.save(membership2ToGroup1);
+		membershipService.save(membership3ToGroup1);
+		// Create Membership to group 2
+		Membership membership1ToGroup2 = new Membership(user2, group2, LocalDateTime.now());
+		Membership membership2ToGroup2 = new Membership(user3, group2, LocalDateTime.now());
+		Membership membership3ToGroup2 = new Membership(user1, group2, LocalDateTime.now());
+		membershipService.save(membership1ToGroup2);
+		membershipService.save(membership2ToGroup2);
+		membershipService.save(membership3ToGroup2);
+
 	}
 
-	public void createTickets() {
+	private void createTickets() {
 		// Create 3 tickets
 		Group group1 = groupService.getGroupById(1l);
-		Ticket ticket1 = new Ticket("Ticket 1 details", LocalDateTime.now(), group1);
-		Ticket ticket2 = new Ticket("Ticket 2 details", LocalDateTime.now(), group1);
-		Ticket ticket3 = new Ticket("Ticket 3 details", LocalDateTime.now(), group1);
+		Ticket ticket1 = new Ticket("Ticket 1 details", group1);
+		Ticket ticket2 = new Ticket("Ticket 2 details", group1);
+		Ticket ticket3 = new Ticket("Ticket 3 details", group1);
+		Ticket ticket4 = new Ticket("Ticket 4 details", group1);
+		Ticket ticket5 = new Ticket("Ticket 5 details", group1);
+		Ticket ticket6 = new Ticket("Ticket 6 details", group1);
 		ticketService.save(ticket1);
 		ticketService.save(ticket2);
 		ticketService.save(ticket3);
+		ticketService.save(ticket4);
+		ticketService.save(ticket5);
+		ticketService.save(ticket6);
 		// Create task between ticket and user
 		// Get users
 		User user1 = userService.getUserWithId(1l);
 		User user2 = userService.getUserWithId(2l);
-		// Link users and tickets inside task
-		Task task1 = new Task(user1, ticket1, LocalDateTime.now());
-		Task task2 = new Task(user1, ticket2, LocalDateTime.now());
-		Task task3 = new Task(user1, ticket3, LocalDateTime.now());
-		Task task4 = new Task(user2, ticket3, LocalDateTime.now());
-		taskService.save(task1);
-		taskService.save(task2);
-		taskService.save(task3);
-		taskService.save(task4);
-		// Add Status on ticket 1
 		// Create new status
-		Status status1 = new Status("label1");
-		Status status2 = new Status("label2");
-		Status status3 = new Status("label3");
-		statusService.save(status1);
-		statusService.save(status2);
-		statusService.save(status3);
-		// Link status and ticket inside HistoryStatus;
-		StatusHistory statusHistory1 = new StatusHistory(status1, ticket1, LocalDateTime.now());
-		StatusHistory statusHistory2 = new StatusHistory(status2, ticket1, LocalDateTime.now());
-		StatusHistory statusHistory3 = new StatusHistory(status3, ticket1, LocalDateTime.now());
-		statusHistoryService.save(statusHistory1);
-		statusHistoryService.save(statusHistory2);
-		statusHistoryService.save(statusHistory3);
+		Status statusOpened = new Status(TicketStatus.OPENED);
+		Status statusAllocated = new Status(TicketStatus.ALLOCATED);
+		Status statusDone = new Status(TicketStatus.DONE);
+		Status statusClosed = new Status(TicketStatus.CLOSED);
+		Status statusCanceled = new Status(TicketStatus.CANCELED);
+		statusService.save(statusOpened);
+		statusService.save(statusAllocated);
+		statusService.save(statusDone);
+		statusService.save(statusClosed);
+		statusService.save(statusCanceled);
+		// Populate ticket 1
+		addStatusHistoryOnTicket(ticket1, statusOpened, LocalDateTime.of(2021, 5, 20, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket1, statusAllocated, LocalDateTime.of(2021, 5, 21, 10, 10));
+		addStatusHistoryOnTicket(ticket1, statusDone, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addStatusHistoryOnTicket(ticket1, statusClosed, LocalDateTime.of(2021, 5, 23, 10, 10));
+		// Populate ticket2
+		addStatusHistoryOnTicket(ticket2, statusOpened, LocalDateTime.of(2021, 5, 18, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket2, statusAllocated, LocalDateTime.of(2021, 5, 19, 10, 10));
+		addStatusHistoryOnTicket(ticket2, statusDone, LocalDateTime.of(2021, 5, 20, 10, 10));
+		// Populate ticket3
+		addStatusHistoryOnTicket(ticket3, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		// Populate ticket4
+		addStatusHistoryOnTicket(ticket4, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		// Populate ticket5
+		addStatusHistoryOnTicket(ticket5, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		// Populate ticket6
+		addStatusHistoryOnTicket(ticket6, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
+		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
 		// Add comments on ticket 2 from user1 and user2;
 		// Create new comment
 		// Create parent comment
@@ -150,10 +172,23 @@ public class TickettingApplication implements CommandLineRunner {
 		comment1.getChildren().add(commentChild1of1);
 		commentService.save(commentChild1of1);
 		commentService.save(comment1);
-		// Test link between comment
-		Comment comment1Bis = commentService.getCommentById(1l);
-		System.out.println("-------------------comment1Bis----------------------");
-		System.out.println(comment1Bis);
+	}
+
+	private void addTaskBetweenUserAndTicket(User user, Ticket ticket, Status statusAllocated, LocalDateTime taskTime) {
+		// Create a task
+		Task task = new Task(user, ticket, taskTime);
+		// Add StatusHistory on ticket
+		StatusHistory sh = new StatusHistory(statusAllocated, ticket, taskTime);
+		// Save entity
+		taskService.save(task);
+		statusHistoryService.save(sh);
+	}
+
+	private void addStatusHistoryOnTicket(Ticket ticket, Status status, LocalDateTime taskTime) {
+		// Add StatusHistory on ticket
+		StatusHistory sh = new StatusHistory(status, ticket, taskTime);
+		// Save entity
+		statusHistoryService.save(sh);
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.repository.UserRepository;
 
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		List<User> users = new ArrayList<User>();
 		users = repository.findByLoginAndPassword(login, password);
 		System.out.println(users.size());
-		if(users.size() > 0) {
+		if (users.size() > 0) {
 			returnedUser = users.iterator().next();
 			return returnedUser;
 		}

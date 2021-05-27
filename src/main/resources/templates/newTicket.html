@@ -2,28 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{_layout}" layout:fragment="content">
-<head>
-<meta charset="ISO-8859-1">
 <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">CREER
 	UN NOUVEAU TICKET</title>
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
-	rel="stylesheet" />
-<script
-	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script>
-	$('.dropdown-toggle').dropdown()
-</script>
-</head>
-<body>
 	<div class="form-group">
 		<form method="post" th:object="${ticketForm}" th:action="@{/test/test-SelectMenu2}" class="form-group">
 			
@@ -47,7 +28,7 @@
 			</div>
 
 			<!-- Assignation utilisateur -->
-			<select th:field="*{idUser}" class="form-control">
+			<select th:field="*{idUsers}" multiple="multiple" class="js-example-basic-multiple js-states form-control">
 				<option value="default">Assigner un utilisateur</option>
 				<option th:each="u : ${users}" th:value="${u.id}"
 					th:text="${u.pseudo}"></option>
@@ -56,9 +37,10 @@
 			<button type="submit" class="btn btn-primary">VALIDER</button>
 		</form>
 	</div>
-</body>
+
 <script>
 	$(".js-example-tags").select2({
 		tags : true
 	});
 </script>
+</html>

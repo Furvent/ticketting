@@ -1,9 +1,12 @@
 package fr.eql.ticketting.controller.form;
 
+import java.util.List;
+
 public class TicketForm {
 	Long idStatus;
 	String description;
-	Long idUser;
+	List<Long> idUsers;
+	
 	public Long getIdStatus() {
 		return idStatus;
 	}
@@ -16,10 +19,10 @@ public class TicketForm {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Long getIdUser() {
-		return idUser;
+	public List<Long> getIdUsers() {
+		return idUsers;
 	}
-	public void setIdUser(Long idUser) {
-		this.idUser = idUser;
+	public void setIdUsers(List<Long> idUsers) {
+		this.idUsers = idUsers;
 	}
 }

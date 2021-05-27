@@ -9,6 +9,10 @@
 			<td><label>Description ticket :</label></td>
 			<td th:text="${ticketForm.description}" ></td>
 		</tr>
+		<tr th:each="u : ${idUsers}">
+			<td><label>Id du user :</label></td>
+			<td  th:text="${u}"></td>
+		</tr>
 		<!--  
 		<tr>
 			<td><label>label du statut :</label></td>

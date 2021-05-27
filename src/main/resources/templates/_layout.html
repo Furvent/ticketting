@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 <link
 	href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
 	rel="stylesheet" />
@@ -18,14 +18,16 @@
 	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
-	<div class="container-fluid">
-		<div th:replace="_header"></div>
+	<main>
+		<div class="container-fluid">
+			<div th:replace="_header"></div>
 
-		<div layout:fragment="content">default content from _layout.html
-			(to override)</div>
-		<div th:replace="_footer"></div>
-	</div>
-	<!-- end of container-fluid -->
+			<div layout:fragment="content">default content from
+				_layout.html (to override)</div>
+			<div th:replace="_footer"></div>
+		</div>
+	</main>
+
 </body>
 
 </html>

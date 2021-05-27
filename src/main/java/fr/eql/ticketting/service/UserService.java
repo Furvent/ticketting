@@ -13,5 +13,4 @@ public interface UserService {
 
 	public User getUserWithId(long idToSearch);
 	public User getUserForConnection(String login, String password);
-	public List<User> findByGroup(Group group);
 }

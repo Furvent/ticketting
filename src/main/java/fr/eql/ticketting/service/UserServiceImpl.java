@@ -41,17 +41,10 @@ public class UserServiceImpl implements UserService {
 		List<User> users = new ArrayList<User>();
 		users = repository.findByLoginAndPassword(login, password);
 		System.out.println(users.size());
-		if(users.size() > 0) {
+		if (users.size() > 0) {
 			returnedUser = users.iterator().next();
 			return returnedUser;
 		}
 		return returnedUser;
-	}
-
-	@Override
-	public List<User> findByGroup(Group group) {
-		List<User> users = new ArrayList<User>();
-		users = repository.findByGroup(group);
-		return users;
 	}
 }

@@ -8,8 +8,7 @@ import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-	
+
 	public List<User> findByLoginAndPassword(String login, String password);
-	public List<User> findByGroup(Group group);
-	
+
 }

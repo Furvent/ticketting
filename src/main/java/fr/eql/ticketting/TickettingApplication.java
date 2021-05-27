@@ -58,7 +58,7 @@ public class TickettingApplication implements CommandLineRunner {
 	}
 
 	private void createUsers() {
-		User user1 = new User("testLogin", "testPassword", "testPseudo", LocalDateTime.now());
+		User user1 = new User("test", "pwd", "testPseudo", LocalDateTime.now());
 		userService.save(user1);
 		User user2 = new User("login2", "password2", "pseudo2", LocalDateTime.now());
 		userService.save(user2);
@@ -150,13 +150,14 @@ public class TickettingApplication implements CommandLineRunner {
 		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
 		// Populate ticket4
 		addStatusHistoryOnTicket(ticket4, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
-		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		addTaskBetweenUserAndTicket(user1, ticket4, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		addTaskBetweenUserAndTicket(user2, ticket4, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
 		// Populate ticket5
 		addStatusHistoryOnTicket(ticket5, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
-		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		addTaskBetweenUserAndTicket(user2, ticket5, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
 		// Populate ticket6
 		addStatusHistoryOnTicket(ticket6, statusOpened, LocalDateTime.of(2021, 5, 22, 10, 10));
-		addTaskBetweenUserAndTicket(user1, ticket3, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
+		addTaskBetweenUserAndTicket(user2, ticket6, statusAllocated, LocalDateTime.of(2021, 5, 22, 11, 10));
 		// Add comments on ticket 2 from user1 and user2;
 		// Create new comment
 		// Create parent comment

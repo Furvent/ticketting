@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import fr.eql.ticketting.entity.Task;
+import fr.eql.ticketting.entity.Ticket;
+import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.repository.TaskRepository;
 
 @Service
@@ -12,7 +14,6 @@ public class TaskServiceImpl implements TaskService {
 	TaskRepository repository;
 
 	public TaskServiceImpl(TaskRepository repository) {
-		super();
 		this.repository = repository;
 	}
 
@@ -43,5 +44,20 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public Task update(Task task) {
 		return repository.save(task);
+	}
+
+	@Override
+	public List<Task> getTasksByTicket(Ticket ticket) {
+		return repository.findByTicket(ticket);
+	}
+
+	@Override
+	public List<Task> getTasksByUser(User user) {
+		return repository.findByUser(user);
+	}
+
+	@Override
+	public List<Task> getTaskByUserAndTicket(User user, Ticket ticket) {
+		return repository.findByUserAndTicket(user, ticket);
 	}
 }

@@ -9,40 +9,47 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fr.eql.ticketting.controller.ViewModels.ViewUserTaskTicket;
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
 import fr.eql.ticketting.entity.StatusHistory;
+import fr.eql.ticketting.entity.Task;
 import fr.eql.ticketting.entity.Ticket;
 import fr.eql.ticketting.entity.User;
 import fr.eql.ticketting.enums.TicketStatus;
 import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
 import fr.eql.ticketting.service.StatusHistoryService;
+import fr.eql.ticketting.service.TaskService;
 import fr.eql.ticketting.service.TicketService;
 import fr.eql.ticketting.service.UserService;
 
 @Controller
-@SessionAttributes(value = { "user" })
+@SessionAttributes(value = { "user", "groupSelectedByUserId" })
 public class GroupDashboardController {
-
 	GroupService groupService;
 	MembershipService membershipService;
 	UserService userService;
 	TicketService ticketService;
 	StatusHistoryService statusHistoryService;
+	TaskService taskService;
 
 	public GroupDashboardController(GroupService groupService, MembershipService membershipService,
-			UserService userService, TicketService ticketService, StatusHistoryService statusHistoryService) {
+			UserService userService, TicketService ticketService, StatusHistoryService statusHistoryService,
+			TaskService taskService) {
 		super();
 		this.groupService = groupService;
 		this.membershipService = membershipService;
 		this.userService = userService;
 		this.ticketService = ticketService;
 		this.statusHistoryService = statusHistoryService;
+		this.taskService = taskService;
 	}
 
 	@GetMapping("group")
 	public String displayGroupDashboard(Model model, @RequestParam(name = "groupId", required = true) String groupID) {
+		// On ajoute le groupId en session
+		model.addAttribute("groupSelectedByUserId", groupID);
 		String templateName = "";
 		// On vérifie que l'utilisateur appartienne bien à ce groupe
 		User user = (User) model.getAttribute("user");
@@ -63,6 +70,9 @@ public class GroupDashboardController {
 			model.addAttribute("allTickets", groupTickets);
 			// On trie les tickets selon leur dernier statut
 			sortGroupTicketsByLastStatusAndAddThemToModel(model, groupTickets);
+			// On ajoute au modèle les tickets attribués à l'utilisateur (task)
+			addToModelUserOnTaskTickets(model, user, groupIdLong);
+			// On ajoute les titres de status au model
 			addStatusTitleToModel(model);
 
 			templateName = "/dashboard/group-dashboard.html";
@@ -80,7 +90,7 @@ public class GroupDashboardController {
 		List<Ticket> openedTickets = new ArrayList<Ticket>();
 		List<Ticket> allocatedTickets = new ArrayList<Ticket>();
 		List<Ticket> doneTickets = new ArrayList<Ticket>();
-		List<Ticket> closeddTickets = new ArrayList<Ticket>();
+		List<Ticket> closedTickets = new ArrayList<Ticket>();
 		for (Ticket ticket : tickets) {
 			// On récupère le dernier Statut / NB : pas du tout optimisé puisque une
 			// ouverture
@@ -99,7 +109,7 @@ public class GroupDashboardController {
 					doneTickets.add(ticket);
 					break;
 				case TicketStatus.CLOSED:
-					closeddTickets.add(ticket);
+					closedTickets.add(ticket);
 					break;
 				}
 			}
@@ -107,14 +117,55 @@ public class GroupDashboardController {
 		model.addAttribute("openedTickets", openedTickets);
 		model.addAttribute("allocatedTickets", allocatedTickets);
 		model.addAttribute("doneTickets", doneTickets);
-		model.addAttribute("closeddTickets", closeddTickets);
+		model.addAttribute("closedTickets", closedTickets);
 	}
-	
+
 	private void addStatusTitleToModel(Model model) {
 		model.addAttribute("statusTitleOpened", "Opened");
 		model.addAttribute("statusTitleAllocated", "Allocated");
 		model.addAttribute("statusTitleDone", "Done");
 		model.addAttribute("statusTitleClosed", "Closed");
+	}
+
+	private void addToModelUserOnTaskTickets(Model model, User user, Long groupId) {
+		List<ViewUserTaskTicket> userTicketsView = new ArrayList<ViewUserTaskTicket>();
+		// On va chercher les task de l'utilisateur
+		List<Task> userTasks = taskService.getTasksByUser(user);
+		// On sélection les tickets appartenant uniquement au groupe sélectionné
+		List<Ticket> userTicketsOfThisGroup = new ArrayList<Ticket>();
+		for (Task task : userTasks) {
+			if (task.getTicket().getGroup().getId() == groupId) {
+				userTicketsOfThisGroup.add(task.getTicket());
+			}
+		}
+		for (Ticket ticket : userTicketsOfThisGroup) {
+			// Pour créer notre TicketView on a besoin du ticket, du dernier statut, et des
+			// utilisateurs en tâche dessus
+			// On commence par récupérer les task d'un ticket
+			List<Task> ticketTasks = taskService.getTasksByTicket(ticket);
+			// et on récupère les pseudos
+			List<String> usersPseudo = getUsersPseudoFromListTasks(ticketTasks);
+			// Et enfin on récupère le dernier statut
+			String status = getLastStatusOfTheTicket(ticket);
+			userTicketsView.add(new ViewUserTaskTicket(ticket, status, usersPseudo));
+		}
+		model.addAttribute("userTickets", userTicketsView);
+	}
+
+	private String getLastStatusOfTheTicket(Ticket ticket) {
+		StatusHistory lastStatusHistory = statusHistoryService.getLastStatusHistoryFromThisTicket(ticket);
+		if (lastStatusHistory != null) {
+			return lastStatusHistory.getStatus().getLabel();
+		}
+		return "No status found";
+	}
+	
+	private List<String> getUsersPseudoFromListTasks(List<Task> tasks) {
+		List<String> pseudos = new ArrayList<String>();
+		for (Task task : tasks) {
+			pseudos.add(task.getUser().getPseudo());
+		}
+		return pseudos;
 	}
 
 }

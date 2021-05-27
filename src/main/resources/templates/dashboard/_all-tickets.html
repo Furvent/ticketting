@@ -22,10 +22,9 @@
 	</div>
 	<div class="ticketting-container-column-ticket-status">
 		<h4 class="ticketting-title-status" th:text="${statusTitleClosed}"></h4>
-		<div th:each="closeddTicket : ${closeddTickets}"
+		<div th:each="closedTicket : ${closedTickets}"
 			th:include="dashboard/_ticket-card"
-			th:with="ticket=${closeddTicket}"
+			th:with="ticket=${closedTicket}"
 			class="ticketting-ticket-card-container"></div>
 	</div>
 </div>
-<!-- Sur la droite on veut le détail d'un ticket quand on click dessus MAIS pour l'instant ce sera sur une autre page -->

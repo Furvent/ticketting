@@ -1,9 +1,5 @@
 package fr.eql.ticketting.controller;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +9,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import fr.eql.ticketting.entity.User;
-import fr.eql.ticketting.repository.UserRepository;
 import fr.eql.ticketting.service.UserService;
 
 @Controller
@@ -26,20 +21,27 @@ public class ConnectionControler {
 		this.userService = userService;
 	}
 
-	@GetMapping("/connect")
+	@GetMapping({ "/connect", "/" })
 	public String personneForm(Model model) {
 		model.addAttribute("user", new User());
 		return "ConnectionPage";
-	}	
+	}
+
+	@PostMapping("/list-users")
+	public RedirectView signUpNewUser(@ModelAttribute("user") User user) {
+		userService.save(user);
+		return new RedirectView("/dashboard");
+	}
 
 	@PostMapping("/connexionSubmit")
-	public String connexionSubmit(@ModelAttribute("user") User user, Model model) {
-		String retour = "";
+	public RedirectView connexionSubmit(@ModelAttribute("user") User user, Model model) {
+		RedirectView retour;
 		User userConnected = userService.getUserForConnection(user.getLogin(), user.getPassword());
-		if(userConnected != null) {
-			retour = "GeneralDashboard.html";
-		}else {
-			retour = "ConnectionPage";
+		if (userConnected != null) {
+			model.addAttribute("user", userConnected);
+			retour = new RedirectView("/dashboard");
+		} else {
+			retour = new RedirectView("/connect");
 		}
 		return retour;
 	}

@@ -1,0 +1,53 @@
+package fr.eql.ticketting.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+import fr.eql.ticketting.entity.StatusHistory;
+import fr.eql.ticketting.entity.Task;
+import fr.eql.ticketting.entity.Ticket;
+import fr.eql.ticketting.service.StatusHistoryService;
+import fr.eql.ticketting.service.TaskService;
+import fr.eql.ticketting.service.TicketService;
+
+@Controller
+@SessionAttributes(value = { "groupSelectedByUserId" })
+public class TicketDisplayController {
+
+	TicketService ticketService;
+	TaskService taskService;
+	StatusHistoryService statusHistoryService;
+
+	public TicketDisplayController(TicketService ticketService, TaskService taskService,
+			StatusHistoryService statusHistoryService) {
+		super();
+		this.ticketService = ticketService;
+		this.taskService = taskService;
+		this.statusHistoryService = statusHistoryService;
+	}
+
+	@GetMapping("ticket")
+	public String displayTicketWithId(Model model, @RequestParam(name = "ticketId", required = true) String ticketId) {
+		// On veut le détail du ticket
+		Ticket ticket = ticketService.getTicketById(Long.parseLong(ticketId));
+		model.addAttribute("ticketDetails", ticket.getDetails());
+		// On veut les pseudos des personnes qui bossent dessus (Task)
+		List<Task> tasksLinkedWithTicket = taskService.getTasksByTicket(ticket);
+		List<String> usersPseudoWorkingOnTicket = new ArrayList<String>();
+		for (Task task : tasksLinkedWithTicket) {
+			usersPseudoWorkingOnTicket.add(task.getUser().getPseudo());
+		}
+		model.addAttribute("usersPseudo", usersPseudoWorkingOnTicket);
+		// On veut l'historique (Status, StatusHistory)
+		List<StatusHistory> statusHistoricOfTicket = statusHistoryService.getStatusHistoriesFromThisTicket(ticket);
+		model.addAttribute("historic", statusHistoricOfTicket);
+		return "ticket/details.html";
+	}
+
+}

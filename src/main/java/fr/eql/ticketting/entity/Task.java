@@ -34,6 +34,12 @@ public class Task {
 		this.ticket = ticket;
 		this.userAddedDate = userAddedDate;
 	}
+	
+	public Task(LocalDateTime userAddedDate, User user) {
+		super();
+		this.userAddedDate = userAddedDate;
+		this.user = user;
+	}
 
 	public Long getId() {
 		return id;

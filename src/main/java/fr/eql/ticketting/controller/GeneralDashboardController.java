@@ -28,20 +28,16 @@ public class GeneralDashboardController {
 
 	@GetMapping({ "dashboard" })
 	public String displayGeneralDashboard(Model model) {
-		generateMockedUser(model);
+		System.err.println("I'm in displayGeneralDashboard");
 		// On recup les groupes de l'utilisateurs
 		model.addAttribute("userGroups", getUserGroups(model));
 
 		return "dashboard/general-dashboard.html";
 	}
 
-	private void generateMockedUser(Model model) {
-		User user = userService.getUserWithId(1L);
-		model.addAttribute("user", user);
-	}
-
 	private List<Group> getUserGroups(Model model) {
 		User user = (User) model.getAttribute("user");
+		System.err.println("In getUserGroups, user : " + user);
 		List<Membership> memberships = membershipService.getMembershipsWithUser(user);
 		List<Group> userGroups = new ArrayList<Group>();
 		for (Membership membership : memberships) {

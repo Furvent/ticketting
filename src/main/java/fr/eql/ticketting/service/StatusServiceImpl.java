@@ -43,4 +43,9 @@ public class StatusServiceImpl implements StatusService{
 	public Status update(Status status) {
 		return repository.save(status);
 	}
+
+	@Override
+	public Status getStatusByLabel(String label) {
+		return repository.findByLabel(label);
+	}
 }

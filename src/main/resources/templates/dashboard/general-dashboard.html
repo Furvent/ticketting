@@ -36,7 +36,7 @@
 						</tr>
 						<tr th:each="group : ${userGroups}">
 							<td><a th:text="${group.id}"
-								th:href="'group?groupId='+${group.id}"></a></td>
+								th:href="'group?groupId=' + ${group.id}"></a></td>
 							<td th:text="${group.name}"></td>
 							<td><span th:if="${group.createdBy.id == user.id}">You
 									are the administrator of this group</span> <span

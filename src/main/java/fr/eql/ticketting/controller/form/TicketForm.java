@@ -1,17 +1,12 @@
 package fr.eql.ticketting.controller.form;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import fr.eql.ticketting.enums.TicketStatus;
 
 public class TicketForm {
 	Long idStatus;
 	String description;
 	List<Long> idUsers;
-	private List<String> radioButtonsOptions = new ArrayList<String>(
-			Arrays.asList(TicketStatus.DONE, TicketStatus.CLOSED));
+	private List<String> radioButtonsOptions;
 	private String radioSelected;
 
 	public Long getIdStatus() {
@@ -57,7 +52,7 @@ public class TicketForm {
 	@Override
 	public String toString() {
 		return "TicketForm [idStatus=" + idStatus + ", description=" + description + ", idUsers=" + idUsers
-				+ ", radioSelected=" + radioSelected + "]";
+				+ ", radioButtonsOptions=" + radioButtonsOptions + ", radioSelected=" + radioSelected + "]";
 	}
 
 }

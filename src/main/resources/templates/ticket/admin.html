@@ -40,6 +40,11 @@
 				th:text="${radioOption}" th:for="${radioOption}"></label>
 		</div>
 		<!-- End Radio -->
+		<!-- Assignation utilisateur -->
+			<select th:field="*{idUsers}" multiple="multiple" class="js-example-basic-multiple js-states form-control">
+				<option th:each="user : ${usersGroup}" th:value="${user.id}"
+					th:text="${user.pseudo}"></option>
+			</select>
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>
 	<a th:if="groupSelectedByUserId == null" th:href="/dashboard"
@@ -48,4 +53,10 @@
 		th:href="'group?groupId='+${groupSelectedByUserId}"
 		class="btn btn-primary">Go back</a>
 </div>
+<script
+	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
+</script>
+<script>
+	$(".js-example-basic-multiple").select2();
+</script>
 </html>

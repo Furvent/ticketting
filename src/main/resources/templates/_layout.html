@@ -5,27 +5,27 @@
 <meta charset="UTF-8" />
 <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 <link
 	href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
 	rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
-	<div class="container-fluid">
-		<div th:replace="_header"></div>
+	<main>
+		<div class="container-fluid">
+			<div th:replace="_header"></div>
 
-		<div layout:fragment="content">default content from _layout.html
-			(to override)</div>
-		<div th:replace="_footer"></div>
-	</div>
-	<!-- end of container-fluid -->
+			<div layout:fragment="content">default content from
+				_layout.html (to override)</div>
+			<div th:replace="_footer"></div>
+		</div>
+	</main>
+
 </body>
 
 </html>

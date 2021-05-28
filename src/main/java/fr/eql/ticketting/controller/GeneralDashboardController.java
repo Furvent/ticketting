@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import fr.eql.ticketting.controller.form.UserProfileForm;
+import fr.eql.ticketting.controller.form.UserForm;
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
 import fr.eql.ticketting.entity.User;
@@ -24,6 +25,11 @@ public class GeneralDashboardController {
 
 	UserService userService;
 	MembershipService membershipService;
+	
+	@ModelAttribute("userForm")
+	public UserForm addConvAttributeInModel() {
+		return new UserForm();
+	}
 
 	public GeneralDashboardController(UserService userService, MembershipService membershipService) {
 		this.userService = userService;
@@ -90,7 +96,13 @@ public class GeneralDashboardController {
 		return userGroups;
 	}
 	
-	
-	
-	
+	@PostMapping("/edit")
+	public RedirectView updateUser(@ModelAttribute("user") User user,@ModelAttribute("userForm") UserForm userForm ,Model model) {
+		if (userForm.getOldPassword().equals(user.getPassword())) {
+			user.setPassword(userForm.getNewPassword());
+			userService.save(user);
+		}
+		return new RedirectView("/dashboard");
+		
+	}
 }

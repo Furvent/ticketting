@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.view.RedirectView;
 
 import fr.eql.ticketting.entity.User;
@@ -49,15 +50,17 @@ public class ConnectionControler {
 		return retour;
 	}
 	
-	/* version modele didi
+	/* version modele 
 	@RequestMapping("/session-end")
     public String finSession(Model model,HttpSession session) {
 	    session.invalidate();
         return "/connect"; 
     }*/
 	
+	//WebRequest permet de supprimer les sessions attributs
 	@PostMapping("/deconnexion")
-	public RedirectView disconnect(@ModelAttribute("user") User user, Model model) {
+	public RedirectView disconnect(@ModelAttribute("user") User user, Model model, HttpSession session) {
+		session.invalidate(); 
 		user = new User();
 		model.addAttribute(user); 
 		return new RedirectView("/connect");

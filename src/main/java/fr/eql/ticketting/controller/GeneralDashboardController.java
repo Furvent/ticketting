@@ -6,8 +6,12 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
+import fr.eql.ticketting.controller.form.UserProfileForm;
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
 import fr.eql.ticketting.entity.User;
@@ -15,7 +19,7 @@ import fr.eql.ticketting.service.MembershipService;
 import fr.eql.ticketting.service.UserService;
 
 @Controller
-@SessionAttributes(value = { "user" })
+@SessionAttributes(value = { "user", "userModif"})
 public class GeneralDashboardController {
 
 	UserService userService;
@@ -34,6 +38,46 @@ public class GeneralDashboardController {
 
 		return "dashboard/general-dashboard.html";
 	}
+	
+
+	@GetMapping({"userProfile"})
+	public String displayOrModifyUserProfile(Model model) {
+		String connectedUserPseudo = ((User) model.getAttribute("user")).getPseudo();
+		if(model.getAttribute("userModif") == null) {
+			model.addAttribute("userModif", new UserProfileForm(connectedUserPseudo, "", "", "", ""));
+		}
+		return "dashboard/userProfile";
+	}
+	
+	@PostMapping({"/profilChangeConfirmation"})
+	public RedirectView profilChangeVerification(@ModelAttribute("userModif") UserProfileForm userModif, 
+			Model model) {
+//		System.err.println("arrivé dans le mapping de confirmation" + userModif.toString());
+//		System.out.println(userModif.getPseudo());
+//		System.out.println(((UserProfileForm) model.getAttribute("userModif")).getPseudo());
+		User user = (User) model.getAttribute("user");
+		RedirectView redirection;
+		
+		if(!userModif.getPasswordCheck().equals(user.getPassword())) {
+			userModif.setErrorMessage("Wrong password entered");
+			redirection = new RedirectView("/userProfile");
+			
+		} else if (!userModif.getPassword().equals(userModif.getPasswordConfirmation())) {
+			userModif.setErrorMessage("The passwords do not match");
+			redirection = new RedirectView("/userProfile");
+			
+		} else {
+//			System.err.println("IAM IN THE ESLE");
+			user.setPassword(userModif.getPassword());
+			user.setPseudo(userModif.getPseudo());
+			
+			redirection = new RedirectView("/dashboard");
+			model.addAttribute("userModif", null);
+		}
+		System.err.println(user);
+		System.err.println("avant la redirection du mapping"  + userModif.toString());
+		return redirection;
+	}
 
 	private List<Group> getUserGroups(Model model) {
 		User user = (User) model.getAttribute("user");
@@ -45,4 +89,8 @@ public class GeneralDashboardController {
 		}
 		return userGroups;
 	}
+	
+	
+	
+	
 }

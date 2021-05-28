@@ -23,7 +23,10 @@ public class ConnectionControler {
 
 	@GetMapping({ "/connect", "/" })
 	public String personneForm(Model model) {
-		model.addAttribute("user", new User());
+		if(((User) model.getAttribute("user")) == null) {
+			model.addAttribute("user", new User());
+		}
+		
 		return "ConnectionPage";
 	}
 

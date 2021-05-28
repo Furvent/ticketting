@@ -5,35 +5,36 @@
 	<div>
 		<form th:action="@{/editUserProfile}" th:object="${userForm}"
 			method="POST">
-			<p style = "color:red;" th:text=${userForm.errorMessage}/></p>
-			
+			<p style="color: red;" th:text=${userForm.errorMessage}></p>
+
 			<div class="form-group">
-				<label for="pseudo1">Edit your pseudo</label> <input type="text"
-					class="form-control" name="pseudo" th:field="*{pseudo}"
-					id="pseudo">
+				<label for="pseudo1">Edit your pseudo</label>
+				<input type="text" class="form-control" name="pseudo" th:field="*{pseudo}" id="pseudo">
 			</div>
-			<small id="pseudohelp" class="form-text text-muted">This
-				"pseudo" is your public identifier</small>
+			<small id="pseudohelp" class="form-text text-muted">This "pseudo" is your public identifier</small>
 			<div class="form-group">
-				<label for="oldPassword">Old Password</label> <input type="password"
+				<label for="oldPassword">Old Password</label>
+				<input type="password"
 					class="form-control" name="password" th:field="*{oldPassword}"
-					id="oldPassword" placeholder="Enter your old password"> <label
-					for="newPassword">New Password</label> <input type="password"
+					id="oldPassword" placeholder="Enter your old password">
+				<label for="newPassword">New Password</label>
+				<input type="password"
 					class="form-control" name="password" th:field="*{newPassword}"
-					id="newPassword" placeholder="Enter your new password"> <small
-					id="passwordhelp" class="form-text text-muted">Enter your
-					new password</small>
+					id="newPassword" placeholder="Enter your new password">
+				<small id="passwordhelp" class="form-text text-muted">Enter your new password</small>
 			</div>
-			<label for="checkNewPassword">Check New Password</label> <input
+			<label for="checkNewPassword">Check New Password</label>
+			<input
 				type="password" class="form-control" name="password"
 				th:field="*{passwordConfirmation}" id="newPassword"
-				placeholder="Enter your new password again "> <small
+				placeholder="Enter your new password again ">
+			<small
 				id="passwordhelp" class="form-text text-muted">Confirm your
-				new password</small>
-	</div>
-	<button type="submit" class="btn btn-primary">Save changes</button>
-	</form>
-		
+				new password
+			</small>
+
+			<button type="submit" class="btn btn-primary">Save changes</button>
+		</form>
 	</div>
 </body>
 </html>

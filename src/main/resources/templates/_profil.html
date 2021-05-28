@@ -1,26 +1,23 @@
-<body xmlns:th="http://www.thymeleaf.org"
-      th:fragment="_profil">
+<body xmlns:th="http://www.thymeleaf.org" th:fragment="_profil">
 	<div>
-		<form th:action="@{/edit}" th:object="${userForm}" method="POST">
-			<div class="form-group">
-				<label for="pseudo1">Pseudo</label> <input type="text"
-					class="form-control" name="pseudo" th:field="${user.pseudo}" id="pseudo"
-					readonly="readonly">
-			</div>
-			<div class="form-group">
-				<label for="login1">Login</label> 
-				<input type="text" class="form-control" name="login" th:field="${user.login}" id="login1"> 
-			</div>
-			<div class="form-group">
-				<label for="oldPassword">Ancien mot de passe</label> <input type="password"
-					class="form-control" name="password" th:field="*{oldPassword}"
-					id="oldPassword" placeholder="Entrez votre ancien mot de passe">
-				<label for="newPassword">Nouveau mot de passe</label> <input type="password"
-					class="form-control" name="password" th:field="*{newPassword}"
-					id="newPassword" placeholder="Entrez votre nouveau mot de passe">
-			</div>
-			<button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-		</form>
+		<b>You will find here the information relative to your profile</b>
+		<div class="form-group">
+			<label for="login1"> Your Login</label> <input type="text"
+				class="form-control" name="login" th:field="${user.login}"
+				id="login1" readonly="readonly">
+		</div>
+		<div class="form-group">
+			<label for="pseudo1">Your Pseudo</label> <input type="text"
+				class="form-control" name="pseudo" th:field="${user.pseudo}"
+				id="pseudo" readonly="readonly">
+		</div>
+		<small id="pseudohelp" class="form-text text-muted">This
+			"pseudo" is your public identifier</small>
+
+	</div>
+	<form th:action="@{/userProfile}" method="GET">
+		<button type="submit" class="btn btn-primary">Modify your profile</button>
+	</form>
 
 	</div>
 </body>

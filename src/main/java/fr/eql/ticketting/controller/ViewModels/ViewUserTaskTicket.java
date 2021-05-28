@@ -6,7 +6,7 @@ import fr.eql.ticketting.entity.Ticket;
 
 public class ViewUserTaskTicket {
 
-	private String details, lastStatus;
+	private String details, title, lastStatus;
 	private long id;
 	private List<String> usersTaskOn;
 
@@ -23,6 +23,14 @@ public class ViewUserTaskTicket {
 
 	public void setDetails(String details) {
 		this.details = details;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getLastStatus() {
@@ -51,8 +59,8 @@ public class ViewUserTaskTicket {
 
 	@Override
 	public String toString() {
-		return "ViewUserTaskTicket [details=" + details + ", lastStatus=" + lastStatus + ", id=" + id + ", usersTaskOn="
-				+ usersTaskOn + "]";
+		return "ViewUserTaskTicket [details=" + details + ", title=" + title + ", lastStatus=" + lastStatus + ", id="
+				+ id + ", usersTaskOn=" + usersTaskOn + "]";
 	}
 
 }

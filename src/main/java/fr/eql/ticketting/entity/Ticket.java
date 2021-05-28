@@ -2,6 +2,8 @@ package fr.eql.ticketting.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +18,9 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String title;
+	
+	@Column(length = 3000) 
 	private String details;
 
 	@OneToMany(mappedBy = "ticket")
@@ -34,12 +39,13 @@ public class Ticket {
 	public Ticket() {
 	}
 
-	public Ticket(String details) {
+	public Ticket(String details, String title) {
 		this.details = details;
+		this.title = title;
 	}
 
-	public Ticket(String details, Group group) {
-		this(details);
+	public Ticket(String details, String title, Group group) {
+		this(details, title);
 		this.group = group;
 	}
 
@@ -57,6 +63,14 @@ public class Ticket {
 
 	public void setDetails(String details) {
 		this.details = details;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Set<StatusHistory> getStatusHistory() {
@@ -96,7 +110,9 @@ public class Ticket {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((details == null) ? 0 : details.hashCode());
+		result = prime * result + ((group == null) ? 0 : group.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
 
@@ -114,17 +130,27 @@ public class Ticket {
 				return false;
 		} else if (!details.equals(other.details))
 			return false;
+		if (group == null) {
+			if (other.group != null)
+				return false;
+		} else if (!group.equals(other.group))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", details=" + details + "]";
+		return "Ticket [id=" + id + ", details=" + details + ", title=" + title + ", groupiD=" + group.getId() + "]";
 	}
 
 }

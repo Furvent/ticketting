@@ -39,11 +39,6 @@ public class TicketController {
 	StatusHistoryService historyService;
 	TaskService taskService;
 
-	@ModelAttribute("ticketForm")
-	public TicketForm addConvAttributeInModel() {
-		return new TicketForm();
-	}
-
 	public TicketController(TicketService service, StatusService statusService, GroupService groupService,
 			MembershipService membershipService, UserService userService, StatusHistoryService historyService,
 			TaskService taskService) {
@@ -65,7 +60,7 @@ public class TicketController {
 
 	@GetMapping("/newTicket")
 	public String formAddTicket(Model model) {
-
+		model.addAttribute("ticketForm", new TicketForm());
 		List<Status> status = new ArrayList<Status>();
 		status = statusService.getAllStatus();
 		model.addAttribute("status", status);

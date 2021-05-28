@@ -8,51 +8,60 @@
 <link rel="stylesheet" th:href="@{/css/general-dashboard.css}"></link>
 </head>
 <body>
-<nav class="nav nav-tabs m-3">
-		<a class="nav-item nav-link active" href="#allTickets" data-toggle="tab">Groupes</a>
-		<a class="nav-item nav-link" href="#myTickets" data-toggle="tab">Profil</a>
+	<nav class="nav nav-tabs m-3">
+		<a class="nav-item nav-link active" href="#groups"
+			data-toggle="tab">Groupes</a> <a class="nav-item nav-link"
+			href="#profil" data-toggle="tab">Profil</a>
 	</nav>
-	<h2>MES GROUPES</h2>
-	<div class="group-container-all-btn">
-	<!--<div class="group-container-new-group">-->
-		<button type="button" class="btn btn-outline-primary">Nouveau</button>
-	<!--  </div>-->
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
-  </form>
-	</div>
-	<div class="group-container-all-groups">	
-		<div class="group-container-column-group-list">
-			<table>
-				<tr>
-					<th>ID</th>
-					<th>NOM</th>
-					<th>ADMINISTRATEUR</th>
-				</tr>
-				<tr th:each="group : ${userGroups}">
-					<td><a th:text="${group.id}"
-						th:href="'group?groupId='+${group.id}"></a></td>
-					<td th:text="${group.name}"></td>
-					<td><span th:if="${group.createdBy.id == user.id}">You
-							are the administrator of this group</span> <span
-						th:unless="${group.createdBy.id == user.id}"
-						th:text="${group.createdBy.pseudo}"></span></td>
-				</tr>
-			</table>
+	<div class="tab-content">
+		<div class="tab-pane fade show active" id="groups">
+			<h2>MES GROUPES</h2>
+			<div class="group-container-all-btn">
+				<!--<div class="group-container-new-group">-->
+				<button type="button" class="btn btn-outline-primary">Nouveau</button>
+				<!--  </div>-->
+				<form class="form-inline">
+					<input class="form-control mr-sm-2" type="search"
+						placeholder="Rechercher" aria-label="Rechercher">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+				</form>
+			</div>
+			<div class="group-container-all-groups">
+				<div class="group-container-column-group-list">
+					<table>
+						<tr>
+							<th>ID</th>
+							<th>NOM</th>
+							<th>ADMINISTRATEUR</th>
+						</tr>
+						<tr th:each="group : ${userGroups}">
+							<td><a th:text="${group.id}"
+								th:href="'group?groupId='+${group.id}"></a></td>
+							<td th:text="${group.name}"></td>
+							<td><span th:if="${group.createdBy.id == user.id}">You
+									are the administrator of this group</span> <span
+								th:unless="${group.createdBy.id == user.id}"
+								th:text="${group.createdBy.pseudo}"></span></td>
+						</tr>
+					</table>
+				</div>
+				<div class="group-container-column-group-stats">
+					<table>
+						<tr>
+							<th>INFOS</th>
+						</tr>
+						<tr th:each="group : ${userGroups}">
+							<td><span th:if="${group.createdBy.id == user.id}">You
+									are the administrator of this group</span> <span
+								th:unless="${group.createdBy.id == user.id}"
+								th:text="${group.createdBy.pseudo}"></span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
-		<div class="group-container-column-group-stats">
-			<table>
-				<tr>
-					<th>INFOS</th>
-				</tr>
-				<tr th:each="group : ${userGroups}">
-					<td><span th:if="${group.createdBy.id == user.id}">You
-							are the administrator of this group</span> <span
-						th:unless="${group.createdBy.id == user.id}"
-						th:text="${group.createdBy.pseudo}"></span></td>
-				</tr>
-			</table>
+		<div class="tab-pane fade" id="profil">
+			<div th:replace="_profil"></div>
 		</div>
 	</div>
 </body>

@@ -9,8 +9,10 @@
 <div class="card m-2" style="width: 25rem;">
 	<div class="card-body">
 		<h4 class="card-title text-center"
-			th:text="' - ' + ${ticket.details} + ' - '"></h4>
+			th:text="' - ' + ${ticket.title} + ' - '"></h4>
 		<div class="ticketting-line"></div>
+		<h5 class="card-title mt-2">Task's details</h5>
+		<p th:text="${ticket.details}"></p>
 		<h5 class="card-title mt-2">Working on</h5>
 		<ul>
 			<li th:each="pseudo : ${usersPseudo}" th:text="${pseudo}"></li>
@@ -28,9 +30,15 @@
 	<form th:action="@{/modifTicket}" th:object="${ticketForm}"
 		method="POST">
 		<div class="form-group">
-			<label for="ticketDetail">Task's details</label> <input type="text"
-				class="form-control" name="ticketDetail" th:field="*{description}"
+			<label for="ticketDetail">Task's title</label>
+			<input type="text"
+				class="form-control" name="ticketTitle" th:field="*{title}"
 				id="ticketDetail">
+		</div>
+		<div class="form-group">
+			<label for="ticketDetail">Task's details</label>
+			<textarea class="form-control" name="ticketDetail" th:field="*{description}"
+				id="ticketDetail" rows="3"></textarea>
 		</div>
 		<!-- Radio -->
 		<div th:each="radioOption : ${ticketForm.radioButtonsOptions}" class="form-check">

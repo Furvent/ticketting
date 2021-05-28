@@ -74,19 +74,19 @@ public class EditTicketDisplayController {
 
 	}
 
-	private void setNewStatusOnTicket(String newStatus, Ticket ticket) {
-		switch (newStatus) {
-		case TicketStatus.DONE:
-			
-			StatusHistory statusHistory = new StatusHistory(null, ticket, null)
-			break;
-		case TicketStatus.CLOSED:
-
-			break;
-		default:
-			break;
-		}
-	}
+//	private void setNewStatusOnTicket(String newStatus, Ticket ticket) {
+//		switch (newStatus) {
+//		case TicketStatus.DONE:
+//			
+//			StatusHistory statusHistory = new StatusHistory(null, ticket, null)
+//			break;
+//		case TicketStatus.CLOSED:
+//
+//			break;
+//		default:
+//			break;
+//		}
+//	}
 	
 
 }

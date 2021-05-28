@@ -90,12 +90,6 @@ public class GroupDashboardController {
 	}
 	public void formAddTicket(Model model, Group group) {
 		model.addAttribute("ticketForm", new TicketForm());
-		Status statusOpened = statusService.getAllStatus().get(0);
-		Status statusAllocated = statusService.getAllStatus().get(1);
-		List<Status> status = new ArrayList<Status>();
-		status.add(statusOpened);
-		status.add(statusAllocated);
-		model.addAttribute("status", status);
 		List<User> users = new ArrayList<User>();
 		//Ajouter la sélection du groupe
 		users = displayUsersByGroup(model, group);

@@ -3,9 +3,10 @@ package fr.eql.ticketting.controller.form;
 import java.util.List;
 
 public class TicketForm {
-	Long idStatus;
-	String description;
-	List<Long> idUsers;
+	private Long idStatus;
+	private String title;
+	private String description;
+	private List<Long> idUsers;
 	private List<String> radioButtonsOptions;
 	private String radioSelected;
 
@@ -15,6 +16,14 @@ public class TicketForm {
 
 	public void setIdStatus(Long idStatus) {
 		this.idStatus = idStatus;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
@@ -51,8 +60,8 @@ public class TicketForm {
 
 	@Override
 	public String toString() {
-		return "TicketForm [idStatus=" + idStatus + ", description=" + description + ", idUsers=" + idUsers
-				+ ", radioButtonsOptions=" + radioButtonsOptions + ", radioSelected=" + radioSelected + "]";
+		return "TicketForm [idStatus=" + idStatus + ", title=" + title + ", description=" + description + ", idUsers="
+				+ idUsers + ", radioButtonsOptions=" + radioButtonsOptions + ", radioSelected=" + radioSelected + "]";
 	}
 
 }

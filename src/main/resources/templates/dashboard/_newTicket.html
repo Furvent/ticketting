@@ -1,0 +1,41 @@
+
+<div class="form-group" xmlns:th="http://www.thymeleaf.org">
+		<form method="post" th:object="${ticketForm}"
+			th:action="@{/create-new-ticket}" class="form-group">
+	
+			<!-- Boucle thymeleaf affichage des status -->
+			<select th:field="*{idStatus}" class="form-control">
+				<option value="default">Select a status</option>
+				<option th:each="s : ${status}" th:value="${s.id}"
+					th:text="${s.label}"></option>
+			</select>
+	
+	
+			<!-- Description du ticket -->
+			<div class="form-group">
+				<div class="form-group">
+					<label for="details">Details</label>
+					<textarea class="form-control" id="details" rows="3"
+						th:field="*{description}"></textarea>
+				</div>
+				<small id="detailhelp" class="form-text text-muted">Please explain ticket's details</small>
+			</div>
+	
+			<!-- Assignation utilisateur -->
+			<div class="form-group">
+			<select th:field="*{idUsers}" multiple="multiple"
+				class="js-example-basic-multiple js-states form-control">
+				<option value="default">Assign a user</option>
+				<option th:each="u : ${users}" th:value="${u.id}"
+					th:text="${u.pseudo}"></option>
+			</select>
+			</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
+<script
+	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+	$(".js-example-basic-multiple").select2();
+</script>

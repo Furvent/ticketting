@@ -1,5 +1,6 @@
 package fr.eql.ticketting.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import fr.eql.ticketting.controller.form.UserForm;
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
 import fr.eql.ticketting.entity.User;
+import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
 import fr.eql.ticketting.service.UserService;
 
@@ -24,10 +26,13 @@ public class GeneralDashboardController {
 
 	UserService userService;
 	MembershipService membershipService;
+	GroupService groupService;
 	
-	public GeneralDashboardController(UserService userService, MembershipService membershipService) {
+	public GeneralDashboardController(UserService userService, MembershipService membershipService,
+			GroupService groupService) {
 		this.userService = userService;
 		this.membershipService = membershipService;
+		this.groupService = groupService;
 	}
 
 	@GetMapping({ "dashboard" })
@@ -77,5 +82,31 @@ public class GeneralDashboardController {
 			model.addAttribute("userForm", new UserForm(connectedUserPseudo, "", "", "", ""));
 			}
 				return "profilEdition";
+	}
+	
+	@GetMapping({"createGroup"})
+	public String createGroupe(Model model) {
+		model.addAttribute("newGroup", new Group());
+		return("dashboard/createGroup");
+	}
+	
+	@PostMapping({"/groupeCreated"})
+	public RedirectView validateGroupCreation(Model model, @ModelAttribute("newGroup") Group newGroup) {
+		RedirectView redirection;
+		if(newGroup.getName()=="") {
+			redirection = new RedirectView("/createGroup");
+		} else {
+			User user = (User) model.getAttribute("user");
+			newGroup.setCreatedBy(user);
+			LocalDateTime GroupAndMemberDate = LocalDateTime.now();
+			newGroup.setCreationDateGroup(GroupAndMemberDate);
+			System.err.println(newGroup);
+			groupService.save(newGroup);
+			Membership creatorMembership = new Membership(user, newGroup, GroupAndMemberDate);
+			membershipService.save(creatorMembership);
+			redirection = new RedirectView("/dashboard");
+		}
+		
+		return redirection;
 	}
 }

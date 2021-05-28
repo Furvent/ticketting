@@ -19,7 +19,9 @@
 			<h2>MES GROUPES</h2>
 			<div class="group-container-all-btn">
 				<!--<div class="group-container-new-group">-->
-				<button type="button" class="btn btn-outline-primary">Nouveau</button>
+				<form th:action="@{/createGroup}" method="get">
+				<button type="submit" class="btn btn-outline-primary">Nouveau</button>
+				</form>
 				<!--  </div>-->
 				<form class="form-inline">
 					<input class="form-control mr-sm-2" type="search"

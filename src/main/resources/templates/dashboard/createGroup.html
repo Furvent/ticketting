@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{_layout}" layout:fragment="content">
+<head>
+<meta charset="ISO-8859-1">
+<title>Create your group from here</title>
+</head>
+<body>
+	<form th:action="@{/groupeCreated}" th:object="${newGroup}"
+		method="POST">
+		<div class="form-group">
+			<label for="name1">Group name</label> <input type="text"
+				class="form-control" name="name" th:field="*{name}" id="name"
+				placeholder="Enter the name of your new group"> <small
+				id="pseudohelp" class="form-text text-muted">This will set permanently the name of
+				your group</small>
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+		
+	<form th:action="@{/dashboard}" method="GET">
+			<button type="submit" class="btn btn-primary">Return</button>
+	</form>
+</body>
+</html>

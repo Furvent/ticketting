@@ -8,15 +8,17 @@
 	<div class="card m-2" style="width: 25rem;">
 		<div class="card-body">
 			<h4 class="card-title text-center"
-				th:text="' - ' + ${ticketDetails} + ' - '"></h4>
+				th:text="' - ' + ${ticketTitle} + ' - '"></h4>
 			<div class="ticketting-line"></div>
+			<h5 class="card-title mt-2">Details</h5>
+			<p th:text="${ticketDetails}"></p>
 			<h5 class="card-title mt-2">Working on</h5>
 			<ul>
 				<li th:each="pseudo : ${usersPseudo}" th:text="${pseudo}"></li>
 			</ul>
 			<h5 class="card-title mt-2">History</h5>
 			<ul>
-				<li th:each="statusHistory : ${historic}">
+				<li th:each="statusHistory : ${history}">
 					<p>
 						Date <span th:text="${statusHistory.statusDate}"></span> => <span
 							th:text="${statusHistory.status.label}"></span>

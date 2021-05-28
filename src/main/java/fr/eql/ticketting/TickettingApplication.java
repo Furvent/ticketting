@@ -109,12 +109,12 @@ public class TickettingApplication implements CommandLineRunner {
 	private void createTickets() {
 		// Create 3 tickets
 		Group group1 = groupService.getGroupById(1l);
-		Ticket ticket1 = new Ticket("Ticket 1 details", group1);
-		Ticket ticket2 = new Ticket("Ticket 2 details", group1);
-		Ticket ticket3 = new Ticket("Ticket 3 details", group1);
-		Ticket ticket4 = new Ticket("Ticket 4 details", group1);
-		Ticket ticket5 = new Ticket("Ticket 5 details", group1);
-		Ticket ticket6 = new Ticket("Ticket 6 details", group1);
+		Ticket ticket1 = new Ticket("Ticket 1 details", "title ticket 1", group1);
+		Ticket ticket2 = new Ticket("Ticket 2 details", "title ticket 2", group1);
+		Ticket ticket3 = new Ticket("Ticket 3 details", "title ticket 3", group1);
+		Ticket ticket4 = new Ticket("Ticket 4 details", "title ticket 4", group1);
+		Ticket ticket5 = new Ticket("Ticket 5 details", "title ticket 5", group1);
+		Ticket ticket6 = new Ticket("Ticket 6 details", "title ticket 6", group1);
 		ticketService.save(ticket1);
 		ticketService.save(ticket2);
 		ticketService.save(ticket3);

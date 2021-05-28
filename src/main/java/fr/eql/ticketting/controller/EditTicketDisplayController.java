@@ -117,6 +117,9 @@ public class EditTicketDisplayController {
 		if (ticket == null) {
 			return new RedirectView("/");
 		}
+		if (ticketForm.getTitle() != "") {
+			ticket.setTitle(ticketForm.getTitle());
+		}
 		if (ticketForm.getDescription() != "") {
 			ticket.setDetails(ticketForm.getDescription());
 		}

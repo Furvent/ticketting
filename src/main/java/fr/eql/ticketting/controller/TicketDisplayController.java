@@ -36,6 +36,7 @@ public class TicketDisplayController {
 	public String displayTicketWithId(Model model, @RequestParam(name = "ticketId", required = true) String ticketId) {
 		// On veut le détail du ticket
 		Ticket ticket = ticketService.getTicketById(Long.parseLong(ticketId));
+		model.addAttribute("ticketTitle", ticket.getTitle());
 		model.addAttribute("ticketDetails", ticket.getDetails());
 		// On veut les pseudos des personnes qui bossent dessus (Task)
 		List<Task> tasksLinkedWithTicket = taskService.getTasksByTicket(ticket);
@@ -46,7 +47,7 @@ public class TicketDisplayController {
 		model.addAttribute("usersPseudo", usersPseudoWorkingOnTicket);
 		// On veut l'historique (Status, StatusHistory)
 		List<StatusHistory> statusHistoricOfTicket = statusHistoryService.getStatusHistoriesFromThisTicket(ticket);
-		model.addAttribute("historic", statusHistoricOfTicket);
+		model.addAttribute("history", statusHistoricOfTicket);
 		return "ticket/details.html";
 	}
 

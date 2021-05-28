@@ -6,13 +6,17 @@
 <meta charset="ISO-8859-1">
 <title>General dashboard</title>
 <link rel="stylesheet" th:href="@{/css/group-dashboard.css}"></link>
-<link rel="stylesheet" th:href="@{/css/group-dashboard-tickets-user.css}"></link>
+<link rel="stylesheet"
+	th:href="@{/css/group-dashboard-tickets-user.css}"></link>
 </head>
 <body>
 	<nav class="nav nav-tabs m-3">
 		<a class="nav-item nav-link active" href="#allTickets" data-toggle="tab">All tickets</a>
 		<a class="nav-item nav-link" href="#myTickets" data-toggle="tab">My tickets</a>
-		<a class="nav-item nav-link" href="#newTicket" data-toggle="tab">New ticket</a>
+		<a th:if="${isAdmin}" class="nav-item nav-link" href="#newTicket" data-toggle="tab">New ticket</a>	
+		<a th:if="${isAdmin}" class="nav-item nav-link" href="#admin"
+			data-toggle="tab">Group options</a>
+		
 	</nav>
 
 	<div class="tab-content m-3">
@@ -24,6 +28,9 @@
 		</div>
 		<div class="tab-pane fade" id="newTicket">
 			<div th:replace="dashboard/_newTicket"></div>
+		</div>
+		<div class="tab-pane fade" id="admin">
+			<div th:replace="dashboard/_adminFunctions"></div>
 		</div>
 	</div>
 </body>

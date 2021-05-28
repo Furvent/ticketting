@@ -80,29 +80,29 @@ public class TicketController {
 
 	// Page renvoyée par le test
 	@PostMapping("/create-new-ticket")
-	public RedirectView testMenu2(@ModelAttribute("ticketForm") TicketForm ticketForm, Model model2) {
-		Long idStatus = ticketForm.getIdStatus();
-		String description = ticketForm.getDescription();
+	public RedirectView testMenu2(@ModelAttribute("ticketForm") TicketForm ticketForm, Model model) {
 		List<Long> idUsers = ticketForm.getIdUsers();
-		String selectedGroupId = (String) model2.getAttribute("groupSelectedByUserId");
-
-		model2.addAttribute("idUsers", idUsers);
-		model2.addAttribute("idStatus", idStatus);
-		model2.addAttribute("description", description);
-
+		String selectedGroupId = (String) model.getAttribute("groupSelectedByUserId");
+		String ticketTitle = ticketForm.getTitle();
+		String description = ticketForm.getDescription();
+		Set<StatusHistory> statusHistorys = new HashSet<StatusHistory>();
+		model.addAttribute("idUsers", idUsers);
+		model.addAttribute("ticketTitle", ticketTitle);
 		// Ajout du nouveau ticket en BDD
 		// Create ticket
 		Ticket ticket = new Ticket();
+		model.addAttribute("description", description);
+		ticket.setTitle(ticketTitle);
 		ticket.setDetails(description);
 		ticket.setGroup(groupService.getGroupById(Long.parseLong(selectedGroupId)));
 		service.save(ticket);
 
 		// Create status historic
-		Status status = statusService.getStatusById(idStatus);
-		StatusHistory statusHistory = new StatusHistory(status, ticket, LocalDateTime.now());
-		historyService.save(statusHistory);
-		Set<StatusHistory> statusHistorys = new HashSet<StatusHistory>();
-		statusHistorys.add(statusHistory);
+		Long idStatus = 1L;
+		if (idUsers.size() > 0) {
+			statusHistorys.add(saveStatusHistory(idStatus, ticket));
+			idStatus = 2L;
+		}
 
 		// create task
 		Set<Task> tasks = new HashSet<Task>();
@@ -111,10 +111,17 @@ public class TicketController {
 			taskService.save(task);
 			tasks.add(task);
 		}
-
+		statusHistorys.add(saveStatusHistory(idStatus, ticket));
 		ticket.setStatusHistory(statusHistorys);
 		ticket.setTasks(tasks);
 		service.save(ticket);
-		return new RedirectView( "/group?groupId=" + selectedGroupId);
+		return new RedirectView("/group?groupId=" + selectedGroupId);
+	}
+
+	private StatusHistory saveStatusHistory(Long idStatus, Ticket ticket) {
+		Status status = statusService.getStatusById(idStatus);
+		StatusHistory statusHistory = new StatusHistory(status, ticket, LocalDateTime.now());
+		historyService.save(statusHistory);
+		return statusHistory;
 	}
 }

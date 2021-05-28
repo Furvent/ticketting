@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fr.eql.ticketting.controller.ViewModels.ViewUserTaskTicket;
+import fr.eql.ticketting.controller.form.TicketForm;
 import fr.eql.ticketting.entity.Group;
 import fr.eql.ticketting.entity.Membership;
+import fr.eql.ticketting.entity.Status;
 import fr.eql.ticketting.entity.StatusHistory;
 import fr.eql.ticketting.entity.Task;
 import fr.eql.ticketting.entity.Ticket;
@@ -20,6 +22,7 @@ import fr.eql.ticketting.enums.TicketStatus;
 import fr.eql.ticketting.service.GroupService;
 import fr.eql.ticketting.service.MembershipService;
 import fr.eql.ticketting.service.StatusHistoryService;
+import fr.eql.ticketting.service.StatusService;
 import fr.eql.ticketting.service.TaskService;
 import fr.eql.ticketting.service.TicketService;
 import fr.eql.ticketting.service.UserService;
@@ -33,17 +36,18 @@ public class GroupDashboardController {
 	TicketService ticketService;
 	StatusHistoryService statusHistoryService;
 	TaskService taskService;
+	StatusService statusService;
 
 	public GroupDashboardController(GroupService groupService, MembershipService membershipService,
 			UserService userService, TicketService ticketService, StatusHistoryService statusHistoryService,
-			TaskService taskService) {
-		super();
+			TaskService taskService, StatusService statusService) {
 		this.groupService = groupService;
 		this.membershipService = membershipService;
 		this.userService = userService;
 		this.ticketService = ticketService;
 		this.statusHistoryService = statusHistoryService;
 		this.taskService = taskService;
+		this.statusService = statusService;
 	}
 
 	@GetMapping("group")
@@ -76,12 +80,34 @@ public class GroupDashboardController {
 			addToModelUserOnTaskTickets(model, user, groupIdLong);
 			// On ajoute les titres de status au model
 			addStatusTitleToModel(model);
-
-			templateName = "/dashboard/group-dashboard.html";
+			//Ajout form ticket
+			formAddTicket(model,currUserGroup);
+			templateName = "dashboard/group-dashboard.html";
 		} else {
-			templateName = "/dashboard/general-dashboard.html";
+			templateName = "dashboard/general-dashboard.html";
 		}
 		return templateName;
+	}
+	public void formAddTicket(Model model, Group group) {
+		model.addAttribute("ticketForm", new TicketForm());
+		Status statusOpened = statusService.getAllStatus().get(0);
+		Status statusAllocated = statusService.getAllStatus().get(1);
+		List<Status> status = new ArrayList<Status>();
+		status.add(statusOpened);
+		status.add(statusAllocated);
+		model.addAttribute("status", status);
+		List<User> users = new ArrayList<User>();
+		//Ajouter la sélection du groupe
+		users = displayUsersByGroup(model, group);
+		model.addAttribute("users", users);
+	}
+	private List<User> displayUsersByGroup(Model model, Group group) {
+		List<Membership> memberships = membershipService.getMembershipsWithGroup(group);
+		List<User> users = new ArrayList<User>();
+		for (Membership membership : memberships) {
+			users.add(membership.getUser());
+		}
+		return users;
 	}
 
 	private List<Ticket> getGroupTickets(Group group) {

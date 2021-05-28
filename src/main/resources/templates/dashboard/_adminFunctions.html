@@ -1,0 +1,17 @@
+
+<h3>GROUP MEMBER</h3>
+<div th:each="u : ${users2}">
+	<tr>
+		<td th:text="${u.pseudo}"></td>
+	</tr>
+</div>
+<h3>NEW MEMBER</h3>
+<form method="post" th:object="${addUserForm}"
+	th:action="@{/addUser}" class="form-group">
+	<select th:field="*{idUserToAdd}" class="form-control">
+		<option value="default">Ajouter des nouveaux membres</option>
+		<option th:each="u2 : ${userToAdd}" th:value="${u2.id}"
+			th:text="${u2.pseudo}"></option>
+	</select>
+	<button type="submit" class="btn btn-primary">VALIDER</button>
+</form>

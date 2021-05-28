@@ -3,6 +3,12 @@
 	margin: auto;
 }
 
+.ticketting-main-container-connect {
+	width: 30rem;
+	margin-right: auto;
+	margin-left: auto;
+}
+
 .ticketting-line {
 	line-height: 90%;
 	text-align: center;

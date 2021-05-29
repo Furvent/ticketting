@@ -21,8 +21,10 @@
 		<ul>
 			<li th:each="statusHistory : ${historic}">
 				<p>
-					Date <span th:text="${statusHistory.statusDate}"></span> => <span
-						th:text="${statusHistory.status.label}"></span>
+					<span
+						th:text="${#temporals.format(statusHistory.statusDate, 'dd MMM yyyy')}">
+					</span>
+					=> <span th:text="${statusHistory.status.label}"></span>
 				</p>
 			</li>
 		</ul>
@@ -58,8 +60,8 @@
 			<div class="d-flex justify-content-around mt-3">
 				<button type="submit" class="btn btn-success" style="width: 7rem;">Submit</button>
 				<a th:if="groupSelectedByUserId == null" th:href="/dashboard"
-					class="btn btn-warning" style="width: 7rem;">Go back</a>
-				<a th:unless="groupSelectedByUserId == null"
+					class="btn btn-warning" style="width: 7rem;">Go back</a> <a
+					th:unless="groupSelectedByUserId == null"
 					th:href="'group?groupId='+${groupSelectedByUserId}"
 					class="btn btn-warning" style="width: 7rem;">Go back</a>
 			</div>

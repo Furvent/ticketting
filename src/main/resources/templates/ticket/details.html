@@ -20,7 +20,7 @@
 			<ul>
 				<li th:each="statusHistory : ${history}">
 					<p>
-						Date <span th:text="${statusHistory.statusDate}"></span> => <span
+						<span th:text="${#temporals.format(statusHistory.statusDate, 'dd MMM yyyy')}"></span> => <span
 							th:text="${statusHistory.status.label}"></span>
 					</p>
 				</li>

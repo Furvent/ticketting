@@ -10,13 +10,25 @@
 	th:href="@{/css/group-dashboard-tickets-user.css}"></link>
 </head>
 <body>
+	<header class="d-flex align-items-center m-3">
+		<h5 th:text="'Welcome ' + ${user.pseudo} + ' !'"></h5>
+		<a href="/dashboard" class="btn btn-outline-primary ml-5">Back to
+			general dashboard</a>
+		<form th:action="@{/deconnexion}" th:object="${user}" method="POST">
+			<button type="submit"
+				class="btn btn-outline-warning ml-5">Disconnect</button>
+		</form>
+	</header>
+	<div class="ticketting-line"></div>
 	<nav class="nav nav-tabs m-3">
-		<a class="nav-item nav-link active" href="#allTickets" data-toggle="tab">All tickets</a>
-		<a class="nav-item nav-link" href="#myTickets" data-toggle="tab">My tickets</a>
-		<a th:if="${isAdmin}" class="nav-item nav-link" href="#newTicket" data-toggle="tab">New ticket</a>	
-		<a th:if="${isAdmin}" class="nav-item nav-link" href="#admin"
-			data-toggle="tab">Group options</a>
-		
+		<a class="nav-item nav-link active" href="#allTickets"
+			data-toggle="tab">All tickets</a> <a class="nav-item nav-link"
+			href="#myTickets" data-toggle="tab">My tickets</a> <a
+			th:if="${isAdmin}" class="nav-item nav-link" href="#newTicket"
+			data-toggle="tab">New ticket</a> <a th:if="${isAdmin}"
+			class="nav-item nav-link" href="#admin" data-toggle="tab">Group
+			options</a>
+
 	</nav>
 
 	<div class="tab-content m-3">

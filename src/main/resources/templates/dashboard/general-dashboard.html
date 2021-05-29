@@ -22,20 +22,12 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<h2>My Groups</h2>
 					<form class="mr-5" th:action="@{/createGroup}" method="get">
-						<button type="submit" class="btn btn-outline-primary">Create
+						<button type="submit" class="btn btn-primary">Create
 							a new group</button>
 					</form>
 				</div>
 
 				<div class="group-container-all-btn">
-					<!-- Add group button -->
-
-					<!-- Research button -->
-					<!-- <form class="form-inline">
-						<input class="form-control mr-sm-2" type="search"
-							placeholder="Rechercher" aria-label="Rechercher">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
-					</form> -->
 				</div>
 				<table class="table mt-2" cellspacing="0">
 					<thead>
@@ -54,7 +46,7 @@
 								th:unless="${group.createdBy.id == user.id}"
 								th:text="${group.createdBy.pseudo}"></span></td>
 							<td class="text-center" th:text="${group.creationDateGroup}"></td>
-							<td><a class="btn btn-primary" href="#" role="button">Enter</a></td>
+							<td><a class="btn btn-success" th:href="'group?groupId=' + ${group.id}" role="button">Enter</a></td>
 						</tr>
 					</tbody>
 				</table>

@@ -1,4 +1,4 @@
-.group-container-all-groups {
+/* .group-container-all-groups {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
@@ -46,4 +46,9 @@
 	margin-right: auto;
 	padding-top:1rem;
 	width:30%;
+} */
+
+.ticketting-container-general-dashboard {
+	margin: auto;
+	width: 50rem;
 }

@@ -12,6 +12,7 @@ public class ViewUserTaskTicket {
 
 	public ViewUserTaskTicket(Ticket ticket, String lastStatus, List<String> usersTaskOn) {
 		this.details = ticket.getDetails();
+		this.title = ticket.getTitle();
 		this.id = ticket.getId();
 		this.lastStatus = lastStatus;
 		this.usersTaskOn = usersTaskOn;

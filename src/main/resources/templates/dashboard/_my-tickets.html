@@ -1,70 +1,20 @@
-<div class="card-deck-my-tyckets">
-<div class="ticketting-container-column-ticket-status">
-<h4 class="ticketting-title-status" th:text="${statusTitleOpened}"></h4>
-	<div th:each="ticketView : ${userTickets}"
-		class="card border-primary mb-3" style="width: 20rem;">
-		<h5 class="card-header text-white bg-primary mb-3 text-left" >TO DO...</h5>
-		<div class="card-body d-flex flex-column">
-			<p class="card-text text-center" th:text="${ticketView.details}"></p>
-			<button type="button" class="align-self-end btn btn-link btn-sm float-right" style="margin-top: auto;">more details...</button>
-		</div>
-			<ul class="d-inline list-group">
-				<li class="list-group-item" th:each="userPseudo : ${ticketView.usersTaskOn}"
-					th:text="${userPseudo}"></li>
+<div class="d-flex flex-wrap">
+	<article th:each="ticketView : ${userTickets}" class="card m-2"
+		style="width: 20rem;">
+		<div class="card-body">
+			<h4 class="card-title text-center text-primary"
+				th:text="' - ' + ${ticketView.title} + ' - '"></h4>
+			<div class="ticketting-line"></div>
+			<h5 class="card-title mt-2 text-primary">Details</h5>
+			<p th:text="${ticketView.details}"></p>
+			<h5 class="card-title mt-2 text-primary">Working on</h5>
+			<ul>
+				<li th:each="pseudo : ${ticketView.usersTaskOn}" th:text="${pseudo}"></li>
 			</ul>
-		<div class="card-footer text-right"><small class="card-text" th:text="${ticketView.lastStatus}"></small>
+			<h5 class="card-title mt-2 text-primary"
+				th:text="'Status: ' + ${ticketView.lastStatus}"></h5>
+			<h5 class="card-title mt-2">Comments</h5>
+			<p>Work in progress!</p>
 		</div>
-		</div>
-	</div>
-<div class="ticketting-container-column-ticket-status">
-<h4 class="ticketting-title-status" th:text="${statusTitleAllocated}"></h4>
-	<div th:each="ticketView : ${userTickets}"
-	th:with="ticket=${allocatedTicket}"
-		class="card border-primary mb-3" style="width: 20rem;">
-		<h5 class="card-header text-white bg-primary mb-3 text-left" >TO DO...</h5>
-		<div class="card-body d-flex flex-column">
-			<p class="card-text text-center" th:text="${ticketView.details}"></p>
-			<button type="button" class="align-self-end btn btn-link btn-sm float-right" style="margin-top: auto;">more details...</button>
-		</div>
-			<ul class="d-inline list-group">
-				<li class="list-group-item" th:each="userPseudo : ${ticketView.usersTaskOn}"
-					th:text="${userPseudo}"></li>
-			</ul>
-		<div class="card-footer text-right"><small class="card-text" th:text="${ticketView.lastStatus}"></small>
-		</div>
-		</div>
-	</div>
-<div class="ticketting-container-column-ticket-status">
-<h4 class="ticketting-title-status" th:text="${statusTitleDone}"></h4>
-	<div th:each="ticketView : ${userTickets}"
-		class="card border-primary mb-3" style="width: 20rem;">
-		<h5 class="card-header text-white bg-primary mb-3 text-left" >TO DO...</h5>
-		<div class="card-body d-flex flex-column">
-			<p class="card-text text-center" th:text="${ticketView.details}"></p>
-			<button type="button" class="align-self-end btn btn-link btn-sm float-right" style="margin-top: auto;">more details...</button>
-		</div>
-			<ul class="d-inline list-group">
-				<li class="list-group-item" th:each="userPseudo : ${ticketView.usersTaskOn}"
-					th:text="${userPseudo}"></li>
-			</ul>
-		<div class="card-footer text-right"><small class="card-text" th:text="${ticketView.lastStatus}"></small>
-		</div>
-		</div>
-	</div><div class="ticketting-container-column-ticket-status">
-		<h4 class="ticketting-title-status" th:text="${statusTitleClosed}"></h4>
-	<div th:each="ticketView : ${userTickets}"
-		class="card border-primary mb-3" style="width: 20rem;">
-		<h5 class="card-header text-white bg-primary mb-3 text-left" >TO DO...</h5>
-		<div class="card-body d-flex flex-column">
-			<p class="card-text text-center" th:text="${ticketView.details}"></p>
-			<button type="button" class="align-self-end btn btn-link btn-sm float-right" style="margin-top: auto;">more details...</button>
-		</div>
-			<ul class="d-inline list-group">
-				<li class="list-group-item" th:each="userPseudo : ${ticketView.usersTaskOn}"
-					th:text="${userPseudo}"></li>
-			</ul>
-		<div class="card-footer text-right"><small class="card-text" th:text="${ticketView.lastStatus}"></small>
-		</div>
-		</div>
-	</div>
+	</article>
 </div>

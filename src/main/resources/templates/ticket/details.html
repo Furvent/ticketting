@@ -7,16 +7,16 @@
 </head>
 	<div class="card m-2" style="width: 25rem;">
 		<div class="card-body">
-			<h4 class="card-title text-center"
+			<h4 class="card-title text-center text-primary"
 				th:text="' - ' + ${ticketTitle} + ' - '"></h4>
 			<div class="ticketting-line"></div>
-			<h5 class="card-title mt-2">Details</h5>
+			<h5 class="card-title mt-2 text-primary">Details</h5>
 			<p th:text="${ticketDetails}"></p>
-			<h5 class="card-title mt-2">Working on</h5>
+			<h5 class="card-title mt-2 text-primary">Working on</h5>
 			<ul>
 				<li th:each="pseudo : ${usersPseudo}" th:text="${pseudo}"></li>
 			</ul>
-			<h5 class="card-title mt-2">History</h5>
+			<h5 class="card-title mt-2 text-primary">History</h5>
 			<ul>
 				<li th:each="statusHistory : ${history}">
 					<p>
@@ -25,7 +25,7 @@
 					</p>
 				</li>
 			</ul>
-			<h5 class="card-title mt-2">Comments</h5>
+			<h5 class="card-title mt-2 text-primary">Comments</h5>
 			<p>Work in progress!</p>
 		</div>
 		<a th:if="groupSelectedByUserId == null" th:href="/dashboard"

@@ -1,17 +1,22 @@
-
-<h3>GROUP MEMBER</h3>
-<div th:each="u : ${users2}">
-	<tr>
-		<td th:text="${u.pseudo}"></td>
-	</tr>
+<div style="width: 35rem">
+	<section>
+		<h4>Group members</h4>
+		<ul>
+			<li th:each="u : ${users2}" th:text="${u.pseudo}"></li>
+		</ul>
+	</section>
+	<section>
+		<h4>Add a member</h4>
+		<form method="post" th:object="${addUserForm}" th:action="@{/addUser}"
+			class="form-group d-flex align-items-center">
+			<select th:field="*{idUserToAdd}" class="form-control">
+				<option value="default">Ajouter des nouveaux membres</option>
+				<option th:each="u2 : ${userToAdd}" th:value="${u2.id}"
+					th:text="${u2.pseudo}"></option>
+			</select>
+			<button type="submit" class="btn btn-primary ml-2">VALIDER</button>
+		</form>
+	</section>
 </div>
-<h3>NEW MEMBER</h3>
-<form method="post" th:object="${addUserForm}"
-	th:action="@{/addUser}" class="form-group">
-	<select th:field="*{idUserToAdd}" class="form-control">
-		<option value="default">Ajouter des nouveaux membres</option>
-		<option th:each="u2 : ${userToAdd}" th:value="${u2.id}"
-			th:text="${u2.pseudo}"></option>
-	</select>
-	<button type="submit" class="btn btn-primary">VALIDER</button>
-</form>
+
+

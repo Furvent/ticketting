@@ -1,5 +1,7 @@
 package fr.eql.ticketting.controller;
 
+import java.time.LocalDateTime;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,7 @@ public class ConnectionControler {
 
 	@PostMapping("/list-users")
 	public RedirectView signUpNewUser(@ModelAttribute("user") User user) {
+		user.setCreationAccountDate(LocalDateTime.now());
 		userService.save(user);
 		return new RedirectView("/dashboard");
 	}

@@ -261,9 +261,4 @@ public class GroupDashboardController {
 		return users;
 	}
 
-	//Récupérer la liste des users qui ne sont pas dans le groupe
-	private List<User> getUsersNotGroup(Long idGrouo){
-
-		return null;
-	}
 }

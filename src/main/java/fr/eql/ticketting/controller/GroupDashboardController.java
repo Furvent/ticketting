@@ -33,7 +33,7 @@ import fr.eql.ticketting.service.TicketService;
 import fr.eql.ticketting.service.UserService;
 
 @Controller
-@SessionAttributes(value = { "user", "groupSelectedByUserId", "isUserAdmin"})
+@SessionAttributes(value = { "user", "groupSelectedByUserId", "isUserAdmin" })
 public class GroupDashboardController {
 	GroupService groupService;
 	MembershipService membershipService;
@@ -58,18 +58,18 @@ public class GroupDashboardController {
 	@GetMapping("group")
 	public String displayGroupDashboard(Model model, @RequestParam(name = "groupId", required = true) String groupID) {
 		String templateName = "";
-		//Récupération et envoi des données pour la page admin
-		Long groupIdLong = Long.parseLong(groupID); 
+		// Récupération et envoi des données pour la page admin
+		Long groupIdLong = Long.parseLong(groupID);
 		List<User> users2 = displayUsersByGroup(groupIdLong);
 		model.addAttribute("users2", users2);
 		AddUserForm addUserForm = new AddUserForm();
 		model.addAttribute("addUserForm", addUserForm);
-		//Récupération des users qu'on peut ajouter au groupe
+		// Récupération des users qu'on peut ajouter au groupe
 		List<User> userToAdd = new ArrayList<User>();
 		List<User> allUsers = userService.getAllUsers();
 
 		for (User user : allUsers) {
-			//On teste si le user est dans le groupe
+			// On teste si le user est dans le groupe
 			Boolean isInGroupe = false;
 			for (Membership membership : user.getMemberships()) {
 				if (membership.getGroup().getId() == groupIdLong) {
@@ -77,7 +77,7 @@ public class GroupDashboardController {
 					break;
 				}
 			}
-			if( isInGroupe == false) {
+			if (isInGroupe == false) {
 				userToAdd.add(user);
 			}
 		}
@@ -85,18 +85,18 @@ public class GroupDashboardController {
 			System.out.println(user.getPseudo());
 		}
 		model.addAttribute("userToAdd", userToAdd);
-		
-		//Restriction de l'accès à la page admin
+
+		// Restriction de l'accès à la page admin
 		boolean isAdmin = false;
 		User userConnected = (User) model.getAttribute("user");
 		Group actifGroup = groupService.getGroupById(groupIdLong);
-		if(userConnected.equals(actifGroup.getCreatedBy())) {
+		if (userConnected.equals(actifGroup.getCreatedBy())) {
 			isAdmin = true;
 		}
 		System.err.println(isAdmin);
 		model.addAttribute("isAdmin", isAdmin);
-		System.err.println((boolean)model.getAttribute("isAdmin"));
-		
+		System.err.println((boolean) model.getAttribute("isAdmin"));
+
 		// On ajoute le groupId en session
 		model.addAttribute("groupSelectedByUserId", groupID);
 		// On vérifie que l'utilisateur appartienne bien à ce groupe
@@ -112,7 +112,8 @@ public class GroupDashboardController {
 			// On récupère le group en db
 			Group currUserGroup = groupService.getGroupById(groupIdLong);
 			model.addAttribute("currUserGroup", currUserGroup);
-			// On vérifie si l'utilisateur est administrateur et on rajoute l'information dans le model
+			// On vérifie si l'utilisateur est administrateur et on rajoute l'information
+			// dans le model
 			model.addAttribute("isUserAdmin", checkIfUserIsAdmin(user, currUserGroup));
 			// On récupère tous les tickets du groupe
 			List<Ticket> groupTickets = getGroupTickets(currUserGroup);
@@ -123,21 +124,23 @@ public class GroupDashboardController {
 			addToModelUserOnTaskTickets(model, user, groupIdLong);
 			// On ajoute les titres de status au model
 			addStatusTitleToModel(model);
-			//Ajout form ticket
-			formAddTicket(model,currUserGroup);
+			// Ajout form ticket
+			formAddTicket(model, currUserGroup);
 			templateName = "dashboard/group-dashboard.html";
 		} else {
 			templateName = "dashboard/general-dashboard.html";
 		}
 		return templateName;
 	}
+
 	public void formAddTicket(Model model, Group group) {
 		model.addAttribute("ticketForm", new TicketForm());
 		List<User> users = new ArrayList<User>();
-		//Ajouter la sélection du groupe
+		// Ajouter la sélection du groupe
 		users = displayUsersByGroup(model, group);
 		model.addAttribute("users", users);
 	}
+
 	private List<User> displayUsersByGroup(Model model, Group group) {
 		List<Membership> memberships = membershipService.getMembershipsWithGroup(group);
 		List<User> users = new ArrayList<User>();
@@ -146,9 +149,11 @@ public class GroupDashboardController {
 		}
 		return users;
 	}
-	//Déclencher lors de l'ajout d'un nouveau membre au groupe
+
+	// Déclencher lors de l'ajout d'un nouveau membre au groupe
 	@PostMapping("/addUser")
-	public RedirectView deleteUser(@ModelAttribute("addUserForm") AddUserForm addUserForm, @ModelAttribute("groupSelectedByUserId")Long groupId){
+	public RedirectView deleteUser(@ModelAttribute("addUserForm") AddUserForm addUserForm,
+			@ModelAttribute("groupSelectedByUserId") Long groupId) {
 		List<Long> idUserToAdds = addUserForm.getIdUserToAdd();
 		for (Long idUser : idUserToAdds) {
 			User user = userService.getUserWithId(idUser);
@@ -156,8 +161,22 @@ public class GroupDashboardController {
 			Membership membership = new Membership(user, group, LocalDateTime.now());
 			membershipService.save(membership);
 		}
-		
+
 		return new RedirectView("group?groupId=" + groupId);
+	}
+
+	@PostMapping("/setTicketStatusToDown")
+	public RedirectView setTicketStatusToDown(@ModelAttribute("groupSelectedByUserId") Long groupSelectedByUserId,
+			@RequestParam("ticketIdToChangeStatusToDone") String ticketIdToChangeStatusToDone) {
+		// get ticket from db
+		Long idTicketToDone = Long.parseLong(ticketIdToChangeStatusToDone);
+		Ticket ticketSelected = ticketService.getTicketById(idTicketToDone);
+		// get status done from DB
+		Status statusAllocated = statusService.getStatusByLabel(TicketStatus.DONE);
+		// create a new StatusHistory between ticket and status
+		StatusHistory statusHistory = new StatusHistory(statusAllocated, ticketSelected, LocalDateTime.now());
+		statusHistoryService.save(statusHistory);
+		return new RedirectView("/group?groupId=" + groupSelectedByUserId);
 	}
 
 	private List<Ticket> getGroupTickets(Group group) {
@@ -245,12 +264,12 @@ public class GroupDashboardController {
 		}
 		return pseudos;
 	}
-	
+
 	private boolean checkIfUserIsAdmin(User user, Group group) {
 		return user.getId() == group.getCreatedBy().getId();
 	}
 
-	//Récupérer la liste des users du groupe
+	// Récupérer la liste des users du groupe
 	private List<User> displayUsersByGroup(Long idGroup) {
 		Group group = groupService.getGroupById(idGroup);
 		List<Membership> memberships = membershipService.getMembershipsWithGroup(group);

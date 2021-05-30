@@ -11,10 +11,17 @@
 			<ul>
 				<li th:each="pseudo : ${ticketView.usersTaskOn}" th:text="${pseudo}"></li>
 			</ul>
-			<h5 class="card-title mt-2 text-primary"
+			<h5 class="card-title mt-2 text-success"
 				th:text="'Status: ' + ${ticketView.lastStatus}"></h5>
 			<h5 class="card-title mt-2">Comments</h5>
 			<p>Work in progress!</p>
+			<form
+				class="d-flex"
+				th:if="${ticketView.lastStatus} == Allocated"
+				method="POST"
+				th:action="@{/setTicketStatusToDown(ticketIdToChangeStatusToDone=${ticketView.id})}">
+					<button type="submit" class="btn btn-success m-auto" style="width: 7rem;">Task done</button>
+				</form>
 		</div>
 	</article>
 </div>

@@ -12,14 +12,14 @@
 		<header class="d-flex align-items-center m-3">
 			<h5 th:text="'Welcome ' + ${user.pseudo} + ' !'"></h5>
 			<form th:action="@{/deconnexion}" th:object="${user}" method="POST">
-				<button type="submit" class="btn btn-outline-warning ml-5">Disconnect</button>
+				<button type="submit" class="btn btn-outline-warning ml-5">Sign out</button>
 			</form>
 		</header>
 		<div class="ticketting-line"></div>
 		<!-- Nav -->
 		<nav class="nav nav-tabs m-3">
 			<a class="nav-item nav-link active" href="#groups" data-toggle="tab">Groups</a>
-			<a class="nav-item nav-link" href="#profil" data-toggle="tab">Profil</a>
+			<a class="nav-item nav-link" href="#profil" data-toggle="tab">Profile</a>
 		</nav>
 
 		<!-- All tabs content -->
